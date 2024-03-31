@@ -4,8 +4,7 @@ import { useNavigate } from "react-router-dom";
 export const useHomeNavigation = () => {
   const navigate = useNavigate();
 
-  return () =>
-    useCallback(() => {
+  return useCallback(() => {
       navigate("/");
     }, [navigate]);
 };
