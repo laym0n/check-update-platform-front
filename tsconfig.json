@@ -6,6 +6,10 @@
       "dom.iterable",
       "esnext"
     ],
+    "paths": {
+      "/@/components/*": ["src/*"],
+      "src/*":["src/*"]
+    },
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -18,9 +22,15 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
+    "baseUrl": "./",
     "jsx": "react-jsx"
   },
+  "exclude": [
+    "./node_modules",
+    "./build"
+  ],
   "include": [
-    "src"
+    "./src",
+    "./types/*.d.ts"
   ]
 }

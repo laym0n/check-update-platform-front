@@ -1,0 +1,55 @@
+@import "src/components/styles/variables/color";
+@import "src/components/styles/variables/font";
+@import "src/components/styles/variables/property";
+
+.activSwitcher {
+  display: flex;
+  width: 50%;
+  background-color: $active-button;
+  border-radius: $small-border-radius;
+  border: 0;
+  box-shadow: $shadow;
+}
+
+.switcher {
+  display: flex;
+  width: 50%;
+  border-radius: $small-border-radius;
+  border: 0;
+}
+
+.default {
+  display: flex;
+  background-color: $default-button-color;
+  border: 0;
+
+  &:hover {
+    display: flex;
+    background-color: $default-button-color;
+    border: 0;
+  }
+}
+
+.main {
+  display: flex;
+  border-color: $white-border;
+
+  &:hover {
+    display: flex;
+    border-color: $active-button;
+  }
+}
+
+.switcher-menu-button-text,
+.default-menu-button-text {
+  font-family: $font-stack;
+  color: $text-color;
+}
+
+.switcher-menu-button-text {
+  font-size: $big-font-size;
+}
+
+.default-menu-button-text {
+  font-size: $medium-font-size;
+}
