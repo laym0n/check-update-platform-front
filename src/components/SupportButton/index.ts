@@ -1,1 +1,1 @@
-export * from './SupportButton';
+export * from './SignUpButton';

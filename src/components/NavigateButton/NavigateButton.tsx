@@ -25,7 +25,7 @@ export const NavigateButton: React.FC<NavigateButtonProps> = ({
   return (
     <Button
       className={classNames({
-        [styles["activSwitcher"]]: isActiveSwitcher,
+        [styles["activeSwitcher"]]: isActiveSwitcher,
         [styles["switcher"]]: isSwitcher,
         [styles["default"]]: isDefault,
         [styles["main"]]: isMain,

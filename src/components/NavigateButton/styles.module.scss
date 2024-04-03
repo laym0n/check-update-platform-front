@@ -2,10 +2,10 @@
 @import "src/components/styles/variables/font";
 @import "src/components/styles/variables/property";
 
-.activSwitcher {
+.activeSwitcher {
   display: flex;
   width: 50%;
-  background-color: $active-button;
+  background-color: $activeColor;
   border-radius: $small-border-radius;
   border: 0;
   box-shadow: $shadow;
@@ -20,7 +20,7 @@
 
 .default {
   display: flex;
-  background-color: $default-button-color;
+  background-color: $activeColor;
   border: 0;
 
   &:hover {

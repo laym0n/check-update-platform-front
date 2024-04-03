@@ -4,8 +4,10 @@
     "lib": [
       "dom",
       "dom.iterable",
-      "esnext"
+      "esnext",
+      "ES2023"
     ],
+    "types": ["reflect-metadata"],
     "paths": {
       "/@/components/*": ["src/*"],
       "src/*":["src/*"]
