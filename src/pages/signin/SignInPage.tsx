@@ -68,7 +68,6 @@ export default function SignInPage() {
                             margin="normal"
                             required
                             fullWidth
-                            variant="filled"
                             id="email"
                             label="Email Address"
                             name="email"

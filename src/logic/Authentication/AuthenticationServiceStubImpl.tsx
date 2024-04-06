@@ -5,6 +5,6 @@ import {injectable} from "inversify";
 @injectable()
 export class AuthenticationServiceStubImpl implements AuthenticationService {
     public userAuthenticated() {
-        return true;
+        return false;
     };
 }
