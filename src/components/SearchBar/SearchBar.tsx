@@ -1,33 +1,11 @@
-import React from "react";
+import InputBase, {InputBaseProps} from "@mui/material/InputBase";
+import {darkTheme} from "src/components/styles/theme";
+import styled from "@emotion/styled";
 
-import {Button, TextField} from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-
-import {SearchBarStyles, SearchIconStyles} from "./utils";
-import {TEXT_INTO_SEARCH_BAR} from "./constants";
-
-import styles from "./styles.module.scss";
-
-export const SearchBar = () => {
-    return (
-        <div className={styles.searchBar}>
-            <TextField
-                placeholder={TEXT_INTO_SEARCH_BAR}
-                className={styles.textField}
-                variant="outlined"
-                type="text"
-                fullWidth
-                sx={SearchBarStyles()}
-                InputProps={{
-                    startAdornment: (
-                        <Button>
-                            <SearchIcon
-                                sx={SearchIconStyles()}
-                            />
-                        </Button>
-                    ),
-                }}
-            />
-        </div>
-    );
-};
+export const SearchBar = styled(InputBase)<InputBaseProps>(({theme}) => ({
+    m: "0 auto",
+    '& .MuiInputBase-input': {
+        color: darkTheme.palette.getContrastText(darkTheme.palette.background.default),
+        backgroundColor: darkTheme.palette.background.default
+    }
+}));

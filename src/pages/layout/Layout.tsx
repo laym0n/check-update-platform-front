@@ -3,8 +3,12 @@ import {SignInButton, SignUpButton} from "src/components/SignInUpButtons";
 import {ProfileDrawer} from "src/components/ProfileDrawer";
 import {diContainer, TYPES} from "src/logic/Config"
 import {AuthenticationService} from "src/logic/Authentication";
-import {Box, Divider, Stack, TextField} from "@mui/material";
+import {Box, Divider, Stack} from "@mui/material";
 import {darkTheme} from "src/components/styles/theme"
+import Grid from "@mui/material/Grid";
+import MenuIcon from "@mui/icons-material/Menu";
+import {SearchBar} from "src/components";
+import {alpha} from '@mui/system';
 
 type LayoutProperties = {
     children: ReactNode;
@@ -16,46 +20,57 @@ export function Layout(properties: LayoutProperties) {
     let menuContent: ReactNode;
 
     menuContent =
-        <Box sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
+        <Grid sx={{
             padding: darkTheme.spacing(1),
-            borderRadius: darkTheme.shape.borderRadius,
-            justifyContent: "center",
-            // border: `1px solid ${darkTheme.palette.divider}`,
-        }}>
-            <TextField
-                sx={{
-                    m: "0 auto",
-                    width: 400,
-                    '& .MuiInputBase-input': {
-                        color: darkTheme.palette.getContrastText(darkTheme.palette.background.default),
-                        backgroundColor: darkTheme.palette.background.default
+        }}
+              container
+              justifyContent="space-between"
+              alignItems="center">
+            <Grid>
+                <MenuIcon/>
+            </Grid>
+            <Grid>
+                <SearchBar
+                    sx={{
+                        width: 400
+                    }}
+                    placeholder="Search Google Maps"
+                    inputProps={{'aria-label': 'search google maps'}}
+                />
+            </Grid>
+            <Grid>
+                <Stack direction="row" justifyContent="flex-end" spacing={2}>
+                    {isAuthenticated ?
+                        <ProfileDrawer/>
+                        :
+                        <>
+                            <SignInButton/>
+                            <SignUpButton/>
+                        </>
                     }
-                }}
-                variant="outlined"
-                placeholder="Search Google Maps"
-                inputProps={{'aria-label': 'search google maps'}}
-            />
-            <Stack direction="row" justifyContent="flex-end" spacing={2}>
-                {isAuthenticated ?
-                    <ProfileDrawer/>
-                    :
-                    <>
-                        <SignInButton/>
-                        <SignUpButton/>
-                    </>
-                }
-            </Stack>
-        </Box>;
+                </Stack>
+            </Grid>
+        </Grid>;
     return (
         <Stack>
-            <Box component="header">
+            <Box component="header" sx={{
+                position: "fixed",
+                background: alpha(darkTheme.palette.background.default, 0.5),
+                width: "100%",
+                backdropFilter: "blur(8px)",
+                zIndex: 1000
+            }}>
                 {menuContent}
+                <Divider/>
             </Box>
-            <Divider/>
-            {properties.children}
+            <Stack sx={{
+                width: 1200,
+                mt: darkTheme.spacing(5),
+                mr: "auto",
+                ml: "auto",
+            }}>
+                {properties.children}
+            </Stack>
         </Stack>
     );
 }
