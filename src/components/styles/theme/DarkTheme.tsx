@@ -13,14 +13,5 @@ export const darkTheme = createTheme({
             primary: "#fff",
             secondary: "#6F7F95"
         }
-    },
-    components: {
-        MuiInput: {
-            styleOverrides: {
-                root: {
-                    border: '1px red #007bff',
-                },
-            },
-        },
-    },
+    }
 })
