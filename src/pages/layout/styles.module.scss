@@ -1,13 +1,5 @@
 @import '../../components/styles/variables/color.module';
 
-.buttons {
-  display: flex;
-  justify-content: flex-end;
-  margin: 25px 3%;
-}
-
-.topNavBar {
-  background-color: $backgroundColor;
-  margin: 20px;
-  padding: 20px;
+.rootComponent {
+  width: 1200px;
 }

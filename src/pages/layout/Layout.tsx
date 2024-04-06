@@ -3,9 +3,8 @@ import {SignInButton, SignUpButton} from "src/components/SignInUpButtons";
 import {ProfileDrawer} from "src/components/ProfileDrawer";
 import {diContainer, TYPES} from "src/logic/Config"
 import {AuthenticationService} from "src/logic/Authentication";
-import {Stack, TextField} from "@mui/material";
+import {Box, Divider, Stack, TextField} from "@mui/material";
 import {darkTheme} from "src/components/styles/theme"
-import Container from "@mui/material/Container";
 
 type LayoutProperties = {
     children: ReactNode;
@@ -17,14 +16,14 @@ export function Layout(properties: LayoutProperties) {
     let menuContent: ReactNode;
 
     menuContent =
-        <Container sx={{
+        <Box sx={{
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
             padding: darkTheme.spacing(1),
             borderRadius: darkTheme.shape.borderRadius,
             justifyContent: "center",
-            border: `1px solid ${darkTheme.palette.divider}`,
+            // border: `1px solid ${darkTheme.palette.divider}`,
         }}>
             <TextField
                 sx={{
@@ -49,10 +48,13 @@ export function Layout(properties: LayoutProperties) {
                     </>
                 }
             </Stack>
-        </Container>;
+        </Box>;
     return (
-        <Stack sx={{width: 1200, margin: "0 auto"}}>
-            {menuContent}
+        <Stack>
+            <Box component="header">
+                {menuContent}
+            </Box>
+            <Divider/>
             {properties.children}
         </Stack>
     );
