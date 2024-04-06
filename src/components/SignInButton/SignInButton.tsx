@@ -1,15 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
-import { NavigateButton } from "src/components/NavigateButton";
-
-import styles from "./styles.module.scss";
+import {NavigateButton} from "src/components/NavigateButton";
 
 export const SignInButton = () => {
-  return (
-    <Link to="/sign-in" className={styles.button}>
-      <NavigateButton text={"SignInButton"} isMain />
-    </Link>
-  );
+    return (
+        <Link to="/sign-in">
+            <NavigateButton text={"SignInButton"} isMain/>
+        </Link>
+    );
 };
 

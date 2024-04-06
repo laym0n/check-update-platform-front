@@ -1,10 +1,10 @@
-import { useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import {useCallback} from "react";
+import {useNavigate} from "react-router-dom";
 
 export const useHomeNavigation = () => {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  return useCallback(() => {
-      navigate("/");
+    return useCallback(() => {
+        navigate("/");
     }, [navigate]);
 };

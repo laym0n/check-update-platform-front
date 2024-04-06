@@ -7,10 +7,16 @@
       "esnext",
       "ES2023"
     ],
-    "types": ["reflect-metadata"],
+    "types": [
+      "reflect-metadata"
+    ],
     "paths": {
-      "/@/components/*": ["src/*"],
-      "src/*":["src/*"]
+      "/@/components/*": [
+        "src/*"
+      ],
+      "src/*": [
+        "src/*"
+      ]
     },
     "allowJs": true,
     "skipLibCheck": true,

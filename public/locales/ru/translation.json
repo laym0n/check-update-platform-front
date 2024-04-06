@@ -8,7 +8,6 @@
   "Login": "Имя пользователя",
   "Password": "Пароль",
   "SubmitButton": "Отправить",
-
   "description": {
     "sign-in": "- или войдите с помощью -",
     "my-tags": "Мои метки: ",
