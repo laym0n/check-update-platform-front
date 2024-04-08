@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {useState} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -9,10 +8,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import {diContainer, TYPES} from "src/logic/Config";
-import {AuthenticationService} from "src/logic/services/Authentication";
-import {UserRegistrationRequest} from "src/api/generated";
-import {useNavigate} from 'react-router-dom';
+import useSignUpViewModel from "src/pages/signup/SignUpViewModel";
 
 function Copyright(props: any) {
     return (
@@ -28,24 +24,7 @@ function Copyright(props: any) {
 }
 
 export default function SignUpPage() {
-    const [password, setPassword] = useState("")
-    const [repeatPassword, setRepeatPassword] = useState("")
-    let authenticationService = diContainer.get<AuthenticationService>(TYPES.AuthenticationService);
-    const navigate = useNavigate();
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        if (password !== repeatPassword) {
-            return
-        }
-
-        const data = new FormData(event.currentTarget);
-        let request: UserRegistrationRequest = {
-            email: data.get('email').toString(),
-            password: data.get('password').toString()
-        };
-        authenticationService.register(request)
-            .then(value => navigate("/sign-in"))
-    };
+    let signUpViewModel = useSignUpViewModel();
 
     return (
         <Container component="main" maxWidth="xs">
@@ -65,7 +44,7 @@ export default function SignUpPage() {
                 <Typography component="h1" variant="h5">
                     Sign up
                 </Typography>
-                <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt: 3}}>
+                <Box component="form" noValidate onSubmit={signUpViewModel.onClickRegister} sx={{mt: 3}}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
@@ -86,10 +65,8 @@ export default function SignUpPage() {
                                 type="password"
                                 id="password"
                                 autoComplete="new-password"
-                                value={password}
-                                onChange={(event) => {
-                                    setPassword(event.target.value);
-                                }}
+                                value={signUpViewModel.password}
+                                onChange={signUpViewModel.onPasswordChange}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -100,10 +77,8 @@ export default function SignUpPage() {
                                 type="password"
                                 id="repeatPassword"
                                 autoComplete="repeat-password"
-                                value={repeatPassword}
-                                onChange={(event) => {
-                                    setRepeatPassword(event.target.value);
-                                }}
+                                value={signUpViewModel.repeatPassword}
+                                onChange={signUpViewModel.onRepeatPasswordChange}
                             />
                         </Grid>
                     </Grid>

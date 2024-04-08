@@ -14,8 +14,8 @@ import {injectable} from "inversify";
 export class AuthenticationServiceStubImpl implements AuthenticationService {
     private static readonly AUTH_VALUE_NAME: string = "authenticateResponse";
 
-    authenticate(request: AuthenticationRequest): void {
-        AuthenticationClient.authentication(request)
+    authenticate(request: AuthenticationRequest): Promise<void> {
+        return AuthenticationClient.authentication(request)
             .then(authenticateResponse => {
                 OpenAPI.TOKEN = authenticateResponse.jwtToken.accessToken
                 localStorage[AuthenticationServiceStubImpl.AUTH_VALUE_NAME] = authenticateResponse;
@@ -26,7 +26,7 @@ export class AuthenticationServiceStubImpl implements AuthenticationService {
         return UserClient.register(request);
     }
 
-    public userAuthenticated() {
+    userAuthenticated(): boolean {
         return localStorage.getItem(AuthenticationServiceStubImpl.AUTH_VALUE_NAME) !== null;
     };
 

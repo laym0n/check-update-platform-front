@@ -5,6 +5,7 @@ export interface AuthenticationService {
 
     register(request: UserRegistrationRequest): CancelablePromise<any>;
 
-    authenticate(request: AuthenticationRequest): void;
+    authenticate(request: AuthenticationRequest): Promise<void>;
+
     logOut(): void;
 }

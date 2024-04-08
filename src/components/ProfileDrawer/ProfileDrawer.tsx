@@ -1,14 +1,5 @@
 import React, {MouseEventHandler} from "react";
-import {
-    Box,
-    Drawer,
-    IconButton,
-    List,
-    ListItem,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText
-} from "@mui/material";
+import {Box, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
 import {diContainer, TYPES} from "src/logic/Config";
@@ -21,7 +12,7 @@ export const ProfileDrawer = () => {
         setOpen(newOpen);
     };
 
-    const onLogOutClick = (event : MouseEventHandler<HTMLAnchorElement>) => {
+    const onLogOutClick = (event: MouseEventHandler<HTMLAnchorElement>) => {
         let authenticationService = diContainer.get<AuthenticationService>(TYPES.AuthenticationService);
         authenticationService.logOut();
     }

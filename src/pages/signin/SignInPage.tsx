@@ -9,9 +9,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import {diContainer, TYPES} from "src/logic/Config";
-import {AuthenticationService} from "src/logic/services/Authentication";
-import {AuthenticationRequest} from "src/api/generated";
+import useSignInViewModel from "src/pages/signin/SignInViewModel";
 
 function Copyright(props: any) {
     return (
@@ -28,17 +26,7 @@ function Copyright(props: any) {
 
 export default function SignInPage() {
 
-    let authenticationService = diContainer.get<AuthenticationService>(TYPES.AuthenticationService);
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        let request: AuthenticationRequest = {
-            email: data.get('email').toString(),
-            password: data.get('password').toString(),
-            rememberMe: data.get('rememberMe') === 'on',
-        }
-        authenticationService.authenticate(request);
-    };
+    let signInViewModel = useSignInViewModel();
 
     return (
         <Grid container component="main" sx={{height: '100vh'}}>
@@ -72,7 +60,7 @@ export default function SignInPage() {
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
-                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt: 1}}>
+                    <Box component="form" noValidate onSubmit={signInViewModel.onSubmitSignIn} sx={{mt: 1}}>
                         <TextField
                             margin="normal"
                             required
