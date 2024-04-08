@@ -2,7 +2,7 @@ import React, {ReactNode} from "react";
 import {SignInButton, SignUpButton} from "src/components/SignInUpButtons";
 import {ProfileDrawer} from "src/components/ProfileDrawer";
 import {diContainer, TYPES} from "src/logic/Config"
-import {AuthenticationService} from "src/logic/Authentication";
+import {AuthenticationService} from "src/logic/services/Authentication";
 import {Box, Divider, Stack} from "@mui/material";
 import {darkTheme} from "src/components/styles/theme"
 import Grid from "@mui/material/Grid";

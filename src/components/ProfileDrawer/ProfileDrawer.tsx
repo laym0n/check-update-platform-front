@@ -1,7 +1,6 @@
-import React from "react";
+import React, {MouseEventHandler} from "react";
 import {
     Box,
-    Divider,
     Drawer,
     IconButton,
     List,
@@ -11,8 +10,9 @@ import {
     ListItemText
 } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import LogoutIcon from '@mui/icons-material/Logout';
+import {diContainer, TYPES} from "src/logic/Config";
+import {AuthenticationService} from "src/logic/services/Authentication";
 
 export const ProfileDrawer = () => {
     const [open, setOpen] = React.useState(false);
@@ -21,32 +21,22 @@ export const ProfileDrawer = () => {
         setOpen(newOpen);
     };
 
+    const onLogOutClick = (event : MouseEventHandler<HTMLAnchorElement>) => {
+        let authenticationService = diContainer.get<AuthenticationService>(TYPES.AuthenticationService);
+        authenticationService.logOut();
+    }
+
     const DrawerList = (
         <Box sx={{width: 250}} role="presentation" onClick={toggleDrawer(false)}>
             <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}
-                            </ListItemIcon>
-                            <ListItemText primary={text}/>
-                        </ListItemButton>
-                    </ListItem>
-                ))}
-            </List>
-            <Divider/>
-            <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}
-                            </ListItemIcon>
-                            <ListItemText primary={text}/>
-                        </ListItemButton>
-                    </ListItem>
-                ))}
+                <ListItem disablePadding>
+                    <ListItemButton onClick={onLogOutClick}>
+                        <ListItemIcon>
+                            <LogoutIcon/>
+                        </ListItemIcon>
+                        <ListItemText primary="Log Out"/>
+                    </ListItemButton>
+                </ListItem>
             </List>
         </Box>
     );

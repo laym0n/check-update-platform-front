@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useState} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -8,6 +9,10 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import {diContainer, TYPES} from "src/logic/Config";
+import {AuthenticationService} from "src/logic/services/Authentication";
+import {UserRegistrationRequest} from "src/api/generated";
+import {useNavigate} from 'react-router-dom';
 
 function Copyright(props: any) {
     return (
@@ -23,13 +28,23 @@ function Copyright(props: any) {
 }
 
 export default function SignUpPage() {
+    const [password, setPassword] = useState("")
+    const [repeatPassword, setRepeatPassword] = useState("")
+    let authenticationService = diContainer.get<AuthenticationService>(TYPES.AuthenticationService);
+    const navigate = useNavigate();
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        if (password !== repeatPassword) {
+            return
+        }
+
         const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+        let request: UserRegistrationRequest = {
+            email: data.get('email').toString(),
+            password: data.get('password').toString()
+        };
+        authenticationService.register(request)
+            .then(value => navigate("/sign-in"))
     };
 
     return (
@@ -42,9 +57,11 @@ export default function SignUpPage() {
                     alignItems: 'center',
                 }}
             >
-                <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
-                    <LockOutlinedIcon/>
-                </Avatar>
+                <Link href="/">
+                    <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
+                        <LockOutlinedIcon/>
+                    </Avatar>
+                </Link>
                 <Typography component="h1" variant="h5">
                     Sign up
                 </Typography>
@@ -69,17 +86,24 @@ export default function SignUpPage() {
                                 type="password"
                                 id="password"
                                 autoComplete="new-password"
+                                value={password}
+                                onChange={(event) => {
+                                    setPassword(event.target.value);
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
                                 required
                                 fullWidth
-                                name="repeat password"
                                 label="Repeat password"
                                 type="password"
                                 id="repeatPassword"
                                 autoComplete="repeat-password"
+                                value={repeatPassword}
+                                onChange={(event) => {
+                                    setRepeatPassword(event.target.value);
+                                }}
                             />
                         </Grid>
                     </Grid>

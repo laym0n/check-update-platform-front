@@ -47,7 +47,32 @@ paths:
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/JwtTokenResponse'
+                $ref: '#/components/schemas/AuthenticateResponse'
+        400:
+          description: неуспешная аутентификация
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorMessageDto'
+
+  /authentication/refresh:
+    post:
+      tags:
+        - Authentication
+      summary: Обновление аутентификации пользователя
+      operationId: authenticationRefresh
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthenticationRefreshRequest'
+      responses:
+        200:
+          description: успешная аутентификация
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/AuthenticateResponse'
         400:
           description: неуспешная аутентификация
           content:
@@ -74,7 +99,7 @@ paths:
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/WebResourceObserving'
+                $ref: '#/components/schemas/WebResourceObservingDto'
         400:
           description: ошибка валидации данных
           content:
@@ -98,7 +123,7 @@ paths:
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/WebResourceObserving'
+                $ref: '#/components/schemas/WebResourceObservingDto'
         400:
           description: ошибка валидации данных
           content:
@@ -152,7 +177,7 @@ paths:
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/Task'
+                $ref: '#/components/schemas/TaskDto'
         400:
           description: ошибка валидации данных
           content:
@@ -181,7 +206,7 @@ paths:
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/Task'
+                $ref: '#/components/schemas/TaskDto'
         400:
           description: ошибка валидации данных
           content:
@@ -208,7 +233,7 @@ paths:
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/PluginUsage'
+                $ref: '#/components/schemas/PluginUsageDto'
         400:
           description: ошибка валидации данных
           content:
@@ -228,7 +253,7 @@ components:
         format: uuid
 
   securitySchemes:
-    JwtToken:
+    JwtTokenSecurity:
       type: http
       scheme: bearer
       bearerFormat: JWT
@@ -240,9 +265,11 @@ components:
           type: string
           description: email для регистрации
           format: email
+          minLength: 1
         password:
           type: string
           description: Пароль
+          minLength: 1
       required:
         - email
         - password
@@ -250,21 +277,55 @@ components:
     AuthenticationRequest:
       type: object
       properties:
-        principal:
+        email:
           type: string
-        credentials:
+        password:
           type: string
+        rememberMe:
+          type: boolean
       required:
-        - principal
-        - credentials
+        - email
+        - password
+        - rememberMe
 
-    JwtTokenResponse:
+    AuthenticationRefreshRequest:
       type: object
       properties:
-        token:
+        refreshToken:
           type: string
+        rememberMe:
+          type: boolean
       required:
-        - token
+        - refreshToken
+        - rememberMe
+
+    AuthenticateResponse:
+      type: object
+      properties:
+        jwtToken:
+          $ref: '#/components/schemas/JwtTokenDto'
+        user:
+          $ref: '#/components/schemas/UserDto'
+      required:
+        - jwtToken
+        - user
+
+    JwtTokenDto:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        accessTokenLiveDuration:
+          type: integer
+        refreshToken:
+          type: string
+        refreshTokenLiveDuration:
+          type: integer
+      required:
+        - accessToken
+        - accessTokenLiveDuration
+        - refreshToken
+        - refreshTokenLiveDuration
 
     WebResourceObservingAddRequest:
       type: object
@@ -294,7 +355,7 @@ components:
       type: object
       properties:
         plugin:
-          $ref: "#/components/schemas/Plugin"
+          $ref: "#/components/schemas/PluginDto"
         accessToken:
           type: string
           description: Токен для доступа
@@ -310,7 +371,7 @@ components:
           format: uuid
           description: id плагина, для которого создается задача
         description:
-          $ref: "#/components/schemas/PluginDescription"
+          $ref: "#/components/schemas/PluginDescriptionDto"
       required:
         - pluginId
         - description
@@ -334,12 +395,12 @@ components:
           format: uuid
           description: id плагина для начала использования
         distributionMethod:
-          $ref: "#/components/schemas/DistributionMethod"
+          $ref: "#/components/schemas/DistributionMethodDto"
       required:
         - pluginId
         - distributionMethod
 
-    Task:
+    TaskDto:
       type: object
       properties:
         id:
@@ -347,9 +408,9 @@ components:
           format: uuid
           description: id задачи
         plugin:
-          $ref: "#/components/schemas/Plugin"
+          $ref: "#/components/schemas/PluginDto"
         description:
-          $ref: "#/components/schemas/PluginDescription"
+          $ref: "#/components/schemas/PluginDescriptionDto"
         decision:
           $ref: "#/components/schemas/TaskDecisionEnum"
         comment:
@@ -359,13 +420,13 @@ components:
         - plugin
         - description
 
-    WebResourceObserving:
+    WebResourceObservingDto:
       type: object
       properties:
         webResourceDto:
-          $ref: '#/components/schemas/WebResource'
+          $ref: '#/components/schemas/WebResourceDto'
         observeSettings:
-          $ref: '#/components/schemas/ObserveSettings'
+          $ref: '#/components/schemas/ObserveSettingsDto'
         status:
           $ref: '#/components/schemas/ObserveStatusEnum'
       required:
@@ -373,27 +434,27 @@ components:
         - observeSettings
         - status
 
-    PluginUsage:
+    PluginUsageDto:
       type: object
       properties:
         id:
           type: string
           format: uuid
         distributionMethod:
-          $ref: "#/components/schemas/DistributionMethod"
+          $ref: "#/components/schemas/DistributionMethodDto"
         expiredDate:
           type: string
           format: date-time
           description: Дата и время когда заканчивается использование плагина
         plugin:
-          $ref: '#/components/schemas/Plugin'
+          $ref: '#/components/schemas/PluginDto'
       required:
         - id
         - distributionMethod
         - expiredDate
         - plugin
 
-    Plugin:
+    PluginDto:
       type: object
       properties:
         id:
@@ -408,7 +469,31 @@ components:
         - name
         - baseUrl
 
-    WebResource:
+    UserDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+        roles:
+          type: array
+          items:
+            $ref: "#/components/schemas/UserRoleEnum"
+      required:
+        - id
+        - type
+        - role
+
+    UserRoleEnum:
+      type: string
+      enum:
+        - SIMPLE_USER
+        - EMPLOYEE
+        - ADMIN
+
+    WebResourceDto:
       type: object
       properties:
         id:
@@ -422,7 +507,7 @@ components:
         - id
         - name
 
-    PluginDescription:
+    PluginDescriptionDto:
       type: object
       properties:
         description:
@@ -433,17 +518,22 @@ components:
           description: массив url до изображений
           items:
             type: string
+        tags:
+          type: array
+          description: массив тегов плагина
+          items:
+            type: string
         distributionMethods:
           type: array
           description: массив типов распространения плагина
           items:
-            $ref: "#/components/schemas/DistributionMethod"
+            $ref: "#/components/schemas/DistributionMethodDto"
       required:
         - description
         - imagePaths
         - distributionMethods
 
-    DistributionMethod:
+    DistributionMethodDto:
       type: object
       properties:
         cost:
@@ -469,7 +559,7 @@ components:
         - APPROVE
         - REJECT
 
-    ObserveSettings:
+    ObserveSettingsDto:
       type: object
       properties:
         needNotify:

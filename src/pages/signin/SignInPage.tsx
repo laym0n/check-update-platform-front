@@ -9,6 +9,9 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
+import {diContainer, TYPES} from "src/logic/Config";
+import {AuthenticationService} from "src/logic/services/Authentication";
+import {AuthenticationRequest} from "src/api/generated";
 
 function Copyright(props: any) {
     return (
@@ -24,13 +27,17 @@ function Copyright(props: any) {
 }
 
 export default function SignInPage() {
+
+    let authenticationService = diContainer.get<AuthenticationService>(TYPES.AuthenticationService);
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+        let request: AuthenticationRequest = {
+            email: data.get('email').toString(),
+            password: data.get('password').toString(),
+            rememberMe: data.get('rememberMe') === 'on',
+        }
+        authenticationService.authenticate(request);
     };
 
     return (
@@ -57,9 +64,11 @@ export default function SignInPage() {
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
-                        <LockOutlinedIcon/>
-                    </Avatar>
+                    <Link href="/">
+                        <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
+                            <LockOutlinedIcon/>
+                        </Avatar>
+                    </Link>
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
@@ -87,6 +96,7 @@ export default function SignInPage() {
                         <FormControlLabel
                             control={<Checkbox value="remember" color="primary"/>}
                             label="Remember me"
+                            name="rememberMe"
                         />
                         <Button
                             type="submit"

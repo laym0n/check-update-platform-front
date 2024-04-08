@@ -8,6 +8,9 @@ import SignUpPage from "src/pages/signup/SignUpPage";
 import {darkTheme} from "src/components/styles/theme";
 import {ThemeProvider} from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import initialize from "src/logic/Config/Config";
+
+initialize();
 
 function App() {
     return (

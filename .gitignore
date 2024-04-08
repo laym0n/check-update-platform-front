@@ -5,3 +5,5 @@ node_modules
 dist
 /.idea/
 /src/api/generated/
+
+.env.local

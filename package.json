@@ -16,6 +16,7 @@
     "@types/react-dom": "^18.2.23",
     "classnames": "^2.5.1",
     "inversify": "^6.0.2",
+    "process": "^0.11.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
@@ -29,7 +30,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "generate": "openapi -i ./public/openapi/check-update-platform-rest-api.yaml -o ./src/api/generated"
+    "generate": "openapi -i ./public/openapi/check-update-platform-rest-api.yaml -o ./src/api/generated --postfixServices Client"
   },
   "eslintConfig": {
     "extends": [
