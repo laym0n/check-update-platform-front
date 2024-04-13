@@ -1,12 +1,24 @@
 import React from "react";
 
-import {SearchBar} from "src/components/SearchBar";
-import {SignInButton} from "src/components/SignInButton";
-import {Space} from "src/components/Space";
-import {SignUpButton} from "src/components/SupportButton";
-import {Title} from "src/components/Title";
+import {SearchBar} from "src/shared/components/SearchBar";
+import {SignInButton} from "src/shared/components/SignInButton";
+import {Space} from "src/shared/components/Space";
+import {SignUpButton} from "src/shared/components/SupportButton";
+import {Title} from "src/shared/components/Title";
 
 import styles from "./styles.module.scss";
+
+export function SearchPageHeader() {
+    return (
+        <SearchBar
+            sx={{
+                width: 400
+            }}
+            placeholder="Search Google Maps"
+            inputProps={{'aria-label': 'search google maps'}}
+        />
+    );
+}
 
 export function SearchPage() {
     return (

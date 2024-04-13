@@ -1,5 +1,5 @@
-import {MouseEventHandler, ReactNode, useState} from "react";
-import {ProfileDrawerHooks} from "src/components/ProfileDrawer";
+import {MouseEventHandler, useState} from "react";
+import {ProfileDrawerHooks} from "src/shared/components/ProfileDrawer";
 import {diContainer, TYPES} from "src/logic/Config"
 import {AuthenticationService} from "src/logic/services/Authentication";
 
@@ -12,7 +12,6 @@ const useLayoutViewController: () => LayoutViewController = () => {
     let authenticationService = diContainer.get<AuthenticationService>(TYPES.AuthenticationService);
     let isAuthenticatedUser = authenticationService.userAuthenticated();
     const [isAuthenticated, setIsAuthenticated] = useState(isAuthenticatedUser)
-    let menuContent: ReactNode;
 
     const onLogOutClick = (event: MouseEventHandler<HTMLAnchorElement>) => {
         let isAuthenticatedUser = authenticationService.userAuthenticated();

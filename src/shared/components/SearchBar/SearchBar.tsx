@@ -1,5 +1,5 @@
 import InputBase, {InputBaseProps} from "@mui/material/InputBase";
-import {darkTheme} from "src/components/styles/theme";
+import {darkTheme} from "src/shared/theme";
 import styled from "@emotion/styled";
 
 export const SearchBar = styled(InputBase)<InputBaseProps>(({theme}) => ({

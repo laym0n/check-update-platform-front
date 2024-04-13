@@ -1,16 +1,16 @@
 import React, {ReactNode} from "react";
-import {SignInButton, SignUpButton} from "src/components/SignInUpButtons";
-import {ProfileDrawer} from "src/components/ProfileDrawer";
+import {SignInButton, SignUpButton} from "src/shared/components/SignInUpButtons";
+import {ProfileDrawer} from "src/shared/components/ProfileDrawer";
 import {Box, Divider, Stack} from "@mui/material";
-import {darkTheme} from "src/components/styles/theme"
+import {darkTheme} from "src/shared/theme"
 import Grid from "@mui/material/Grid";
 import MenuIcon from "@mui/icons-material/Menu";
-import {SearchBar} from "src/components";
 import {alpha} from '@mui/system';
 import useLayoutViewController from "src/pages/layout/LayoutViewController";
 
 type LayoutProperties = {
     children: ReactNode;
+    header?: ReactNode;
 }
 
 export function Layout(properties: LayoutProperties) {
@@ -26,15 +26,7 @@ export function Layout(properties: LayoutProperties) {
             <Grid>
                 <MenuIcon/>
             </Grid>
-            <Grid>
-                <SearchBar
-                    sx={{
-                        width: 400
-                    }}
-                    placeholder="Search Google Maps"
-                    inputProps={{'aria-label': 'search google maps'}}
-                />
-            </Grid>
+            <Grid> {properties.header}</Grid>
             <Grid>
                 <Stack direction="row" justifyContent="flex-end" spacing={2}>
                     {viewController.isAuthenticated ?

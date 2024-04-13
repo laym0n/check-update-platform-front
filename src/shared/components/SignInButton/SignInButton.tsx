@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-import {NavigateButton} from "src/components/NavigateButton";
+import {NavigateButton} from "src/shared/components/NavigateButton";
 
 export const SignInButton = () => {
     return (
