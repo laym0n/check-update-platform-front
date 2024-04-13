@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import useSignInViewModel from "src/pages/signin/SignInViewModel";
+import useSignInViewController from "src/pages/signin/SignInViewController";
 
 function Copyright(props: any) {
     return (
@@ -26,7 +26,7 @@ function Copyright(props: any) {
 
 export default function SignInPage() {
 
-    let signInViewModel = useSignInViewModel();
+    let signInViewModel = useSignInViewController();
 
     return (
         <Grid container component="main" sx={{height: '100vh'}}>

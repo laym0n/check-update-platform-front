@@ -8,7 +8,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import useSignUpViewModel from "src/pages/signup/SignUpViewModel";
+import useSignUpViewController from "src/pages/signup/SignUpViewController";
 
 function Copyright(props: any) {
     return (
@@ -24,7 +24,7 @@ function Copyright(props: any) {
 }
 
 export default function SignUpPage() {
-    let signUpViewModel = useSignUpViewModel();
+    let signUpViewController = useSignUpViewController();
 
     return (
         <Container component="main" maxWidth="xs">
@@ -44,7 +44,7 @@ export default function SignUpPage() {
                 <Typography component="h1" variant="h5">
                     Sign up
                 </Typography>
-                <Box component="form" noValidate onSubmit={signUpViewModel.onClickRegister} sx={{mt: 3}}>
+                <Box component="form" noValidate onSubmit={signUpViewController.onClickRegister} sx={{mt: 3}}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
@@ -65,8 +65,8 @@ export default function SignUpPage() {
                                 type="password"
                                 id="password"
                                 autoComplete="new-password"
-                                value={signUpViewModel.password}
-                                onChange={signUpViewModel.onPasswordChange}
+                                value={signUpViewController.password}
+                                onChange={signUpViewController.onPasswordChange}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -77,8 +77,8 @@ export default function SignUpPage() {
                                 type="password"
                                 id="repeatPassword"
                                 autoComplete="repeat-password"
-                                value={signUpViewModel.repeatPassword}
-                                onChange={signUpViewModel.onRepeatPasswordChange}
+                                value={signUpViewController.repeatPassword}
+                                onChange={signUpViewController.onRepeatPasswordChange}
                             />
                         </Grid>
                     </Grid>

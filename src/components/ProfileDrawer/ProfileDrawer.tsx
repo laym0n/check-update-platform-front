@@ -1,27 +1,19 @@
-import React, {MouseEventHandler} from "react";
+import React from "react";
 import {Box, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
-import {diContainer, TYPES} from "src/logic/Config";
-import {AuthenticationService} from "src/logic/services/Authentication";
+import useProfileDrawerViewController, {
+    ProfileDrawerHooks
+} from "src/components/ProfileDrawer/ProfileDrawerViewController";
 
-export const ProfileDrawer = () => {
-    const [open, setOpen] = React.useState(false);
-
-    const toggleDrawer = (newOpen: boolean) => () => {
-        setOpen(newOpen);
-    };
-
-    const onLogOutClick = (event: MouseEventHandler<HTMLAnchorElement>) => {
-        let authenticationService = diContainer.get<AuthenticationService>(TYPES.AuthenticationService);
-        authenticationService.logOut();
-    }
+export const ProfileDrawer = (props: ProfileDrawerHooks) => {
+    let viewController = useProfileDrawerViewController(props);
 
     const DrawerList = (
-        <Box sx={{width: 250}} role="presentation" onClick={toggleDrawer(false)}>
+        <Box sx={{width: 250}} role="presentation">
             <List>
                 <ListItem disablePadding>
-                    <ListItemButton onClick={onLogOutClick}>
+                    <ListItemButton onClick={viewController.onLogOutClick}>
                         <ListItemIcon>
                             <LogoutIcon/>
                         </ListItemIcon>
@@ -34,10 +26,10 @@ export const ProfileDrawer = () => {
 
     return (
         <>
-            <IconButton onClick={toggleDrawer(true)} color="primary">
+            <IconButton onClick={viewController.onProfileButtonClick} color="primary">
                 <MenuIcon/>
             </IconButton>
-            <Drawer open={open} onClose={toggleDrawer(false)} anchor="right">
+            <Drawer open={viewController.open} onClose={viewController.onCloseDrawer} anchor="right">
                 {DrawerList}
             </Drawer>
         </>

@@ -1,2 +1,2 @@
 export * from './SignInPage';
-export * from './SignInViewModel';
+export * from './SignInViewController';

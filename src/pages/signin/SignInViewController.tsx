@@ -4,11 +4,11 @@ import {AuthenticationService} from "src/logic/services/Authentication";
 import {AuthenticationRequest} from "src/api/generated";
 import {useNavigate} from "react-router-dom";
 
-export type SignInViewModel = {
+export type SignInViewController = {
     onSubmitSignIn: (event: React.FormEvent<HTMLFormElement>) => void
 }
 
-const useSignInViewModel: () => SignInViewModel = () => {
+const useSignInViewController: () => SignInViewController = () => {
     let authenticationService = diContainer.get<AuthenticationService>(TYPES.AuthenticationService);
     let navigate = useNavigate();
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -30,4 +30,4 @@ const useSignInViewModel: () => SignInViewModel = () => {
     };
 }
 
-export default useSignInViewModel;
+export default useSignInViewController;

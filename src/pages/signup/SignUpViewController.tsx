@@ -4,7 +4,7 @@ import {AuthenticationService} from "src/logic/services/Authentication";
 import {UserRegistrationRequest} from "src/api/generated";
 import {useNavigate} from "react-router-dom";
 
-export type SignUpViewModel = {
+export type SignUpViewController = {
     password: string;
     onPasswordChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
     repeatPassword: string;
@@ -12,7 +12,7 @@ export type SignUpViewModel = {
     onClickRegister: (event: React.FormEvent<HTMLFormElement>) => void
 }
 
-const useSignUpViewModel: () => SignUpViewModel = () => {
+const useSignUpViewController: () => SignUpViewController = () => {
     const [password, setPassword] = useState("")
     const [repeatPassword, setRepeatPassword] = useState("")
 
@@ -49,4 +49,4 @@ const useSignUpViewModel: () => SignUpViewModel = () => {
     };
 }
 
-export default useSignUpViewModel;
+export default useSignUpViewController;

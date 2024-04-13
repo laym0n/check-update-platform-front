@@ -1,25 +1,22 @@
 import React, {ReactNode} from "react";
 import {SignInButton, SignUpButton} from "src/components/SignInUpButtons";
 import {ProfileDrawer} from "src/components/ProfileDrawer";
-import {diContainer, TYPES} from "src/logic/Config"
-import {AuthenticationService} from "src/logic/services/Authentication";
 import {Box, Divider, Stack} from "@mui/material";
 import {darkTheme} from "src/components/styles/theme"
 import Grid from "@mui/material/Grid";
 import MenuIcon from "@mui/icons-material/Menu";
 import {SearchBar} from "src/components";
 import {alpha} from '@mui/system';
+import useLayoutViewController from "src/pages/layout/LayoutViewController";
 
 type LayoutProperties = {
     children: ReactNode;
 }
 
 export function Layout(properties: LayoutProperties) {
-    let authenticationService = diContainer.get<AuthenticationService>(TYPES.AuthenticationService);
-    let isAuthenticated = authenticationService.userAuthenticated();
-    let menuContent: ReactNode;
+    let viewController = useLayoutViewController();
 
-    menuContent =
+    let menuContent: ReactNode =
         <Grid sx={{
             padding: darkTheme.spacing(1),
         }}
@@ -40,8 +37,8 @@ export function Layout(properties: LayoutProperties) {
             </Grid>
             <Grid>
                 <Stack direction="row" justifyContent="flex-end" spacing={2}>
-                    {isAuthenticated ?
-                        <ProfileDrawer/>
+                    {viewController.isAuthenticated ?
+                        <ProfileDrawer onLogOutClick={viewController.profileDrawerHooks.onLogOutClick}/>
                         :
                         <>
                             <SignInButton/>
