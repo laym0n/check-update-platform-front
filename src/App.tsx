@@ -18,7 +18,7 @@ function App() {
             <CssBaseline/>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Layout><SearchPage/></Layout>}/>
+                    <Route path="/" element={<SearchPage/>}/>
                     <Route path="/test" element={<Layout><h1>test</h1></Layout>}/>
                     <Route path="/sign-in" element={<SignInPage/>}/>
                     <Route path="/sign-up" element={<SignUpPage/>}/>

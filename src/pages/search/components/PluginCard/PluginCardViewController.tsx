@@ -1,41 +1,49 @@
-import React, {MouseEventHandler} from "react";
-import {diContainer, TYPES} from "src/logic/Config";
-import {AuthenticationService} from "src/logic/services/Authentication";
+import React, {useCallback} from "react";
+import {DistributionMethodDto, PluginInfoDto} from "src/api/generated";
+import {useLayoutContext} from "src/pages/layout/LayoutContext";
 
 export type PluginCardViewController = {
-    open: boolean,
-    onProfileButtonClick: (event: MouseEventHandler<HTMLAnchorElement>) => void,
-    onLogOutClick: (event: MouseEventHandler<HTMLAnchorElement>) => void,
-    onCloseDrawer: (event: object, reason: string) => void,
+    disableBuyButton: boolean,
+    buyButtonToolTipTitle: string,
+    pluginInfo: PluginInfoDto,
+    distributionMethodAutocompleteDtoArray: DistributionMethodAutocompleteDto[]
+    onBuyButtonClick: React.MouseEventHandler<HTMLButtonElement>,
+    onViewButtonClick: React.MouseEventHandler<HTMLButtonElement>,
 }
 
-export type PluginCardHooks = {
-    onLogOutClick: (event: MouseEventHandler<HTMLAnchorElement>) => void,
+type DistributionMethodAutocompleteDto = {
+    label: string,
+    distributionMethodDto: DistributionMethodDto
 }
 
-const usePluginCard: (hooks: PluginCardHooks) => PluginCardViewController = (hooks: PluginCardHooks) => {
-    const [open, setOpen] = React.useState(false);
+export type PluginCardProps = {
+    key: string,
+    pluginInfoDto: PluginInfoDto,
+}
 
-    const onProfileButtonClick = () => {
-        setOpen(!open);
-    }
+const usePluginCardController: (props: PluginCardProps) => PluginCardViewController = (props: PluginCardProps) => {
+    const layoutContext = useLayoutContext();
+    const onBuyButtonClick: React.MouseEventHandler<HTMLButtonElement> = useCallback(() => {
+    }, [])
 
-    const onLogOutClick = (event: MouseEventHandler<HTMLAnchorElement>) => {
-        let authenticationService = diContainer.get<AuthenticationService>(TYPES.AuthenticationService);
-        authenticationService.logOut();
-        hooks.onLogOutClick(event)
-    }
+    const onViewButtonClick: React.MouseEventHandler<HTMLButtonElement> = useCallback(() => {
+    }, [])
 
-    const onCloseDrawer = (event: object, reason: string) => {
-        setOpen(!open);
-    };
+    let autocompleteDtoArray: DistributionMethodAutocompleteDto[] = (props.pluginInfoDto.description.distributionMethods || []).map((method) => {
+        return {
+            label: 'Надпись',
+            distributionMethodDto: method
+        } as DistributionMethodAutocompleteDto;
+    })
+
     return {
-        open: open,
-        onProfileButtonClick: onProfileButtonClick,
-        onCloseDrawer: onCloseDrawer,
-        onLogOutClick: onLogOutClick
+        pluginInfo: props.pluginInfoDto,
+        onBuyButtonClick: onBuyButtonClick,
+        onViewButtonClick: onViewButtonClick,
+        distributionMethodAutocompleteDtoArray: autocompleteDtoArray,
+        disableBuyButton: !layoutContext.isAuthenticated,
+        buyButtonToolTipTitle: layoutContext.isAuthenticated ? "" : "Необходима аутентификация",
     };
 };
-
-export default usePluginCard;
+export default usePluginCardController;
 

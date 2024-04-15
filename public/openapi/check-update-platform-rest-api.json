@@ -1,0 +1,874 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "OpenAPI definition",
+    "version": "v0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Notification",
+      "description": "the Notification API"
+    }
+  ],
+  "paths": {
+    "/webresource/observing/{id}/stop": {
+      "put": {
+        "tags": [
+          "WebResourceObserving"
+        ],
+        "operationId": "stopObserve",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebResourceObservingDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/task/{id}/decision": {
+      "put": {
+        "tags": [
+          "Task"
+        ],
+        "operationId": "makeDecision",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MakeDecisionRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/webresource/observing": {
+      "post": {
+        "tags": [
+          "WebResourceObserving"
+        ],
+        "operationId": "createObserving",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddWebResourceForObservingRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebResourceObservingDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/user/register": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "register",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRegistrationRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/task": {
+      "post": {
+        "tags": [
+          "Task"
+        ],
+        "operationId": "createTask",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTaskRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/plugin": {
+      "get": {
+        "tags": [
+          "Plugin"
+        ],
+        "operationId": "getPlugins",
+        "parameters": [
+          {
+            "name": "arg0",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/GetPluginsRequestDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetPluginsResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Plugin"
+        ],
+        "operationId": "createPlugin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddPluginRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddPluginResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/plugin/usage": {
+      "post": {
+        "tags": [
+          "PluginUsage"
+        ],
+        "operationId": "createPluginUsage",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePluginUsageRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PluginUsageDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/notification": {
+      "post": {
+        "tags": [
+          "Notification"
+        ],
+        "summary": "Отправить уведомление",
+        "operationId": "create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationCreateRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "успешное добавление"
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/authentication": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "operationId": "authenticate",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthenticationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthenticateResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/authentication/refresh": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "operationId": "refreshAuthentication",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthenticationRefreshRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthenticateResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ObserveSettingsDto": {
+        "type": "object",
+        "properties": {
+          "needNotify": {
+            "type": "boolean"
+          }
+        }
+      },
+      "WebResourceDto": {
+        "required": [
+          "description",
+          "id",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "WebResourceObservingDto": {
+        "required": [
+          "observeSettings",
+          "status",
+          "webResourceDto"
+        ],
+        "type": "object",
+        "properties": {
+          "observeSettings": {
+            "$ref": "#/components/schemas/ObserveSettingsDto"
+          },
+          "webResourceDto": {
+            "$ref": "#/components/schemas/WebResourceDto"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "NOT_OBSERVE",
+              "OBSERVE"
+            ]
+          }
+        }
+      },
+      "MakeDecisionRequestDto": {
+        "required": [
+          "decision"
+        ],
+        "type": "object",
+        "properties": {
+          "decision": {
+            "type": "string",
+            "enum": [
+              "APPROVE",
+              "REJECT"
+            ]
+          },
+          "comment": {
+            "type": "string"
+          }
+        }
+      },
+      "DistributionMethodDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "SUBSCRIBE",
+              "PURCHASE"
+            ]
+          },
+          "duration": {
+            "type": "string",
+            "example": "PT1H"
+          },
+          "cost": {
+            "type": "number"
+          }
+        }
+      },
+      "PluginDescriptionDto": {
+        "type": "object",
+        "properties": {
+          "specificDescription": {
+            "$ref": "#/components/schemas/PluginSpecificDescriptionDto"
+          },
+          "logoPath": {
+            "type": "string"
+          },
+          "distributionMethods": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DistributionMethodDto"
+            }
+          }
+        }
+      },
+      "PluginDto": {
+        "required": [
+          "baseUrl",
+          "description",
+          "id",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "baseUrl": {
+            "type": "string"
+          },
+          "description": {
+            "$ref": "#/components/schemas/PluginDescriptionDto"
+          }
+        }
+      },
+      "PluginSpecificDescriptionDto": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "imagePaths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "TaskDto": {
+        "required": [
+          "decision",
+          "description",
+          "id",
+          "plugin"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "description": {
+            "$ref": "#/components/schemas/PluginDescriptionDto"
+          },
+          "decision": {
+            "type": "string",
+            "enum": [
+              "APPROVE",
+              "REJECT"
+            ]
+          },
+          "comment": {
+            "type": "string"
+          },
+          "plugin": {
+            "$ref": "#/components/schemas/PluginDto"
+          }
+        }
+      },
+      "AddWebResourceForObservingRequestDto": {
+        "required": [
+          "pluginId",
+          "resourceDescription"
+        ],
+        "type": "object",
+        "properties": {
+          "pluginId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "resourceDescription": {
+            "type": "string"
+          }
+        }
+      },
+      "UserRegistrationRequestDto": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateTaskRequestDto": {
+        "required": [
+          "description",
+          "pluginId"
+        ],
+        "type": "object",
+        "properties": {
+          "pluginId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "description": {
+            "$ref": "#/components/schemas/PluginDescriptionDto"
+          }
+        }
+      },
+      "AddPluginRequestDto": {
+        "required": [
+          "baseUrl",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "baseUrl": {
+            "type": "string"
+          }
+        }
+      },
+      "AddPluginResponseDto": {
+        "required": [
+          "accessToken",
+          "plugin"
+        ],
+        "type": "object",
+        "properties": {
+          "plugin": {
+            "$ref": "#/components/schemas/PluginDto"
+          },
+          "accessToken": {
+            "type": "string"
+          }
+        }
+      },
+      "CreatePluginUsageRequestDto": {
+        "required": [
+          "distributionMethod",
+          "pluginId"
+        ],
+        "type": "object",
+        "properties": {
+          "pluginId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "distributionMethod": {
+            "$ref": "#/components/schemas/DistributionMethodDto"
+          }
+        }
+      },
+      "PluginUsageDto": {
+        "required": [
+          "distributionMethod",
+          "expiredDate",
+          "id",
+          "plugin"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "distributionMethod": {
+            "$ref": "#/components/schemas/DistributionMethodDto"
+          },
+          "expiredDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "plugin": {
+            "$ref": "#/components/schemas/PluginDto"
+          }
+        }
+      },
+      "NotificationCreateRequestBody": {
+        "required": [
+          "notification",
+          "updatedResource"
+        ],
+        "type": "object",
+        "properties": {
+          "updatedResource": {
+            "$ref": "#/components/schemas/WebResourceDto"
+          },
+          "notification": {
+            "$ref": "#/components/schemas/NotificationDto"
+          }
+        }
+      },
+      "NotificationDto": {
+        "required": [
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "название веб ресурса"
+          }
+        }
+      },
+      "AuthenticationRequest": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "rememberMe": {
+            "type": "boolean"
+          }
+        }
+      },
+      "AuthenticateResponse": {
+        "required": [
+          "jwtToken",
+          "user"
+        ],
+        "type": "object",
+        "properties": {
+          "jwtToken": {
+            "$ref": "#/components/schemas/JwtTokenDto"
+          },
+          "user": {
+            "$ref": "#/components/schemas/UserInfoDto"
+          }
+        }
+      },
+      "JwtTokenDto": {
+        "required": [
+          "accessToken",
+          "accessTokenLiveDuration",
+          "refreshToken",
+          "refreshTokenLiveDuration"
+        ],
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          },
+          "refreshToken": {
+            "type": "string"
+          },
+          "accessTokenLiveDuration": {
+            "type": "string",
+            "description": "Access token live duration",
+            "example": "PT1H"
+          },
+          "refreshTokenLiveDuration": {
+            "type": "string",
+            "description": "Refresh token live duration",
+            "example": "PT1H"
+          }
+        }
+      },
+      "UserInfoDto": {
+        "required": [
+          "email",
+          "id",
+          "roles"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "email": {
+            "type": "string"
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "SIMPLE_USER",
+                "EMPLOYEE",
+                "ADMIN"
+              ]
+            }
+          }
+        }
+      },
+      "AuthenticationRefreshRequest": {
+        "required": [
+          "refreshToken"
+        ],
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string"
+          },
+          "rememberMe": {
+            "type": "boolean"
+          }
+        }
+      },
+      "GetPluginsRequestDto": {
+        "type": "object",
+        "properties": {
+          "filters": {
+            "$ref": "#/components/schemas/PluginsFilterDto"
+          }
+        }
+      },
+      "PluginsFilterDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "GetPluginsResponseDto": {
+        "required": [
+          "plugins"
+        ],
+        "type": "object",
+        "properties": {
+          "plugins": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PluginInfoDto"
+            }
+          }
+        }
+      },
+      "PluginInfoDto": {
+        "required": [
+          "description",
+          "id",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "$ref": "#/components/schemas/PluginDescriptionDto"
+          }
+        }
+      }
+    }
+  }
+}

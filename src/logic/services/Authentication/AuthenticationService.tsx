@@ -1,11 +1,11 @@
-import {AuthenticationRequest, CancelablePromise, UserRegistrationRequest} from "src/api/generated";
+import {AuthenticationRequest, CancelablePromise, UserRegistrationRequestDto} from "src/api/generated";
 
 export interface AuthenticationService {
     userAuthenticated(): boolean;
 
-    register(request: UserRegistrationRequest): CancelablePromise<any>;
+    register(request: AuthenticationRequest): CancelablePromise<any>;
 
-    authenticate(request: AuthenticationRequest): Promise<void>;
+    authenticate(request: UserRegistrationRequestDto): Promise<void>;
 
     logOut(): void;
 }

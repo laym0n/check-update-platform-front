@@ -4,7 +4,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
 import useProfileDrawerViewController, {
     ProfileDrawerHooks
-} from "src/shared/components/ProfileDrawer/ProfileDrawerViewController";
+} from "src/pages/layout/components/ProfileDrawer/ProfileDrawerViewController";
 
 export const ProfileDrawer = (props: ProfileDrawerHooks) => {
     let viewController = useProfileDrawerViewController(props);

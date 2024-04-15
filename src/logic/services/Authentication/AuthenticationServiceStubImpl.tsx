@@ -4,7 +4,7 @@ import {
     CancelablePromise,
     OpenAPI,
     UserClient,
-    UserRegistrationRequest
+    UserRegistrationRequestDto
 } from "../../../api/generated";
 import {AuthenticationService} from "./AuthenticationService";
 import {injectable} from "inversify";
@@ -15,14 +15,14 @@ export class AuthenticationServiceStubImpl implements AuthenticationService {
     private static readonly AUTH_VALUE_NAME: string = "authenticateResponse";
 
     authenticate(request: AuthenticationRequest): Promise<void> {
-        return AuthenticationClient.authentication(request)
+        return AuthenticationClient.authenticate(request)
             .then(authenticateResponse => {
                 OpenAPI.TOKEN = authenticateResponse.jwtToken.accessToken
                 localStorage[AuthenticationServiceStubImpl.AUTH_VALUE_NAME] = authenticateResponse;
             });
     }
 
-    register(request: UserRegistrationRequest): CancelablePromise<any> {
+    register(request: UserRegistrationRequestDto): CancelablePromise<any> {
         return UserClient.register(request);
     }
 
