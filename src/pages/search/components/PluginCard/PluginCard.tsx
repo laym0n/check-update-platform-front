@@ -34,7 +34,7 @@ export const PluginCard = (props: PluginCardProps) => {
                 <Autocomplete
                     disablePortal
                     options={viewController.distributionMethodAutocompleteDtoArray!}
-                    defaultValue={viewController.distributionMethodAutocompleteDtoArray![0]}
+                    value={viewController.distributionMethodAutocompleteDtoArray![0]}
                     sx={{width: 300}}
                     autoSelect
                     renderInput={(params) => <TextField {...params} label="Movie"/>}

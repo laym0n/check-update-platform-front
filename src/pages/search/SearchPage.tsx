@@ -23,11 +23,11 @@ export function SearchPageContent() {
 
         }}>
             <SearchBar
-                sx={{
-                    width: 400,
-                }}
+                width={400}
                 placeholder="Search Google Maps"
-                inputProps={{'aria-label': 'search google maps'}}
+                searchValue={viewController.searchValue}
+                onSubmit={viewController.onSearchValueSubmit}
+                onSearchValueChange={viewController.onSearchValueChange}
             />
             <Stack direction="row" justifyContent="center" sx={{
                 flexWrap: "wrap"

@@ -62,7 +62,7 @@ function LayoutContent(properties: LayoutProperties) {
             </Box>
             <Stack sx={{
                 width: 1200,
-                mt: darkTheme.spacing(5),
+                mt: darkTheme.spacing(7),
                 mr: "auto",
                 ml: "auto",
             }}>
