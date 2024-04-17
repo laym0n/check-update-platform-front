@@ -382,6 +382,26 @@
           }
         }
       }
+    },
+    "/autocomplete/tags": {
+      "get": {
+        "tags": [
+          "Autocomplete"
+        ],
+        "operationId": "getTags",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AutocompleteTagsResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -866,6 +886,20 @@
           },
           "description": {
             "$ref": "#/components/schemas/PluginDescriptionDto"
+          }
+        }
+      },
+      "AutocompleteTagsResponseDto": {
+        "required": [
+          "tags"
+        ],
+        "type": "object",
+        "properties": {
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       }

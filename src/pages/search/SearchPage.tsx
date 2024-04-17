@@ -1,10 +1,12 @@
 import React from "react";
 
 import {SearchBar} from "src/shared/components/SearchBar";
-import {Stack} from "@mui/material";
+import {Autocomplete, Chip, Paper, Stack, Typography} from "@mui/material";
 import {PluginCard} from "src/pages/search/components";
 import useSearchViewController from "src/pages/search/SearchViewController";
 import {Layout} from "src/pages/layout";
+import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
 
 export function SearchPage() {
     return (
@@ -20,7 +22,6 @@ export function SearchPageContent() {
         <Stack sx={{
             alignItems: "center",
             width: "100%"
-
         }}>
             <SearchBar
                 width={400}
@@ -29,13 +30,54 @@ export function SearchPageContent() {
                 onSubmit={viewController.onSearchValueSubmit}
                 onSearchValueChange={viewController.onSearchValueChange}
             />
-            <Stack direction="row" justifyContent="center" sx={{
-                flexWrap: "wrap"
-            }}>
-                {viewController.pluginCardProps.map(prop => {
-                    return <PluginCard {...prop}/>
-                })}
-            </Stack>
+            <Grid container columns={36}>
+                <Grid item md={7}>
+                    <Paper elevation={24} sx={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        flexDirection: "column"
+                    }}>
+                        <Typography variant="h6" gutterBottom>
+                            Фильтры
+                        </Typography>
+                        <Autocomplete
+                            multiple
+                            id="tags-outlined"
+                            fullWidth
+                            options={viewController.tags}
+                            getOptionLabel={(option) => option}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    variant="outlined"
+                                    placeholder="Выберите теги"
+                                />
+                            )}
+                            onChange={viewController.onTagAutocompleteChange}
+                            renderTags={(value, getTagProps) =>
+                                value.map((option, index) => (
+                                    <Chip
+                                        label={option}
+                                        {...getTagProps({index})}
+                                    />
+                                ))
+                            }
+                        />
+                    </Paper>
+                </Grid>
+                <Grid item md={22}>
+                    <Stack direction="row" justifyContent="center" sx={{
+                        flexWrap: "wrap"
+                    }}>
+                        {viewController.pluginCardProps.map(prop => {
+                            return <PluginCard {...prop}/>
+                        })}
+                    </Stack>
+                </Grid>
+                <Grid item md={7}/>
+            </Grid>
         </Stack>
     );
 }
