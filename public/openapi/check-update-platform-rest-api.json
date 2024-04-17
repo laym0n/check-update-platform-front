@@ -200,11 +200,20 @@
         "operationId": "getPlugins",
         "parameters": [
           {
-            "name": "arg0",
+            "name": "filters.name",
             "in": "query",
-            "required": true,
             "schema": {
-              "$ref": "#/components/schemas/GetPluginsRequestDto"
+              "type": "string"
+            }
+          },
+          {
+            "name": "filters.tags",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           }
         ],
@@ -830,28 +839,6 @@
           },
           "rememberMe": {
             "type": "boolean"
-          }
-        }
-      },
-      "GetPluginsRequestDto": {
-        "type": "object",
-        "properties": {
-          "filters": {
-            "$ref": "#/components/schemas/PluginsFilterDto"
-          }
-        }
-      },
-      "PluginsFilterDto": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
           }
         }
       },

@@ -1,5 +1,10 @@
-import {CancelablePromise, GetPluginsRequestDto, GetPluginsResponseDto} from "src/api/generated";
+import {CancelablePromise, GetPluginsResponseDto} from "src/api/generated";
 
 export interface PluginService {
     getPlugins(request: GetPluginsRequestDto): CancelablePromise<GetPluginsResponseDto>
+}
+
+export type GetPluginsRequestDto = {
+    filtersTag: Array<string>;
+    filtersName: string;
 }

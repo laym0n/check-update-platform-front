@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {diContainer, TYPES} from "src/logic/Config";
 import {AuthenticationService} from "src/logic/services/Authentication";
-import {UserRegistrationRequest} from "src/api/generated";
+import {UserRegistrationRequestDto} from "src/api/generated";
 import {useNavigate} from "react-router-dom";
 
 export type SignUpViewController = {
@@ -25,7 +25,7 @@ const useSignUpViewController: () => SignUpViewController = () => {
         }
 
         const data = new FormData(event.currentTarget);
-        let request: UserRegistrationRequest = {
+        let request: UserRegistrationRequestDto = {
             email: data.get('email')!!.toString(),
             password: data.get('password')!!.toString()
         };

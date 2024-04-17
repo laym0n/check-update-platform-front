@@ -22,10 +22,8 @@ const useSearchViewController: () => SearchViewController = () => {
     function searchPlugins() {
         let pluginService = diContainer.get<PluginService>(TYPES.PluginService);
         pluginService.getPlugins({
-            filters: {
-                name: searchValue.current,
-                tags: selectedTags.current
-            }
+            filtersName: searchValue.current,
+            filtersTag: selectedTags.current
         })
             .then(response => {
                 let newPluginCardProps = response.plugins.map(pluginInfoDto => {
