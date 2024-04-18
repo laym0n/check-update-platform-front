@@ -1,6 +1,7 @@
 import React, {useCallback} from "react";
 import {DistributionMethodDto, PluginInfoDto} from "src/api/generated";
 import {useLayoutContext} from "src/pages/layout/LayoutContext";
+import moment from "moment";
 
 export type PluginCardViewController = {
     disableBuyButton: boolean,
@@ -30,8 +31,15 @@ const usePluginCardController: (props: PluginCardProps) => PluginCardViewControl
     }, [])
 
     let autocompleteDtoArray: DistributionMethodAutocompleteDto[] = (props.pluginInfoDto.description.distributionMethods || []).map((method) => {
+        let label: string;
+        if (method.type === DistributionMethodDto.type.PURCHASE) {
+            label = `${method.cost} РУБ`
+        } else {
+            let duration = moment.duration(method.duration!).humanize()
+            label = `${method.cost} РУБ/${duration}`
+        }
         return {
-            label: 'Надпись',
+            label: label,
             distributionMethodDto: method
         } as DistributionMethodAutocompleteDto;
     })

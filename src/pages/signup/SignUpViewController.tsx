@@ -30,7 +30,7 @@ const useSignUpViewController: () => SignUpViewController = () => {
             password: data.get('password')!!.toString()
         };
         authenticationService.register(request)
-            .then(value => navigate("/sign-in"))
+            .then(() => navigate("/sign-in"))
     };
 
     const onPasswordChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
