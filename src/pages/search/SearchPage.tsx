@@ -55,6 +55,7 @@ export function SearchPageContent() {
                                     placeholder="Выберите теги"
                                 />
                             )}
+                            defaultValue={viewController.selectedTags}
                             onChange={viewController.onTagAutocompleteChange}
                             renderTags={(value, getTagProps) =>
                                 value.map((option, index) => (

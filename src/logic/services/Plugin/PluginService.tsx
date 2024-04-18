@@ -5,6 +5,6 @@ export interface PluginService {
 }
 
 export type GetPluginsRequestDto = {
-    filtersTag: Array<string>;
-    filtersName: string;
+    filtersTag?: Array<string>;
+    filtersName?: string;
 }
