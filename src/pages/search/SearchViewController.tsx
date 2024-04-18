@@ -54,10 +54,9 @@ const useSearchViewController: () => SearchViewController = () => {
     let onSearchValueChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void = useCallback((event) => {
         searchValue.current = event.target.value
     }, [])
-    let onTagAutocompleteChange: (event: React.SyntheticEvent, value: string[]) => void = (event, value) => {
+    let onTagAutocompleteChange: (event: React.SyntheticEvent, value: string[]) => void = useCallback((event, value) => {
         selectedTags.current = value;
-        console.log(selectedTags.current)
-    }
+    }, []);
     return {
         pluginCardProps: pluginCardProps,
         searchValue: searchValue.current,

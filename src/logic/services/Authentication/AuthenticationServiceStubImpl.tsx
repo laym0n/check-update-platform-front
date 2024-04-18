@@ -1,4 +1,5 @@
 import {
+    AuthenticateResponse,
     AuthenticationClient,
     AuthenticationRequest,
     CancelablePromise,
@@ -17,8 +18,8 @@ export class AuthenticationServiceStubImpl implements AuthenticationService {
     authenticate(request: AuthenticationRequest): Promise<void> {
         return AuthenticationClient.authenticate(request)
             .then(authenticateResponse => {
-                OpenAPI.TOKEN = authenticateResponse.jwtToken.accessToken
-                localStorage[AuthenticationServiceStubImpl.AUTH_VALUE_NAME] = authenticateResponse;
+                localStorage[AuthenticationServiceStubImpl.AUTH_VALUE_NAME] = JSON.stringify(authenticateResponse);
+                this.initialize();
             });
     }
 
@@ -32,5 +33,14 @@ export class AuthenticationServiceStubImpl implements AuthenticationService {
 
     logOut(): void {
         localStorage.removeItem(AuthenticationServiceStubImpl.AUTH_VALUE_NAME)
+    }
+
+    initialize(): void {
+        const authResponseJson: string | null = localStorage.getItem(AuthenticationServiceStubImpl.AUTH_VALUE_NAME);
+        let authResponse: AuthenticateResponse | null = authResponseJson == null ? null : JSON.parse(authResponseJson) as AuthenticateResponse;
+        if (authResponse === null) {
+            return
+        }
+        OpenAPI.TOKEN = authResponse.jwtToken.accessToken;
     }
 }

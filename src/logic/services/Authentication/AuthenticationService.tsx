@@ -8,4 +8,6 @@ export interface AuthenticationService {
     authenticate(request: UserRegistrationRequestDto): Promise<void>;
 
     logOut(): void;
+
+    initialize(): void;
 }

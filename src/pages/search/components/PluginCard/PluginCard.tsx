@@ -32,6 +32,7 @@ export const PluginCard = (props: PluginCardProps) => {
             </CardContent>
             <Stack>
                 <Autocomplete
+                    onChange={viewController.onChangeDistributionMethod}
                     disablePortal
                     options={viewController.distributionMethodAutocompleteDtoArray!}
                     value={viewController.distributionMethodAutocompleteDtoArray![0]}
@@ -44,7 +45,9 @@ export const PluginCard = (props: PluginCardProps) => {
                             variant="contained">Посмотреть</Button>
                     <Tooltip title={viewController.buyButtonToolTipTitle} arrow>
                         <span style={{width: '48%'}}>
-                            <Button sx={{width: '100%'}} onClick={viewController.onBuyButtonClick} variant="contained"
+                            <Button sx={{width: '100%'}}
+                                    onClick={viewController.onBuyButtonClick}
+                                    variant="contained"
                                     disabled={viewController.disableBuyButton}>Купить</Button>
                         </span>
                     </Tooltip>
