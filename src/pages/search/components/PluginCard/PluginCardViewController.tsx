@@ -1,24 +1,23 @@
-import React, {useCallback, useRef} from "react";
-import {DistributionMethodDto, PluginInfoDto} from "src/api/generated";
+import React, {useCallback, useMemo, useRef} from "react";
+import {PluginInfoDto} from "src/api/generated";
 import {useLayoutContext} from "src/pages/layout/LayoutContext";
-import moment from "moment";
 import {diContainer, TYPES} from "src/logic/Config";
 import {PluginUsageService} from "src/logic/services/PluginUsage";
 import {AutocompleteValue} from "@mui/material";
+import {
+    DistributionMethodAutocompleteDto,
+    mapToDistributionMethodAutocompleteDto
+} from "src/shared/components/DistributionMethodAutocomplete";
 
 export type PluginCardViewController = {
+    viewPageHref: string;
     onChangeDistributionMethod: (event: React.SyntheticEvent, value: AutocompleteValue<DistributionMethodAutocompleteDto, false, false, false>) => void;
     disableBuyButton: boolean,
     buyButtonToolTipTitle: string,
     pluginInfo: PluginInfoDto,
-    distributionMethodAutocompleteDtoArray: DistributionMethodAutocompleteDto[]
+    distributionMethodAutocompleteDtoArray: DistributionMethodAutocompleteDto[],
     onBuyButtonClick: React.MouseEventHandler<HTMLButtonElement>,
     onViewButtonClick: React.MouseEventHandler<HTMLButtonElement>,
-}
-
-type DistributionMethodAutocompleteDto = {
-    label: string,
-    distributionMethodDto: DistributionMethodDto
 }
 
 export type PluginCardProps = {
@@ -28,19 +27,7 @@ export type PluginCardProps = {
 
 const usePluginCardController: (props: PluginCardProps) => PluginCardViewController = (props: PluginCardProps) => {
     const layoutContext = useLayoutContext();
-    let autocompleteDtoArray: DistributionMethodAutocompleteDto[] = (props.pluginInfoDto.description.distributionMethods || []).map((method) => {
-        let label: string;
-        if (method.type === DistributionMethodDto.type.PURCHASE) {
-            label = `${method.cost} РУБ`
-        } else {
-            let duration = moment.duration(method.duration!).humanize()
-            label = `${method.cost} РУБ/${duration}`
-        }
-        return {
-            label: label,
-            distributionMethodDto: method
-        } as DistributionMethodAutocompleteDto;
-    })
+    let autocompleteDtoArray: DistributionMethodAutocompleteDto[] = mapToDistributionMethodAutocompleteDto(props.pluginInfoDto.description.distributionMethods)
     const selectedDistributionMethod = useRef(autocompleteDtoArray[0]);
     const onBuyButtonClick: React.MouseEventHandler<HTMLButtonElement> = useCallback(() => {
         const pluginUsageService = diContainer.get<PluginUsageService>(TYPES.PluginUsageService);
@@ -58,6 +45,10 @@ const usePluginCardController: (props: PluginCardProps) => PluginCardViewControl
         selectedDistributionMethod.current = value!;
     }
 
+    const viewPageHref = useMemo(() => {
+        return "/plugin/" + props.pluginInfoDto.id
+    }, [props.pluginInfoDto.id]);
+
     return {
         pluginInfo: props.pluginInfoDto,
         onBuyButtonClick: onBuyButtonClick,
@@ -65,7 +56,8 @@ const usePluginCardController: (props: PluginCardProps) => PluginCardViewControl
         distributionMethodAutocompleteDtoArray: autocompleteDtoArray,
         disableBuyButton: !layoutContext.isAuthenticated,
         buyButtonToolTipTitle: layoutContext.isAuthenticated ? "" : "Необходима аутентификация",
-        onChangeDistributionMethod: onChangeDistributionMethod
+        onChangeDistributionMethod: onChangeDistributionMethod,
+        viewPageHref: viewPageHref,
     };
 };
 export default usePluginCardController;

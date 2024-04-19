@@ -200,6 +200,16 @@
         "operationId": "getPlugins",
         "parameters": [
           {
+            "name": "filters.ids",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
             "name": "filters.name",
             "in": "query",
             "schema": {

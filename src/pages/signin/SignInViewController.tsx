@@ -21,7 +21,7 @@ const useSignInViewController: () => SignInViewController = () => {
         }
         authenticationService.authenticate(request)
             .then(() => {
-                navigate("/test")
+                navigate("/")
             });
 
     };

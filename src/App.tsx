@@ -9,6 +9,7 @@ import {darkTheme} from "src/shared/theme";
 import {ThemeProvider} from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import initialize from "src/logic/Config/Config";
+import {PluginPage} from "src/pages/plugin";
 
 initialize();
 
@@ -19,6 +20,7 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<SearchPage/>}/>
+                    <Route path="/plugin/:id" element={<PluginPage/>}/>
                     <Route path="/test" element={<Layout><h1>test</h1></Layout>}/>
                     <Route path="/sign-in" element={<SignInPage/>}/>
                     <Route path="/sign-up" element={<SignUpPage/>}/>

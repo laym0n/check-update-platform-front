@@ -41,8 +41,10 @@ export const PluginCard = (props: PluginCardProps) => {
                     renderInput={(params) => <TextField {...params} label="Movie"/>}
                 />
                 <CardActions sx={{display: 'flex', justifyContent: 'space-between'}}>
-                    <Button sx={{width: '48%'}} onClick={viewController.onViewButtonClick}
-                            variant="contained">Посмотреть</Button>
+                    <Button sx={{width: '48%'}}
+                            onClick={viewController.onViewButtonClick}
+                            variant="contained"
+                            href={viewController.viewPageHref}>Посмотреть</Button>
                     <Tooltip title={viewController.buyButtonToolTipTitle} arrow>
                         <span style={{width: '48%'}}>
                             <Button sx={{width: '100%'}}
