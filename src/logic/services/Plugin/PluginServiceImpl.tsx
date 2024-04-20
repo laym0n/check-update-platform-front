@@ -8,4 +8,8 @@ export class PluginServiceImpl implements PluginService {
     getPlugins(request: GetPluginsRequestDto): CancelablePromise<GetPluginsResponseDto> {
         return PluginClient.getPlugins(request.ids, request.filtersName, request.filtersTag);
     }
+
+    getCurrentUserPlugins(request: GetPluginsRequestDto): CancelablePromise<GetPluginsResponseDto> {
+        return PluginClient.getMyPlugins(request.ids, request.filtersName, request.filtersTag);
+    }
 }
