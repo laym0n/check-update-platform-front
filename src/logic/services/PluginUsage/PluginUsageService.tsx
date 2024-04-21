@@ -1,5 +1,5 @@
-import {CancelablePromise, CreatePluginUsageRequestDto, PluginUsageDto} from "src/api/generated";
+import {CreatePluginUsageRequestDto, PluginUsageDto} from "src/api/generated";
 
 export interface PluginUsageService {
-    createPluginUsage(request: CreatePluginUsageRequestDto): CancelablePromise<PluginUsageDto>
+    createPluginUsage(request: CreatePluginUsageRequestDto): Promise<PluginUsageDto>
 }

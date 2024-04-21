@@ -6,7 +6,7 @@ import type = DistributionMethodDto.type;
 // @ts-ignore
 @injectable()
 export class PluginServiceStubImpl implements PluginService {
-    getPlugins(request: GetPluginsRequestDto): CancelablePromise<GetPluginsResponseDto> {
+    private static getStubPlugins() {
         let response = {
             plugins: [
                 {
@@ -35,5 +35,13 @@ export class PluginServiceStubImpl implements PluginService {
             ]
         } as GetPluginsResponseDto;
         return new CancelablePromise<GetPluginsResponseDto>(resolve => resolve(response))
+    }
+
+    getPlugins(request: GetPluginsRequestDto): CancelablePromise<GetPluginsResponseDto> {
+        return PluginServiceStubImpl.getStubPlugins();
+    }
+
+    getCurrentUserPlugins(request: GetPluginsRequestDto): Promise<GetPluginsResponseDto> {
+        return PluginServiceStubImpl.getStubPlugins();
     }
 }

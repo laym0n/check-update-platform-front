@@ -5,6 +5,8 @@ import {PluginCardProps} from "src/pages";
 import {TagService} from "src/logic/services/Tags";
 import {useSearchParams} from "react-router-dom";
 import {AutocompleteValue} from "@mui/material";
+import {useLayoutContext} from "src/pages/layout/LayoutContext";
+import {AuthenticationService} from "src/logic/services/Authentication";
 
 export type SearchViewController = {
     selectedTags: AutocompleteValue<string, true, false, false>;
@@ -24,6 +26,7 @@ const useSearchViewController: () => SearchViewController = () => {
     const searchValue = useRef(searchParams.get("search") || "");
     const selectedTags = useRef(searchParams.getAll("tags"));
 
+    const layoutContext = useLayoutContext();
     const searchPlugins = useCallback(() => {
         let pluginService = diContainer.get<PluginService>(TYPES.PluginService);
         let searchParams: URLSearchParams = new URLSearchParams();
@@ -41,9 +44,11 @@ const useSearchViewController: () => SearchViewController = () => {
                         key: pluginInfoDto.id,
                     } as PluginCardProps
                 });
+                const authenticationService = diContainer.get<AuthenticationService>(TYPES.AuthenticationService);
+                layoutContext.setIsAuthenticated(authenticationService.userAuthenticated)
                 setPluginCardProps(newPluginCardProps)
             });
-    }, [setSearchParams]);
+    }, [setSearchParams, layoutContext]);
 
     useEffect(() => {
         searchPlugins();

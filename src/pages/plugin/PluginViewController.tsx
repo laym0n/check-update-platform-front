@@ -10,6 +10,7 @@ import {
 import {AutocompleteValue} from "@mui/material";
 import {PluginUsageService} from "src/logic/services/PluginUsage";
 import {useLayoutContext} from "src/pages/layout/LayoutContext";
+import NotAuthorizedError from "src/logic/errors/NotAuthorizedError";
 
 export type PluginViewController = {
     onBuyButtonClick: React.MouseEventHandler<HTMLButtonElement>;
@@ -57,7 +58,15 @@ const usePluginViewController: () => PluginViewController = () => {
             pluginId: pluginPagePathVariables.id!,
             distributionMethod: selectedMethod.current!.distributionMethodDto,
         })
-    }, [pluginPagePathVariables.id])
+            .catch(error => {
+                    if (error instanceof NotAuthorizedError) {
+                        layoutContext.setIsAuthenticated(false)
+                    } else {
+                        console.error('Произошла ошибка:', error.message);
+                    }
+                }
+            );
+    }, [layoutContext, pluginPagePathVariables.id])
 
     let onImageClick: (event: React.MouseEvent<HTMLLIElement>, index: number) => void = useCallback((event, index) => {
         setSelectedIndexImage(index);

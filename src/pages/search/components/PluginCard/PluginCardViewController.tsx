@@ -8,6 +8,7 @@ import {
     DistributionMethodAutocompleteDto,
     mapToDistributionMethodAutocompleteDto
 } from "src/shared/components/DistributionMethodAutocomplete";
+import NotAuthorizedError from "src/logic/errors/NotAuthorizedError";
 
 export type PluginCardViewController = {
     viewPageHref: string;
@@ -35,7 +36,15 @@ const usePluginCardController: (props: PluginCardProps) => PluginCardViewControl
             pluginId: props.pluginInfoDto.id,
             distributionMethod: selectedDistributionMethod.current.distributionMethodDto,
         })
-    }, [props.pluginInfoDto.id])
+            .catch(error => {
+                    if (error instanceof NotAuthorizedError) {
+                        layoutContext.setIsAuthenticated(false)
+                    } else {
+                        console.error('Произошла ошибка:', error.message);
+                    }
+                }
+            );
+    }, [props.pluginInfoDto.id, layoutContext])
 
     const onViewButtonClick: React.MouseEventHandler<HTMLButtonElement> = useCallback(() => {
     }, [])
@@ -61,4 +70,3 @@ const usePluginCardController: (props: PluginCardProps) => PluginCardViewControl
     };
 };
 export default usePluginCardController;
-

@@ -7,6 +7,10 @@ export interface AuthenticationService {
 
     authenticate(request: UserRegistrationRequestDto): Promise<void>;
 
+    refreshAuthorize(): Promise<void>;
+
+    tryRefreshAuthorize(): Promise<void>;
+
     logOut(): void;
 
     initialize(): void;
