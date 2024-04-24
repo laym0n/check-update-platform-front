@@ -17,7 +17,7 @@
     }
   ],
   "paths": {
-    "/webresource/observing/{id}/stop": {
+    "/webresource/observing/{id}": {
       "put": {
         "tags": [
           "WebResourceObserving"
@@ -34,6 +34,16 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateWebResourceObservingRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -100,6 +110,41 @@
       }
     },
     "/webresource/observing": {
+      "get": {
+        "tags": [
+          "WebResourceObserving"
+        ],
+        "operationId": "getObservings",
+        "parameters": [
+          {
+            "name": "filters.pluginIds",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetWebResouceObservingsResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
       "post": {
         "tags": [
           "WebResourceObserving"
@@ -280,6 +325,41 @@
       }
     },
     "/plugin/usage": {
+      "get": {
+        "tags": [
+          "PluginUsage"
+        ],
+        "operationId": "getPluginUsages",
+        "parameters": [
+          {
+            "name": "filters.pluginIds",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetPluginUsagesResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
       "post": {
         "tags": [
           "PluginUsage"
@@ -479,6 +559,21 @@
   },
   "components": {
     "schemas": {
+      "UpdateWebResourceObservingRequestDto": {
+        "required": [
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "NOT_OBSERVE",
+              "OBSERVE"
+            ]
+          }
+        }
+      },
       "ObserveSettingsDto": {
         "type": "object",
         "properties": {
@@ -509,12 +604,17 @@
       },
       "WebResourceObservingDto": {
         "required": [
+          "id",
           "observeSettings",
           "status",
           "webResourceDto"
         ],
         "type": "object",
         "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
           "observeSettings": {
             "$ref": "#/components/schemas/ObserveSettingsDto"
           },
@@ -906,6 +1006,20 @@
           }
         }
       },
+      "GetWebResouceObservingsResponseDto": {
+        "required": [
+          "webResourceObservings"
+        ],
+        "type": "object",
+        "properties": {
+          "webResourceObservings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WebResourceObservingDto"
+            }
+          }
+        }
+      },
       "GetPluginsResponseDto": {
         "required": [
           "plugins"
@@ -937,6 +1051,20 @@
           },
           "description": {
             "$ref": "#/components/schemas/PluginDescriptionDto"
+          }
+        }
+      },
+      "GetPluginUsagesResponseDto": {
+        "required": [
+          "pluginUsages"
+        ],
+        "type": "object",
+        "properties": {
+          "pluginUsages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PluginUsageDto"
+            }
           }
         }
       },

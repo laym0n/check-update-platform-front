@@ -3,6 +3,7 @@ const TYPES = {
     PluginService: Symbol.for("PluginService"),
     TagService: Symbol.for("TagService"),
     PluginUsageService: Symbol.for("PluginUsageService"),
+    WebResourceObservingService: Symbol.for("WebResourceObservingService"),
 };
 
 export {TYPES};
