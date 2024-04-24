@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {diContainer, TYPES} from "src/logic/Config";
 import {PluginInfoDto} from "src/api/generated";
 import {PluginService} from "src/logic/services/Plugin";
@@ -7,6 +7,7 @@ import {WebResourceCardsListProps} from "src/pages/webresources/components/WebRe
 export type WebResourceViewController = {
     plugins: PluginInfoDto[],
     webResourceCardsListProps: WebResourceCardsListProps,
+    onSwitchSelectedPlugin: (event: React.MouseEvent<HTMLButtonElement>, id: string) => void;
 }
 
 const useWebResourceViewController: () => WebResourceViewController = () => {
@@ -23,9 +24,15 @@ const useWebResourceViewController: () => WebResourceViewController = () => {
                 } as WebResourceCardsListProps)
             });
     }, []);
+    let onSwitchSelectedPlugin: (event: React.MouseEvent<HTMLButtonElement>, id: string) => void = useCallback((event, pluginId) => {
+        setWebResourceCardsListProps({
+            pluginId: pluginId,
+        } as WebResourceCardsListProps)
+    }, []);
     return {
         plugins: pluginInfoDtos,
         webResourceCardsListProps: webResourceCardsListProps,
+        onSwitchSelectedPlugin: onSwitchSelectedPlugin,
     } as WebResourceViewController;
 }
 

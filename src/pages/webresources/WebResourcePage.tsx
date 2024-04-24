@@ -26,7 +26,8 @@ function WebResourcePageContent() {
                     {viewController.plugins?.map(plugin => {
                         return (
                             <Button key={plugin.id}
-                                    value={plugin.name}>
+                                    value={plugin.name}
+                                    onClick={(event) => viewController.onSwitchSelectedPlugin(event, plugin.id)}>
                                 <Stack>
                                     <Avatar src={plugin.description.logoPath}/>
                                     <Typography>{plugin.name}</Typography>
