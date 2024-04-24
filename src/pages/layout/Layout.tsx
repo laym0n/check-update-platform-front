@@ -8,6 +8,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import {alpha} from '@mui/system';
 import useLayoutViewController from "src/pages/layout/LayoutViewController";
 import {LayoutContextProvider} from "src/pages/layout/LayoutContext";
+import Link from "@mui/material/Link";
 
 type LayoutProperties = {
     children: ReactNode;
@@ -34,7 +35,13 @@ function LayoutContent(properties: LayoutProperties) {
             <Grid>
                 <MenuIcon/>
             </Grid>
-            <Grid><Typography>WEBRESOURCE OBSERVER</Typography></Grid>
+            <Grid>
+                <Typography>
+                    <Link href="/" underline="none">
+                        WEBRESOURCE OBSERVER
+                    </Link>
+                </Typography>
+            </Grid>
             <Grid>
                 <Stack direction="row" justifyContent="flex-end" spacing={2}>
                     {viewController.isAuthenticated ?

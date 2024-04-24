@@ -13,6 +13,14 @@ export const ProfileDrawer = (props: ProfileDrawerHooks) => {
         <Box sx={{width: 250}} role="presentation">
             <List>
                 <ListItem disablePadding>
+                    <ListItemButton href="/webresource">
+                        <ListItemIcon>
+                            <LogoutIcon/>
+                        </ListItemIcon>
+                        <ListItemText primary="WebResources"/>
+                    </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
                     <ListItemButton onClick={viewController.onLogOutClick}>
                         <ListItemIcon>
                             <LogoutIcon/>

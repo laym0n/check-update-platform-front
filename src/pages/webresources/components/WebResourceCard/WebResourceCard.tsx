@@ -1,7 +1,8 @@
 import React from "react";
 import {Card, CardActions, CardContent, Stack, Switch, Typography} from "@mui/material";
-import {WebResourceCardProps} from "src/pages/webresources/components";
-import useWebResourceCardController from "src/pages/webresources/components/PluginCard/WebResourceCardViewController";
+import {WebResourceCardProps} from "src/pages/webresources/components/WebResourceCard";
+import useWebResourceCardController
+    from "src/pages/webresources/components/WebResourceCard/WebResourceCardViewController";
 import {WebResourceObservingDto} from "src/api/generated";
 import status = WebResourceObservingDto.status;
 

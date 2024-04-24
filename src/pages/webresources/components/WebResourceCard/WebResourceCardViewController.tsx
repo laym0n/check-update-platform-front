@@ -28,6 +28,6 @@ const useWebResourceCardController: (props: WebResourceCardProps) => WebResource
     return {
         webResourceObserving: props.webResourceObserving,
         onChangeNeedNotify: onChangeNeedNotify,
-    };
+    } as WebResourceCardViewController;
 };
 export default useWebResourceCardController;
