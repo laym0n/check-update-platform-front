@@ -24,7 +24,7 @@ function Copyright(props: any) {
 }
 
 export default function SignUpPage() {
-    let signUpViewController = useSignUpViewController();
+    let viewController = useSignUpViewController();
 
     return (
         <Container component="main" maxWidth="xs">
@@ -44,7 +44,7 @@ export default function SignUpPage() {
                 <Typography component="h1" variant="h5">
                     Sign up
                 </Typography>
-                <Box component="form" noValidate onSubmit={signUpViewController.onClickRegister} sx={{mt: 3}}>
+                <Box component="form" noValidate onSubmit={viewController.onClickRegister} sx={{mt: 3}}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
@@ -65,8 +65,8 @@ export default function SignUpPage() {
                                 type="password"
                                 id="password"
                                 autoComplete="new-password"
-                                value={signUpViewController.password}
-                                onChange={signUpViewController.onPasswordChange}
+                                value={viewController.password}
+                                onChange={viewController.onPasswordChange}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -77,8 +77,8 @@ export default function SignUpPage() {
                                 type="password"
                                 id="repeatPassword"
                                 autoComplete="repeat-password"
-                                value={signUpViewController.repeatPassword}
-                                onChange={signUpViewController.onRepeatPasswordChange}
+                                value={viewController.repeatPassword}
+                                onChange={viewController.onRepeatPasswordChange}
                             />
                         </Grid>
                     </Grid>

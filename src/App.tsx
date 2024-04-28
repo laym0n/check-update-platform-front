@@ -10,6 +10,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import initialize from "src/logic/Config/Config";
 import {PluginPage} from "src/pages/plugin";
 import WebResourcePage from "src/pages/webresources/WebResourcePage";
+import PluginCreatePage from "src/pages/plugin_create/PluginCreatePage";
 
 initialize();
 
@@ -21,6 +22,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<SearchPage/>}/>
                     <Route path="/plugin/:id" element={<PluginPage/>}/>
+                    <Route path="/plugin" element={<PluginCreatePage/>}/>
                     <Route path="/webresource" element={<WebResourcePage/>}/>
                     <Route path="/sign-in" element={<SignInPage/>}/>
                     <Route path="/sign-up" element={<SignUpPage/>}/>

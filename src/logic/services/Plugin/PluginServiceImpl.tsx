@@ -1,4 +1,4 @@
-import {GetPluginsResponseDto, PluginClient,} from "src/api/generated";
+import {AddPluginRequestDto, AddPluginResponseDto, GetPluginsResponseDto, PluginClient,} from "src/api/generated";
 import {GetPluginsRequestDto, PluginService} from "./PluginService";
 import {injectable} from "inversify";
 import {diContainer, TYPES} from "src/logic/Config";
@@ -17,5 +17,11 @@ export class PluginServiceImpl implements PluginService {
         const authenticationService = diContainer.get<AuthenticationService>(TYPES.AuthenticationService);
         return authenticationService.refreshAuthorize()
             .then(() => PluginClient.getMyPlugins(request.ids, request.filtersName, request.filtersTag));
+    }
+
+    create(request: AddPluginRequestDto): Promise<AddPluginResponseDto> {
+        const authenticationService = diContainer.get<AuthenticationService>(TYPES.AuthenticationService);
+        return authenticationService.refreshAuthorize()
+            .then(() => PluginClient.createPlugin(request));
     }
 }
