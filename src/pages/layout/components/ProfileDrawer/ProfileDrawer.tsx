@@ -29,6 +29,14 @@ export const ProfileDrawer = (props: ProfileDrawerHooks) => {
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
+                    <ListItemButton href="/plugin/own">
+                        <ListItemIcon>
+                            <LogoutIcon/>
+                        </ListItemIcon>
+                        <ListItemText primary="Own plugins"/>
+                    </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
                     <ListItemButton onClick={viewController.onLogOutClick}>
                         <ListItemIcon>
                             <LogoutIcon/>

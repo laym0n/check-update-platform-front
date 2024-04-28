@@ -11,6 +11,8 @@ import initialize from "src/logic/Config/Config";
 import {PluginPage} from "src/pages/plugin";
 import WebResourcePage from "src/pages/webresources/WebResourcePage";
 import PluginCreatePage from "src/pages/plugin_create/PluginCreatePage";
+import OwnPluginsPage from "src/pages/own_plugins/OwnPluginsPage";
+import TaskCreatePage from "src/pages/task_create/TaskCreatePage";
 
 initialize();
 
@@ -23,6 +25,8 @@ function App() {
                     <Route path="/" element={<SearchPage/>}/>
                     <Route path="/plugin/:id" element={<PluginPage/>}/>
                     <Route path="/plugin" element={<PluginCreatePage/>}/>
+                    <Route path="/plugin/own" element={<OwnPluginsPage/>}/>
+                    <Route path="/plugin/own/:pluginId" element={<TaskCreatePage/>}/>
                     <Route path="/webresource" element={<WebResourcePage/>}/>
                     <Route path="/sign-in" element={<SignInPage/>}/>
                     <Route path="/sign-up" element={<SignUpPage/>}/>

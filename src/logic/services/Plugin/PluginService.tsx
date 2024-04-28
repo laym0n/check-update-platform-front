@@ -6,6 +6,8 @@ export interface PluginService {
     getCurrentUserPlugins(request: GetPluginsRequestDto): Promise<GetPluginsResponseDto>
 
     create(request: AddPluginRequestDto): Promise<AddPluginResponseDto>
+
+    getOwnPlugins(request: GetPluginsRequestDto): Promise<GetPluginsResponseDto>
 }
 
 export type GetPluginsRequestDto = {

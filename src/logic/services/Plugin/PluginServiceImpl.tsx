@@ -24,4 +24,10 @@ export class PluginServiceImpl implements PluginService {
         return authenticationService.refreshAuthorize()
             .then(() => PluginClient.createPlugin(request));
     }
+
+    getOwnPlugins(request: GetPluginsRequestDto): Promise<GetPluginsResponseDto> {
+        const authenticationService = diContainer.get<AuthenticationService>(TYPES.AuthenticationService);
+        return authenticationService.refreshAuthorize()
+            .then(() => PluginClient.getOwnPlugins(request.ids, request.filtersName, request.filtersTag));
+    }
 }

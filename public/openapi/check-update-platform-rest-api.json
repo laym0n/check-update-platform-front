@@ -482,6 +482,107 @@
         }
       }
     },
+    "/tasks": {
+      "get": {
+        "tags": [
+          "Task"
+        ],
+        "operationId": "getTasks",
+        "parameters": [
+          {
+            "name": "filters.ids",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "filters.pluginIds",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTasksResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/plugin/own": {
+      "get": {
+        "tags": [
+          "Plugin"
+        ],
+        "operationId": "getOwnPlugins",
+        "parameters": [
+          {
+            "name": "filters.ids",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "filters.name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filters.tags",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetPluginsResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/plugin/my": {
       "get": {
         "tags": [
@@ -684,9 +785,25 @@
           }
         }
       },
-      "PluginDto": {
+      "PluginDescriptionTaskDto": {
+        "type": "object",
+        "properties": {
+          "specificDescription": {
+            "$ref": "#/components/schemas/PluginSpecificDescriptionTaskDto"
+          },
+          "logoPath": {
+            "type": "string"
+          },
+          "distributionMethods": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DistributionMethodDto"
+            }
+          }
+        }
+      },
+      "PluginInfoDto": {
         "required": [
-          "baseUrl",
           "description",
           "id",
           "name"
@@ -698,9 +815,6 @@
             "format": "uuid"
           },
           "name": {
-            "type": "string"
-          },
-          "baseUrl": {
             "type": "string"
           },
           "description": {
@@ -728,6 +842,41 @@
           }
         }
       },
+      "PluginSpecificDescriptionTaskDto": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "imagePaths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagInfoDto"
+            }
+          }
+        }
+      },
+      "TagInfoDto": {
+        "required": [
+          "isNew",
+          "tag"
+        ],
+        "type": "object",
+        "properties": {
+          "tag": {
+            "type": "string"
+          },
+          "isNew": {
+            "type": "boolean"
+          }
+        }
+      },
       "TaskDto": {
         "required": [
           "decision",
@@ -742,7 +891,7 @@
             "format": "uuid"
           },
           "description": {
-            "$ref": "#/components/schemas/PluginDescriptionDto"
+            "$ref": "#/components/schemas/PluginDescriptionTaskDto"
           },
           "decision": {
             "type": "string",
@@ -755,7 +904,7 @@
             "type": "string"
           },
           "plugin": {
-            "$ref": "#/components/schemas/PluginDto"
+            "$ref": "#/components/schemas/PluginInfoDto"
           }
         }
       },
@@ -833,6 +982,30 @@
           },
           "accessToken": {
             "type": "string"
+          }
+        }
+      },
+      "PluginDto": {
+        "required": [
+          "baseUrl",
+          "description",
+          "id",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "baseUrl": {
+            "type": "string"
+          },
+          "description": {
+            "$ref": "#/components/schemas/PluginDescriptionDto"
           }
         }
       },
@@ -1020,6 +1193,20 @@
           }
         }
       },
+      "GetTasksResponseDto": {
+        "required": [
+          "tasks"
+        ],
+        "type": "object",
+        "properties": {
+          "tasks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TaskDto"
+            }
+          }
+        }
+      },
       "GetPluginsResponseDto": {
         "required": [
           "plugins"
@@ -1031,26 +1218,6 @@
             "items": {
               "$ref": "#/components/schemas/PluginInfoDto"
             }
-          }
-        }
-      },
-      "PluginInfoDto": {
-        "required": [
-          "description",
-          "id",
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "$ref": "#/components/schemas/PluginDescriptionDto"
           }
         }
       },
