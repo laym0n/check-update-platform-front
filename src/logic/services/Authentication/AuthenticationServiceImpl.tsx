@@ -5,6 +5,7 @@ import {
     CancelablePromise,
     OpenAPI,
     UserClient,
+    UserInfoDto,
     UserRegistrationRequestDto
 } from "src/api/generated";
 import {AuthenticationService} from "./AuthenticationService";
@@ -88,6 +89,11 @@ export class AuthenticationServiceImpl implements AuthenticationService {
         return new Promise(() => {
             throw new NotAuthorizedError("Refresh token is expired");
         })
+    }
+
+    getUser(): UserInfoDto {
+        const savedAuthenticateResponse = AuthenticationServiceImpl.getSavedAuthenticateResponse();
+        return savedAuthenticateResponse?.authenticationResponse.user!;
     }
 
     private saveAuthenticateResponse(rememberMe: boolean) {

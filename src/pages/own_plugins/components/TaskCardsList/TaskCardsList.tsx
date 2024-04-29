@@ -1,7 +1,8 @@
 import React from "react";
 import {Button, Stack} from "@mui/material";
-import {TaskCard, TaskCardsListProps} from "src/pages/own_plugins/components";
+import {TaskCardsListProps} from "src/pages/own_plugins/components";
 import useTaskCardsListViewController from "src/pages/own_plugins/components/TaskCardsList/TaskCardsListViewController";
+import {TaskCard} from "src/shared/components/TaskCard";
 
 
 export const TaskCardsList = (props: TaskCardsListProps) => {

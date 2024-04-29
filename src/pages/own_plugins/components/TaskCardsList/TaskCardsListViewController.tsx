@@ -1,7 +1,7 @@
 import {useCallback, useEffect, useState} from "react";
 import {diContainer, TYPES} from "src/logic/Config";
-import {TaskCardProps} from "src/pages/own_plugins/components";
 import {TaskService} from "src/logic/services/Task";
+import {TaskCardProps} from "src/shared/components/TaskCard";
 
 export type TaskCardsListViewController = {
     cardProps: TaskCardProps[],

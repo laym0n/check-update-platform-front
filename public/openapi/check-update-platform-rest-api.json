@@ -882,7 +882,8 @@
           "decision",
           "description",
           "id",
-          "plugin"
+          "plugin",
+          "type"
         ],
         "type": "object",
         "properties": {
@@ -898,6 +899,14 @@
             "enum": [
               "APPROVE",
               "REJECT"
+            ]
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "INITIALIZE",
+              "UPDATE",
+              "DELETE"
             ]
           },
           "comment": {

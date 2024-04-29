@@ -1,4 +1,4 @@
-import {AuthenticationRequest, CancelablePromise, UserRegistrationRequestDto} from "src/api/generated";
+import {AuthenticationRequest, CancelablePromise, UserInfoDto, UserRegistrationRequestDto} from "src/api/generated";
 
 export interface AuthenticationService {
     userAuthenticated(): boolean;
@@ -14,4 +14,6 @@ export interface AuthenticationService {
     logOut(): void;
 
     initialize(): void;
+
+    getUser(): UserInfoDto;
 }

@@ -1,4 +1,4 @@
-import {GetTasksRequestDto, TaskService} from "./TaskService";
+import {GetTasksDto, MakeDecisionDto, TaskService} from "./TaskService";
 import {injectable} from "inversify";
 import {CreateTaskRequestDto, GetTasksResponseDto, TaskClient, TaskDto} from "src/api/generated";
 import {diContainer, TYPES} from "src/logic/Config";
@@ -13,9 +13,15 @@ export class TaskServiceImpl implements TaskService {
             .then(() => TaskClient.createTask(request));
     }
 
-    get(request: GetTasksRequestDto): Promise<GetTasksResponseDto> {
+    get(dto: GetTasksDto): Promise<GetTasksResponseDto> {
         const authenticationService = diContainer.get<AuthenticationService>(TYPES.AuthenticationService);
         return authenticationService.refreshAuthorize()
-            .then(() => TaskClient.getTasks(request.ids, request.pluginIds));
+            .then(() => TaskClient.getTasks(dto.ids, dto.pluginIds));
+    }
+
+    makeDecision(dto: MakeDecisionDto): Promise<TaskDto> {
+        const authenticationService = diContainer.get<AuthenticationService>(TYPES.AuthenticationService);
+        return authenticationService.refreshAuthorize()
+            .then(() => TaskClient.makeDecision(dto.taskId, dto.request));
     }
 }
