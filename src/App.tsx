@@ -14,6 +14,7 @@ import PluginCreatePage from "src/pages/plugin_create/PluginCreatePage";
 import OwnPluginsPage from "src/pages/own_plugins/OwnPluginsPage";
 import TaskCreatePage from "src/pages/task_create/TaskCreatePage";
 import TasksPage from "src/pages/tasks/TasksPage";
+import TaskOverviewPage from "src/pages/task_overview/TaskOverviewPage";
 
 initialize();
 
@@ -25,6 +26,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<SearchPage/>}/>
                     <Route path="/tasks" element={<TasksPage/>}/>
+                    <Route path="/task/:id/overview" element={<TaskOverviewPage/>}/>
                     <Route path="/plugin/:id" element={<PluginPage/>}/>
                     <Route path="/plugin" element={<PluginCreatePage/>}/>
                     <Route path="/plugin/own" element={<OwnPluginsPage/>}/>

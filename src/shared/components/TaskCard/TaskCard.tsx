@@ -20,15 +20,13 @@ export const TaskCard = (props: TaskCardProps) => {
             </CardContent>
             <CardActions>
                 <Button variant="contained"
-                        onClick={viewController.onApprove}>Посмотреть</Button>
+                        target="_blank"
+                        href={`/task/${props.taskDto.id}/overview`}>Посмотреть</Button>
             </CardActions>
             <CardActions sx={{display: viewController.isNeedToShowButtons ? "block" : "none"}}>
                 <Button color="success"
                         variant="contained"
-                        onClick={viewController.onApprove}>Approve</Button>
-                <Button color="error"
-                        variant="contained"
-                        onClick={viewController.onReject}>Reject</Button>
+                        onClick={viewController.onMakeDecisionClick}>Make decision</Button>
             </CardActions>
         </Card>
     );
