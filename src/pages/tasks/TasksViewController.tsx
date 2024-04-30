@@ -6,6 +6,7 @@ import {MakeDecisionDialogProps} from "src/shared/components/make_decision_dialo
 import {TaskDto} from "src/api/generated";
 
 export type TasksViewController = {
+    selectedTaskDto: TaskDto | null;
     makeDecisionDialogProps: MakeDecisionDialogProps;
     taskCardProps: TaskCardProps[],
     onSwitchSelectedTask: (event: React.MouseEvent<HTMLButtonElement>, id: string) => void;
@@ -13,13 +14,21 @@ export type TasksViewController = {
 
 const useTasksViewController: () => TasksViewController = () => {
     const [taskCardProps, setTaskCardProps] = useState([] as TaskCardProps[])
-    const [selectedTaskId, setSelectedTaskId] = useState('');
+    const [selectedTaskDto, setSelectedTaskDto] = useState<TaskDto | null>(null);
     const [isOpenDialog, setIsOpenDialog] = useState(false)
 
-    const handleOnMakeDecisionClick: (taskDto: TaskDto) => void = useCallback((taskDto) => {
-        setSelectedTaskId(taskDto.id)
-        setIsOpenDialog(true)
+    const loadAndSetSelectedTaskDto = useCallback((id: string) => {
+        let taskService = diContainer.get<TaskService>(TYPES.TaskService);
+        taskService.get({ids: [id]})
+            .then(response => {
+                setSelectedTaskDto(response.tasks[0])
+            })
     }, []);
+
+    const handleOnMakeDecisionClick: (taskDto: TaskDto) => void = useCallback((taskDto) => {
+        loadAndSetSelectedTaskDto(taskDto.id)
+        setIsOpenDialog(true)
+    }, [loadAndSetSelectedTaskDto]);
     
     useEffect(() => {
         let taskService = diContainer.get<TaskService>(TYPES.TaskService);
@@ -33,18 +42,18 @@ const useTasksViewController: () => TasksViewController = () => {
                     } as TaskCardProps;
                 });
                 setTaskCardProps(newTaskCardProps)
-                setSelectedTaskId(response.tasks[0].id)
+                setSelectedTaskDto(response.tasks[0])
             });
     }, [handleOnMakeDecisionClick]);
     let onSwitchSelectedTask: (event: React.MouseEvent<HTMLButtonElement>, id: string) => void = useCallback((event, value) => {
-        setSelectedTaskId(value)
-    }, []);
+        loadAndSetSelectedTaskDto(value)
+    }, [loadAndSetSelectedTaskDto]);
     const handleCloseDialog = useCallback(() => {
         setIsOpenDialog(false);
     }, []);
     const getTaskId: () => string = useCallback(() => {
-        return selectedTaskId
-    }, [selectedTaskId]);
+        return selectedTaskDto?.id || ''
+    }, [selectedTaskDto]);
     const handleMakeDecisionCallback: (value: TaskDto) => (PromiseLike<TaskDto> | TaskDto) = useCallback((taskDto) => {
         let newTaskCardProps = [...taskCardProps];
         const index = newTaskCardProps.findIndex((taskCardProps) => {
@@ -63,6 +72,7 @@ const useTasksViewController: () => TasksViewController = () => {
     return {
         taskCardProps: taskCardProps,
         onSwitchSelectedTask: onSwitchSelectedTask,
+        selectedTaskDto: selectedTaskDto,
         makeDecisionDialogProps: {
             isOpenDialog: isOpenDialog,
             getTaskId: getTaskId,

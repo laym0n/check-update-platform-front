@@ -1,10 +1,12 @@
 import * as React from 'react';
 import {Layout} from "src/pages/layout";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import useTaskCreateViewController from "src/pages/task_create/TaskCreateViewController";
+import TextField from "@mui/material/TextField";
+import TagsAutocomplete from "src/pages/task_create/components/TagsAutocomplete/TagsAutocomplete";
+import DistributionMethodsField
+    from "src/pages/task_create/components/DistributionMethodsField/DistributionMethodsField";
 
 
 export default function TaskCreatePage() {
@@ -21,34 +23,33 @@ function TaskCreatePageContent() {
     return (
         <>
             <Box component="form" noValidate onSubmit={viewController.onClickCreate} sx={{mt: 3}}>
-                <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                        <TextField
-                            required
-                            fullWidth
-                            id="name"
-                            label="name"
-                            name="name"
-                            // onChange={viewController.onNameChange}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            required
-                            fullWidth
-                            id="base-url"
-                            label="base-url"
-                            name="base-url"
-                            // onChange={viewController.onBaseUrlChange}
-                        />
-                    </Grid>
-                </Grid>
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    defaultValue={viewController.description}
+                    onChange={viewController.onChangeDescription}
+                    name="description"
+                    label="description"
+                    id="description"
+                />
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    defaultValue={viewController.logoPath}
+                    onChange={viewController.onChangeLogoPath}
+                    name="logoPath"
+                    label="logoPath"
+                    id="logoPath"
+                />
+                <TagsAutocomplete {...viewController.tagsAutocompleteProps}/>
+                <DistributionMethodsField {...viewController.distributionMethodsField}/>
                 <Button
                     type="submit"
                     fullWidth
                     variant="contained"
-                    sx={{mt: 3, mb: 2}}
-                >
+                    sx={{mt: 3, mb: 2}}>
                     Create
                 </Button>
             </Box>
