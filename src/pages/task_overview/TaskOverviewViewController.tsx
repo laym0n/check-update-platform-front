@@ -5,6 +5,7 @@ import {diContainer, TYPES} from "src/logic/Config";
 import {TaskService} from "src/logic/services/Task";
 import {MakeDecisionDialogProps} from "src/shared/components/make_decision_dialog/MakeDecisionDialogViewController";
 import {TaskDto} from "src/api/generated";
+import useNavigateOnLogOut from "src/shared/hooks/useNavigateOnLogOut";
 
 export type TaskOverviewViewController = {
     makeDecisionDialogProps: MakeDecisionDialogProps;
@@ -22,6 +23,7 @@ const useTaskOverviewViewController: () => TaskOverviewViewController = () => {
     const [pluginDescriptionProps, setPluginDescriptionProps] = useState({} as PluginDescriptionProps)
     const pathVariables = useParams<TaskOverviewPathVariables>();
     const navigate = useNavigate();
+    useNavigateOnLogOut('/');
 
     useEffect(() => {
         let taskService = diContainer.get<TaskService>(TYPES.TaskService);

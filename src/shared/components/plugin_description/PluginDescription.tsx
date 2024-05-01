@@ -24,8 +24,8 @@ export function PluginDescription(props: PluginDescriptionProps) {
         borderColor: 'primary'
     };
     return (
-        <Stack>
-            <Grid container spacing={3}>
+        <Stack width='100%'>
+            <Grid container>
                 <Grid item
                       xs={6}
                       sx={{
@@ -62,7 +62,7 @@ export function PluginDescription(props: PluginDescriptionProps) {
                         </ImageList>
                     </Stack>
                 </Grid>
-                <Grid item xs={6} padding={2}>
+                <Grid item xs={6}>
                     <Stack alignItems="center" justifyContent="center" height="100%">
                         <Stack alignItems="center">
                             <Avatar alt="logo"
@@ -75,7 +75,7 @@ export function PluginDescription(props: PluginDescriptionProps) {
                                 {viewController.name}
                             </Typography>
                         </Stack>
-                        <Stack direction="row">
+                        <Stack direction="column" spacing={2}>
                             <Autocomplete
                                 onChange={viewController.onChangeDistributionMethod}
                                 disablePortal
@@ -83,7 +83,7 @@ export function PluginDescription(props: PluginDescriptionProps) {
                                 defaultValue={viewController.selectedMethod}
                                 sx={{width: 300}}
                                 autoSelect
-                                renderInput={(params) => <TextField {...params} label="Movie"/>}
+                                renderInput={(params) => <TextField {...params} label="Distribution"/>}
                             />
                             <Tooltip title={viewController.buyButtonToolTipTitle} arrow>
                                 <>
@@ -92,7 +92,7 @@ export function PluginDescription(props: PluginDescriptionProps) {
                                             style={{marginBottom: 10}}
                                             onClick={viewController.onBuyButtonClick}
                                             disabled={viewController.disableBuyButton}>
-                                        Купить
+                                        BUY
                                     </Button>
                                 </>
                             </Tooltip>

@@ -11,6 +11,7 @@ import {
 import {
     TextFieldWithInitProps
 } from "src/pages/task_create/components/TextFieldWithInit/TextFieldWithInitViewController";
+import useNavigateOnLogOut from "src/shared/hooks/useNavigateOnLogOut";
 
 export type TaskCreateViewController = {
     propsForDescription: TextFieldWithInitProps;
@@ -36,6 +37,7 @@ const useTaskCreateViewController: () => TaskCreateViewController = () => {
     const selectedTags = useRef([] as string[]);
     const selectedMethods = useRef([] as DistributionMethodDto[]);
     const [loadedTags, setLoadedTags] = useState([] as string[])
+    useNavigateOnLogOut('/');
     useEffect(() => {
         const tagService = diContainer.get<TagService>(TYPES.TagService);
         tagService.getTags()

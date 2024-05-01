@@ -2,6 +2,7 @@ import React, {useCallback, useRef} from 'react';
 import {diContainer, TYPES} from "src/logic/Config";
 import {PluginService} from "src/logic/services/Plugin";
 import {AddPluginRequestDto} from "src/api/generated";
+import useNavigateOnLogOut from "src/shared/hooks/useNavigateOnLogOut";
 
 export type PluginCreateViewController = {
     onNameChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
@@ -12,6 +13,7 @@ export type PluginCreateViewController = {
 const usePluginCreateViewController: () => PluginCreateViewController = () => {
     const name = useRef('');
     const baseUrl = useRef('');
+    useNavigateOnLogOut('/');
 
     let onClickCreate: (event: React.FormEvent<HTMLFormElement>) => void = useCallback((event) => {
         const pluginService = diContainer.get<PluginService>(TYPES.PluginService);

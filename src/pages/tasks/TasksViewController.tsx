@@ -4,6 +4,7 @@ import {TaskCardProps} from "src/shared/components/TaskCard";
 import {TaskService} from "src/logic/services/Task";
 import {MakeDecisionDialogProps} from "src/shared/components/make_decision_dialog/MakeDecisionDialogViewController";
 import {TaskDto} from "src/api/generated";
+import useNavigateOnLogOut from "src/shared/hooks/useNavigateOnLogOut";
 
 export type TasksViewController = {
     selectedTaskDto: TaskDto | null;
@@ -16,6 +17,7 @@ const useTasksViewController: () => TasksViewController = () => {
     const [taskCardProps, setTaskCardProps] = useState([] as TaskCardProps[])
     const [selectedTaskDto, setSelectedTaskDto] = useState<TaskDto | null>(null);
     const [isOpenDialog, setIsOpenDialog] = useState(false)
+    useNavigateOnLogOut('/');
 
     const loadAndSetSelectedTaskDto = useCallback((id: string) => {
         let taskService = diContainer.get<TaskService>(TYPES.TaskService);

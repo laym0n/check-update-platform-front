@@ -3,6 +3,7 @@ import {diContainer, TYPES} from "src/logic/Config";
 import {PluginInfoDto} from "src/api/generated";
 import {PluginService} from "src/logic/services/Plugin";
 import {WebResourceCardsListProps} from "src/pages/webresources/components/WebResourceCardsList";
+import useNavigateOnLogOut from "src/shared/hooks/useNavigateOnLogOut";
 
 export type WebResourceViewController = {
     plugins: PluginInfoDto[],
@@ -13,6 +14,7 @@ export type WebResourceViewController = {
 const useWebResourceViewController: () => WebResourceViewController = () => {
     const [pluginInfoDtos, setPluginInfoDtos] = useState([] as PluginInfoDto[])
     const [webResourceCardsListProps, setWebResourceCardsListProps] = useState({} as WebResourceCardsListProps);
+    useNavigateOnLogOut('/');
 
     useEffect(() => {
         let pluginService = diContainer.get<PluginService>(TYPES.PluginService);

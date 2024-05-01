@@ -4,7 +4,6 @@ import {ProfileDrawer} from "src/pages/layout/components/ProfileDrawer";
 import {Box, Divider, Stack, Typography} from "@mui/material";
 import {darkTheme} from "src/shared/theme"
 import Grid from "@mui/material/Grid";
-import MenuIcon from "@mui/icons-material/Menu";
 import {alpha} from '@mui/system';
 import useLayoutViewController from "src/pages/layout/LayoutViewController";
 import {LayoutContextProvider} from "src/pages/layout/LayoutContext";
@@ -32,8 +31,15 @@ function LayoutContent(properties: LayoutProperties) {
               container
               justifyContent="space-between"
               alignItems="center">
-            <Grid>
-                <MenuIcon/>
+            <Grid sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                paddingLeft: 1,
+            }}>
+                <Link href='/' height={25} width={25}>
+                    <img src="/logo.svg" alt="logo"/>
+                </Link>
             </Grid>
             <Grid>
                 <Typography>
@@ -42,7 +48,7 @@ function LayoutContent(properties: LayoutProperties) {
                     </Link>
                 </Typography>
             </Grid>
-            <Grid>
+            <Grid paddingRight={1}>
                 <Stack direction="row" justifyContent="flex-end" spacing={2}>
                     {viewController.isAuthenticated ?
                         <ProfileDrawer onLogOutClick={viewController.profileDrawerHooks.onLogOutClick}/>
@@ -68,7 +74,8 @@ function LayoutContent(properties: LayoutProperties) {
                 <Divider/>
             </Box>
             <Stack sx={{
-                width: "100vw",
+                width: '100%',
+                maxWidth: 1655,
                 padding: 1,
                 mt: darkTheme.spacing(7),
                 mr: "auto",

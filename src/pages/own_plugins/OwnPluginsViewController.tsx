@@ -4,6 +4,7 @@ import {PluginInfoDto} from "src/api/generated";
 import {PluginService} from "src/logic/services/Plugin";
 import {TaskCardsListProps} from "src/pages/own_plugins/components";
 import {useSearchParams} from "react-router-dom";
+import useNavigateOnLogOut from "src/shared/hooks/useNavigateOnLogOut";
 
 export type OwnPluginsViewController = {
     plugins: PluginInfoDto[],
@@ -18,6 +19,7 @@ const useOwnPluginsViewController: () => OwnPluginsViewController = () => {
     const [taskCardsListProps, setTaskCardsListProps] = useState({
         pluginId: pluginId.current,
     } as TaskCardsListProps);
+    useNavigateOnLogOut('/');
 
     useEffect(() => {
         let pluginService = diContainer.get<PluginService>(TYPES.PluginService);
