@@ -10,7 +10,7 @@ export const TaskCardsList = (props: TaskCardsListProps) => {
     console.log("TaskCardsList render")
     return (
         <Stack sx={{margin: 2, width: 300}}>
-            <Button href={`/plugin/own/${props.pluginId}`}>
+            <Button href={`/plugin/own/${props.pluginId}/task`}>
                 Создать задачу
             </Button>
             <Stack>

@@ -30,7 +30,8 @@ function App() {
                     <Route path="/plugin/:id" element={<PluginPage/>}/>
                     <Route path="/plugin" element={<PluginCreatePage/>}/>
                     <Route path="/plugin/own" element={<OwnPluginsPage/>}/>
-                    <Route path="/plugin/own/:pluginId" element={<TaskCreatePage/>}/>
+                    <Route path="/plugin/own/:pluginId/task" element={<TaskCreatePage/>}/>
+                    <Route path="/plugin/own/:pluginId/task/:taskId" element={<TaskCreatePage/>}/>
                     <Route path="/webresource" element={<WebResourcePage/>}/>
                     <Route path="/sign-in" element={<SignInPage/>}/>
                     <Route path="/sign-up" element={<SignUpPage/>}/>

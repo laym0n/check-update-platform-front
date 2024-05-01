@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {CreateTaskRequestDto, DistributionMethodDto} from "src/api/generated";
+import {CreateTaskRequestDto, DistributionMethodDto, TagInfoDto} from "src/api/generated";
 import {diContainer, TYPES} from "src/logic/Config";
 import {TaskService} from "src/logic/services/Task";
 import {useNavigate, useParams} from "react-router-dom";
@@ -8,25 +8,29 @@ import {TagService} from "src/logic/services/Tags";
 import {
     DistributionMethodsFieldProps
 } from "src/pages/task_create/components/DistributionMethodsField/DistributionMethodsFieldViewController";
+import {
+    TextFieldWithInitProps
+} from "src/pages/task_create/components/TextFieldWithInit/TextFieldWithInitViewController";
 
 export type TaskCreateViewController = {
+    propsForDescription: TextFieldWithInitProps;
+    propsForLogoPath: TextFieldWithInitProps;
     distributionMethodsField: DistributionMethodsFieldProps;
     tagsAutocompleteProps: TagsAutocompleteProps;
-    onChangeDescription: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
-    onChangeLogoPath: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
-    description: string;
-    logoPath: string;
     onClickCreate: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
 type TaskCreatePagePathVariables = {
     pluginId: string;
+    taskId?: string;
 };
 
 
 const useTaskCreateViewController: () => TaskCreateViewController = () => {
     const pathVariables = useParams<TaskCreatePagePathVariables>();
     let navigate = useNavigate();
+    const [initDescription, setInitDescription] = useState('')
+    const [initLogoPath, setInitLogoPath] = useState('')
     const description = useRef('');
     const logoPath = useRef('');
     const selectedTags = useRef([] as string[]);
@@ -42,6 +46,7 @@ const useTaskCreateViewController: () => TaskCreateViewController = () => {
 
     let onClickCreate: (event: React.FormEvent<HTMLFormElement>) => void = useCallback((event) => {
         event.preventDefault();
+        console.log(selectedTags.current)
         let request = {
             pluginId: pathVariables.pluginId,
             description: {
@@ -57,40 +62,69 @@ const useTaskCreateViewController: () => TaskCreateViewController = () => {
         const taskService = diContainer.get<TaskService>(TYPES.TaskService);
         taskService.create(request)
             .then(() => {
-                    navigate(`/plugin/own?selectedPluginId=${pathVariables.pluginId}`)
+                // navigate(`/plugin/own?selectedPluginId=${pathVariables.pluginId}`)
                 }
             );
     }, [navigate, pathVariables.pluginId]);
 
-    const onChangeLogoPath: (event: React.ChangeEvent<HTMLTextAreaElement>) => void = useCallback((event) => {
-        logoPath.current = event.target.value
+    const onChangeLogoPath: (value: string) => void = useCallback((value) => {
+        logoPath.current = value;
     }, []);
 
-    const onChangeDescription: (event: React.ChangeEvent<HTMLTextAreaElement>) => void = useCallback((event) => {
-        logoPath.current = event.target.value
+    const onChangeDescription: (value: string) => void = useCallback((value) => {
+        description.current = value;
     }, []);
     const onSelectedTagsChange: (tags: string[]) => void = useCallback((tags) => {
         selectedTags.current = tags
     }, []);
     const onDistributionMethodsChange: (methods: DistributionMethodDto[]) => void = useCallback((methods) => {
         selectedMethods.current = methods
+        console.log(selectedMethods.current)
     }, []);
+
+    const [initSelectedTags, setInitSelectedTags] = useState([] as TagInfoDto[])
+
+    const [distributionMethodsField, setDistributionMethodsField] = useState({
+        distributionMethods: [],
+        onDistributionMethodsChange: onDistributionMethodsChange,
+    } as DistributionMethodsFieldProps)
+
+    useEffect(() => {
+        if (!pathVariables.taskId) {
+            return
+        }
+        const taskService = diContainer.get<TaskService>(TYPES.TaskService);
+        taskService.get({ids: [pathVariables.taskId]})
+            .then(response => {
+                const taskDto = response.tasks[0];
+                setDistributionMethodsField({
+                    distributionMethods: taskDto.description.distributionMethods,
+                    onDistributionMethodsChange: onDistributionMethodsChange,
+                })
+                setInitSelectedTags(taskDto.description.specificDescription?.tags || [])
+                setInitLogoPath(taskDto.description.logoPath || '')
+                setInitDescription(taskDto.description.specificDescription?.description || '')
+            })
+    }, [onDistributionMethodsChange, onSelectedTagsChange, pathVariables.taskId]);
 
     return {
         onClickCreate: onClickCreate,
         tagsAutocompleteProps: {
             tags: loadedTags,
-            selectedTags: [],
+            selectedTags: initSelectedTags,
             onSelectedTagsChange: onSelectedTagsChange,
         },
-        distributionMethodsField: {
-            distributionMethods: [],
-            onDistributionMethodsChange: onDistributionMethodsChange,
+        distributionMethodsField: distributionMethodsField,
+        propsForLogoPath: {
+            initValue: initLogoPath,
+            onValueChange: onChangeLogoPath,
+            placeholder: 'logoPath',
         },
-        description: description.current,
-        logoPath: logoPath.current,
-        onChangeLogoPath: onChangeLogoPath,
-        onChangeDescription: onChangeDescription,
+        propsForDescription: {
+            initValue: initDescription,
+            onValueChange: onChangeDescription,
+            placeholder: 'description',
+        },
     } as TaskCreateViewController;
 }
 

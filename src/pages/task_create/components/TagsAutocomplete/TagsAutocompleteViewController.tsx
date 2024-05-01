@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {TagInfoDto} from "src/api/generated";
 
 export type TagsAutocompleteViewController = {
@@ -24,10 +24,15 @@ const useTagsAutocompleteViewController: (props: TagsAutocompleteProps) => TagsA
         })
     }, [props.tags]);
 
-    const [selectedTags, setSelectedTags] = useState((props.selectedTags || []) as TagInfoDto[])
+    const [selectedTags, setSelectedTags] = useState([] as TagInfoDto[])
+    useEffect(() => {
+        setSelectedTags(props.selectedTags || [])
+        props.onSelectedTagsChange(props.selectedTags?.map(tag => tag.tag) || [])
+    }, [props, props.selectedTags]);
 
 
     let onTagAutocompleteChange: (event: React.SyntheticEvent, value: (TagInfoDto | string)[]) => void = useCallback((event, newSelectedTagsOptions) => {
+        newSelectedTagsOptions.forEach(stag => console.log(stag))
         const newTagInfoDtos = newSelectedTagsOptions.map(tag => {
             if (typeof tag === 'string') {
                 return {

@@ -1,5 +1,5 @@
 import {DistributionMethodDto} from "src/api/generated";
-import {useCallback, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import type = DistributionMethodDto.type;
 
 export type DistributionMethodsFieldViewController = {
@@ -16,7 +16,11 @@ export type DistributionMethodsFieldProps = {
 
 
 const useDistributionMethodsFieldViewController: (props: DistributionMethodsFieldProps) => DistributionMethodsFieldViewController = (props) => {
-    const [methods, setMethods] = useState((props.distributionMethods || []) as DistributionMethodDto[])
+    const [methods, setMethods] = useState([] as DistributionMethodDto[])
+    useEffect(() => {
+        setMethods(props.distributionMethods || [])
+        props.onDistributionMethodsChange(props.distributionMethods || [])
+    }, [props, props.distributionMethods]);
     const onAddClick = useCallback(() => {
         const newMethods = [...methods, {
             cost: 0,
