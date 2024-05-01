@@ -29,7 +29,7 @@ const useTasksViewController: () => TasksViewController = () => {
         loadAndSetSelectedTaskDto(taskDto.id)
         setIsOpenDialog(true)
     }, [loadAndSetSelectedTaskDto]);
-    
+
     useEffect(() => {
         let taskService = diContainer.get<TaskService>(TYPES.TaskService);
         taskService.get({})
@@ -68,7 +68,7 @@ const useTasksViewController: () => TasksViewController = () => {
         setIsOpenDialog(false)
         return taskDto
     }, [handleOnMakeDecisionClick, taskCardProps]);
-    
+
     return {
         taskCardProps: taskCardProps,
         onSwitchSelectedTask: onSwitchSelectedTask,

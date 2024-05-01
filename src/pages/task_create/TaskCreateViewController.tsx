@@ -62,7 +62,7 @@ const useTaskCreateViewController: () => TaskCreateViewController = () => {
         const taskService = diContainer.get<TaskService>(TYPES.TaskService);
         taskService.create(request)
             .then(() => {
-                // navigate(`/plugin/own?selectedPluginId=${pathVariables.pluginId}`)
+                navigate(`/plugin/own?selectedPluginId=${pathVariables.pluginId}`)
                 }
             );
     }, [navigate, pathVariables.pluginId]);
