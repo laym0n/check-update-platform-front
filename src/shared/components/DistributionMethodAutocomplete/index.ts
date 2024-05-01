@@ -1,1 +1,1 @@
-export * from "./DistributionMethodAutocomplete";
+export * from "./DistributionMethodAutocompleteViewController";

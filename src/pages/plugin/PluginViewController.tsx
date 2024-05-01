@@ -2,12 +2,11 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {diContainer, TYPES} from "src/logic/Config";
 import {PluginService} from "src/logic/services/Plugin";
 import {useParams} from "react-router-dom";
-import {DistributionMethodAutocompleteDto} from "src/shared/components/DistributionMethodAutocomplete";
 import {PluginUsageService} from "src/logic/services/PluginUsage";
 import {useLayoutContext} from "src/pages/layout/LayoutContext";
 import NotAuthorizedError from "src/logic/errors/NotAuthorizedError";
 import {PluginDescriptionProps} from "src/shared/components/plugin_description/PluginDescriptionViewController";
-import {TagInfoDto} from "src/api/generated";
+import {DistributionMethodDto, TagInfoDto} from "src/api/generated";
 
 export type PluginViewController = {
     pluginDescriptionProps: PluginDescriptionProps;
@@ -21,13 +20,13 @@ const usePluginViewController: () => PluginViewController = () => {
     const layoutContext = useLayoutContext();
     const [pluginDescriptionProps, setPluginDescriptionProps] = useState<PluginDescriptionProps>({} as PluginDescriptionProps)
     const pluginPagePathVariables = useParams<PluginPagePathVariables>();
-    const selectedMethod = useRef<DistributionMethodAutocompleteDto>();
+    const selectedMethod = useRef<DistributionMethodDto>();
 
     const onBuyButtonClick: React.MouseEventHandler<HTMLButtonElement> = useCallback(() => {
         const pluginUsageService = diContainer.get<PluginUsageService>(TYPES.PluginUsageService);
         pluginUsageService.createPluginUsage({
             pluginId: pluginPagePathVariables.id!,
-            distributionMethod: selectedMethod.current!.distributionMethodDto,
+            distributionMethod: selectedMethod.current!,
         })
             .catch(error => {
                     if (error instanceof NotAuthorizedError) {
@@ -39,7 +38,7 @@ const usePluginViewController: () => PluginViewController = () => {
             );
     }, [layoutContext, pluginPagePathVariables.id])
 
-    const onSelectedMethodChanged = useCallback((newMethod: DistributionMethodAutocompleteDto) => {
+    const onSelectedMethodChanged = useCallback((newMethod: DistributionMethodDto) => {
         selectedMethod.current = newMethod;
     }, []);
 

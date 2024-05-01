@@ -1,19 +1,11 @@
 import React from "react";
-import {
-    Autocomplete,
-    Button,
-    Card,
-    CardActions,
-    CardContent,
-    CardMedia,
-    Stack,
-    Tooltip,
-    Typography
-} from "@mui/material";
+import {Button, Card, CardActions, CardContent, CardMedia, Stack, Tooltip, Typography} from "@mui/material";
 import usePluginCardController, {
     PluginCardProps
 } from "src/pages/search/components/PluginCard/PluginCardViewController";
-import TextField from "@mui/material/TextField";
+import {
+    DistributionMethodAutocomplete
+} from "src/shared/components/DistributionMethodAutocomplete/DistributionMethodAutocomplete";
 
 
 export const PluginCard = (props: PluginCardProps) => {
@@ -31,15 +23,7 @@ export const PluginCard = (props: PluginCardProps) => {
                 <Typography>{viewController.pluginInfo.name}</Typography>
             </CardContent>
             <Stack>
-                <Autocomplete
-                    onChange={viewController.onChangeDistributionMethod}
-                    disablePortal
-                    options={viewController.distributionMethodAutocompleteDtoArray!}
-                    value={viewController.distributionMethodAutocompleteDtoArray![0]}
-                    sx={{width: 300}}
-                    autoSelect
-                    renderInput={(params) => <TextField {...params} label="Distribution"/>}
-                />
+                <DistributionMethodAutocomplete {...viewController.distributionMethodAutocompleteProps}/>
                 <CardActions sx={{display: 'flex', justifyContent: 'space-between'}}>
                     <Button sx={{width: '48%'}}
                             onClick={viewController.onViewButtonClick}

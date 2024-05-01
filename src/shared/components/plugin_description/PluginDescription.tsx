@@ -1,11 +1,13 @@
 import React from "react";
-import {Autocomplete, Button, Chip, ImageList, ImageListItem, Stack, Tooltip, Typography} from "@mui/material";
+import {Button, Chip, ImageList, ImageListItem, Stack, Tooltip, Typography} from "@mui/material";
 import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
 import Avatar from "@mui/material/Avatar";
 import usePluginDescriptionViewController, {
     PluginDescriptionProps
 } from "src/shared/components/plugin_description/PluginDescriptionViewController";
+import {
+    DistributionMethodAutocomplete
+} from "src/shared/components/DistributionMethodAutocomplete/DistributionMethodAutocomplete";
 
 export function PluginDescription(props: PluginDescriptionProps) {
     let viewController = usePluginDescriptionViewController(props)
@@ -76,15 +78,7 @@ export function PluginDescription(props: PluginDescriptionProps) {
                             </Typography>
                         </Stack>
                         <Stack direction="column" spacing={2}>
-                            <Autocomplete
-                                onChange={viewController.onChangeDistributionMethod}
-                                disablePortal
-                                options={viewController.distributionMethodAutocompleteDtoArray!}
-                                defaultValue={viewController.selectedMethod}
-                                sx={{width: 300}}
-                                autoSelect
-                                renderInput={(params) => <TextField {...params} label="Distribution"/>}
-                            />
+                            <DistributionMethodAutocomplete {...viewController.distributionMethodAutocompleteProps}/>
                             <Tooltip title={viewController.buyButtonToolTipTitle} arrow>
                                 <>
                                     <Button variant="contained"
