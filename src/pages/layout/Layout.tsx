@@ -68,7 +68,8 @@ function LayoutContent(properties: LayoutProperties) {
                 <Divider/>
             </Box>
             <Stack sx={{
-                width: 1680,
+                width: "100vw",
+                padding: 1,
                 mt: darkTheme.spacing(7),
                 mr: "auto",
                 ml: "auto",
