@@ -9,6 +9,7 @@ import {useLayoutContext} from "src/pages/layout/LayoutContext";
 import {AuthenticationService} from "src/logic/services/Authentication";
 
 export type SearchViewController = {
+    onApplyFiltersClick: React.MouseEventHandler<HTMLButtonElement>;
     selectedTags: AutocompleteValue<string, true, false, false>;
     onTagAutocompleteChange: (event: React.SyntheticEvent, value: string[]) => void;
     onSearchValueChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
@@ -25,16 +26,18 @@ const useSearchViewController: () => SearchViewController = () => {
     const [tags, setTags] = useState([] as string[])
     const searchValue = useRef(searchParams.get("search") || "");
     const selectedTags = useRef(searchParams.getAll("tags"));
+    const lastSearchString = useRef(searchParams.get("search") || "");
 
     const layoutContext = useLayoutContext();
-    const searchPlugins = useCallback(() => {
+    const searchPlugins = useCallback((searchString: string) => {
         let pluginService = diContainer.get<PluginService>(TYPES.PluginService);
         let searchParams: URLSearchParams = new URLSearchParams();
         (selectedTags.current.length && selectedTags.current.forEach(tag => searchParams.append('tags', tag)));
-        (searchValue.current !== "" && searchParams.set('search', searchValue.current));
+        (searchString !== "" && searchParams.set('search', searchString));
         setSearchParams(searchParams)
+        lastSearchString.current = searchString;
         pluginService.getPlugins({
-            filtersName: searchValue.current,
+            filtersName: searchString,
             filtersTag: selectedTags.current
         })
             .then(response => {
@@ -51,7 +54,7 @@ const useSearchViewController: () => SearchViewController = () => {
     }, [setSearchParams, layoutContext]);
 
     useEffect(() => {
-        searchPlugins();
+        searchPlugins(searchValue.current);
     }, [searchPlugins]);
 
     useEffect(() => {
@@ -63,7 +66,7 @@ const useSearchViewController: () => SearchViewController = () => {
     }, []);
     let onSearchValueSubmit: React.FormEventHandler<HTMLDivElement> = useCallback((event) => {
         event.preventDefault();
-        searchPlugins()
+        searchPlugins(searchValue.current)
     }, [searchPlugins])
     let onSearchValueChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void = useCallback((event) => {
         searchValue.current = event.target.value
@@ -71,7 +74,11 @@ const useSearchViewController: () => SearchViewController = () => {
     let onTagAutocompleteChange: (event: React.SyntheticEvent, value: string[]) => void = useCallback((event, value) => {
         selectedTags.current = value;
     }, []);
+    let onApplyFiltersClick: React.MouseEventHandler<HTMLButtonElement> = useCallback((event) => {
+        searchPlugins(lastSearchString.current);
+    }, [searchPlugins]);
     return {
+        onApplyFiltersClick: onApplyFiltersClick,
         pluginCardProps: pluginCardProps,
         searchValue: searchValue.current,
         onSearchValueSubmit: onSearchValueSubmit,

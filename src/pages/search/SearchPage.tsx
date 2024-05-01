@@ -1,7 +1,7 @@
 import React from "react";
 
 import {SearchBar} from "src/shared/components/SearchBar";
-import {Autocomplete, Chip, Paper, Stack, Typography} from "@mui/material";
+import {Autocomplete, Button, Chip, Paper, Stack, Typography} from "@mui/material";
 import {PluginCard} from "src/pages/search/components";
 import useSearchViewController from "src/pages/search/SearchViewController";
 import {Layout} from "src/pages/layout";
@@ -25,7 +25,7 @@ export function SearchPageContent() {
         }}>
             <SearchBar
                 width={400}
-                placeholder="Search Google Maps"
+                placeholder="Search plugins"
                 searchValue={viewController.searchValue}
                 onSubmit={viewController.onSearchValueSubmit}
                 onSearchValueChange={viewController.onSearchValueChange}
@@ -39,8 +39,10 @@ export function SearchPageContent() {
                         alignItems: "center",
                         flexDirection: "column"
                     }}>
-                        <Typography variant="h6" gutterBottom>
-                            Фильтры
+                        <Typography variant="h6"
+                                    gutterBottom
+                                    margin={2}>
+                            FILTERS
                         </Typography>
                         <Autocomplete
                             multiple
@@ -66,6 +68,12 @@ export function SearchPageContent() {
                                 ))
                             }
                         />
+                        <Button sx={{
+                            margin: 1,
+                        }}
+                                onClick={viewController.onApplyFiltersClick}>
+                            APPLY
+                        </Button>
                     </Paper>
                 </Grid>
                 <Grid item md={22}>
