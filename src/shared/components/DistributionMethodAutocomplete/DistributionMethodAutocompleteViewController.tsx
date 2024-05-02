@@ -43,8 +43,9 @@ const useDistributionMethodAutocompleteViewController: (props: DistributionMetho
         setDistributionMethods(newMethodAutocompletes)
         if (newMethodAutocompletes && newMethodAutocompletes.length) {
             setSelectedValue(newMethodAutocompletes[0])
+            props.onChangeDistributionMethod(newMethodAutocompletes[0].distributionMethodDto)
         }
-    }, [props.distributionMethods]);
+    }, [props]);
 
     const onChangeDistributionMethod: (event: React.SyntheticEvent, value: DistributionMethodAutocompleteDto | null) => void = useCallback((event, newSelectedValue) => {
         if (!newSelectedValue) {

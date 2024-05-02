@@ -1,11 +1,12 @@
 import React from "react";
-import {Button, Card, CardActions, CardContent, CardMedia, Stack, Tooltip, Typography} from "@mui/material";
+import {Button, Card, CardActions, CardContent, CardMedia, Stack, Typography} from "@mui/material";
 import usePluginCardController, {
     PluginCardProps
 } from "src/pages/search/components/PluginCard/PluginCardViewController";
 import {
     DistributionMethodAutocomplete
 } from "src/shared/components/DistributionMethodAutocomplete/DistributionMethodAutocomplete";
+import {BuyButton} from "src/shared/components/BuyButton/BuyButton";
 
 
 export const PluginCard = (props: PluginCardProps) => {
@@ -26,17 +27,9 @@ export const PluginCard = (props: PluginCardProps) => {
                 <DistributionMethodAutocomplete {...viewController.distributionMethodAutocompleteProps}/>
                 <CardActions sx={{display: 'flex', justifyContent: 'space-between'}}>
                     <Button sx={{width: '48%'}}
-                            onClick={viewController.onViewButtonClick}
                             variant="contained"
                             href={viewController.viewPageHref}>VIEW</Button>
-                    <Tooltip title={viewController.buyButtonToolTipTitle} arrow>
-                        <span style={{width: '48%'}}>
-                            <Button sx={{width: '100%'}}
-                                    onClick={viewController.onBuyButtonClick}
-                                    variant="contained"
-                                    disabled={viewController.disableBuyButton}>BUY</Button>
-                        </span>
-                    </Tooltip>
+                    <BuyButton {...viewController.buyButtonProps} width='48%'/>
                 </CardActions>
             </Stack>
         </Card>

@@ -7,11 +7,14 @@ import useSearchViewController from "src/pages/search/SearchViewController";
 import {Layout} from "src/pages/layout";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
+import {SnackbarProvider} from "notistack";
 
 export function SearchPage() {
     return (
         <Layout>
-            <SearchPageContent/>
+            <SnackbarProvider maxSnack={5}>
+                <SearchPageContent/>
+            </SnackbarProvider>
         </Layout>
     );
 }

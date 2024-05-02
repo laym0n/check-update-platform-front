@@ -42,6 +42,14 @@ const usePluginViewController: () => PluginViewController = () => {
         selectedMethod.current = newMethod;
     }, []);
 
+    const getPluginId = useCallback(() => {
+        return pluginPagePathVariables.id;
+    }, [pluginPagePathVariables.id]);
+
+    const getDistributionMethod = useCallback(() => {
+        return selectedMethod.current
+    }, []);
+
     useEffect(() => {
         let pluginService = diContainer.get<PluginService>(TYPES.PluginService);
         pluginService.getPlugins({
@@ -62,8 +70,12 @@ const usePluginViewController: () => PluginViewController = () => {
                     imagePaths: pluginInfoDto.description.specificDescription?.imagePaths,
                     description: pluginInfoDto.description.specificDescription?.description,
                     distributionMethods: pluginInfoDto.description.distributionMethods,
-                    onBuyButtonClick: onBuyButtonClick,
                     onSelectedMethodChanged: onSelectedMethodChanged,
+                    buyButtonProps: {
+                        getPluginId: getPluginId,
+                        isDisabled: false,
+                        getDistributionMethod: getDistributionMethod,
+                    },
                 } as PluginDescriptionProps)
             });
     }, [onBuyButtonClick, onSelectedMethodChanged, pluginPagePathVariables.id]);

@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Chip, ImageList, ImageListItem, Stack, Tooltip, Typography} from "@mui/material";
+import {Chip, ImageList, ImageListItem, Stack, Typography} from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
 import usePluginDescriptionViewController, {
@@ -8,6 +8,7 @@ import usePluginDescriptionViewController, {
 import {
     DistributionMethodAutocomplete
 } from "src/shared/components/DistributionMethodAutocomplete/DistributionMethodAutocomplete";
+import {BuyButton} from "src/shared/components/BuyButton/BuyButton";
 
 export function PluginDescription(props: PluginDescriptionProps) {
     let viewController = usePluginDescriptionViewController(props)
@@ -79,17 +80,7 @@ export function PluginDescription(props: PluginDescriptionProps) {
                         </Stack>
                         <Stack direction="column" spacing={2}>
                             <DistributionMethodAutocomplete {...viewController.distributionMethodAutocompleteProps}/>
-                            <Tooltip title={viewController.buyButtonToolTipTitle} arrow>
-                                <>
-                                    <Button variant="contained"
-                                            color="primary"
-                                            style={{marginBottom: 10}}
-                                            onClick={viewController.onBuyButtonClick}
-                                            disabled={viewController.disableBuyButton}>
-                                        BUY
-                                    </Button>
-                                </>
-                            </Tooltip>
+                            <BuyButton {...viewController.buyButtonProps}/>
                         </Stack>
                     </Stack>
                 </Grid>

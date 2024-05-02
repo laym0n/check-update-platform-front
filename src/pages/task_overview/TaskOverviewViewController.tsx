@@ -39,6 +39,9 @@ const useTaskOverviewViewController: () => TaskOverviewViewController = () => {
                     imagePaths: taskDto.description.specificDescription?.imagePaths,
                     description: taskDto.description.specificDescription?.description,
                     distributionMethods: taskDto.description.distributionMethods,
+                    buyButtonProps: {
+                        isDisabled: true,
+                    }
                 } as PluginDescriptionProps)
             });
     }, [pathVariables.id]);
