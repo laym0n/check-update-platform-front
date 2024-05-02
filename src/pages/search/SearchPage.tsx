@@ -44,36 +44,43 @@ export function SearchPageContent() {
                                     margin={2}>
                             FILTERS
                         </Typography>
-                        <Autocomplete
-                            multiple
-                            id="tags-outlined"
-                            fullWidth
-                            options={viewController.tags}
-                            getOptionLabel={(option) => option}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    variant="outlined"
-                                    placeholder="Выберите теги"
-                                />
-                            )}
-                            defaultValue={viewController.selectedTags}
-                            onChange={viewController.onTagAutocompleteChange}
-                            renderTags={(value, getTagProps) =>
-                                value.map((option, index) => (
-                                    <Chip
-                                        label={option}
-                                        {...getTagProps({index})}
+                        <Stack direction="column"
+                               width='100%'
+                               padding={2}
+                               spacing={2}>
+                            <Autocomplete
+                                multiple
+                                id="tags-outlined"
+                                fullWidth
+                                options={viewController.tags}
+                                getOptionLabel={(option) => option}
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        variant="outlined"
+                                        placeholder="Выберите теги"
                                     />
-                                ))
-                            }
-                        />
-                        <Button sx={{
-                            margin: 1,
-                        }}
-                                onClick={viewController.onApplyFiltersClick}>
-                            APPLY
-                        </Button>
+                                )}
+                                defaultValue={viewController.selectedTags}
+                                onChange={viewController.onTagAutocompleteChange}
+                                renderTags={(value, getTagProps) =>
+                                    value.map((option, index) => (
+                                        <Chip
+                                            label={option}
+                                            {...getTagProps({index})}
+                                        />
+                                    ))
+                                }
+                            />
+                            <Button sx={{
+                                margin: 1,
+                                width: '100%',
+                            }}
+                                    variant='outlined'
+                                    onClick={viewController.onApplyFiltersClick}>
+                                APPLY
+                            </Button>
+                        </Stack>
                     </Paper>
                 </Grid>
                 <Grid item md={22}>

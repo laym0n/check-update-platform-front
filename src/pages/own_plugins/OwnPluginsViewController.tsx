@@ -1,48 +1,52 @@
-import {useCallback, useEffect, useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {diContainer, TYPES} from "src/logic/Config";
-import {PluginInfoDto} from "src/api/generated";
 import {PluginService} from "src/logic/services/Plugin";
-import {TaskCardsListProps} from "src/pages/own_plugins/components";
 import {useSearchParams} from "react-router-dom";
 import useNavigateOnLogOut from "src/shared/hooks/useNavigateOnLogOut";
+import {PluginsSelectListProps} from "src/shared/components/PluginsSelectList";
+import {usePluginSelectListContext} from "src/shared/components/PluginsSelectList/PluginsSelectListContext";
 
 export type OwnPluginsViewController = {
-    plugins: PluginInfoDto[],
-    taskCardListProps: TaskCardsListProps,
-    onSwitchSelectedPlugin: (event: React.MouseEvent<HTMLButtonElement>, id: string) => void;
+    pluginsSelectListProps: PluginsSelectListProps;
 }
 
 const useOwnPluginsViewController: () => OwnPluginsViewController = () => {
     const [searchParams, setSearchParams] = useSearchParams();
-    const pluginId = useRef(searchParams.get("selectedPluginId"));
-    const [pluginInfoDtos, setPluginInfoDtos] = useState([] as PluginInfoDto[])
-    const [taskCardsListProps, setTaskCardsListProps] = useState({
-        pluginId: pluginId.current,
-    } as TaskCardsListProps);
+    const {selectedPluginId, setSelectedPluginId} = usePluginSelectListContext();
+    console.log('useOwnPluginsViewController')
+    useEffect(() => {
+        if (!selectedPluginId) {
+            return
+        }
+        let searchParams: URLSearchParams = new URLSearchParams();
+        searchParams.set('selectedPluginId', selectedPluginId);
+        setSearchParams(searchParams)
+    }, [selectedPluginId, setSearchParams])
+
+    const [pluginsSelectListProps, setPluginsSelectListProps] = useState({
+        plugins: [],
+    } as PluginsSelectListProps)
     useNavigateOnLogOut('/');
+
+    const initPluginId = useRef(searchParams.get("selectedPluginId"));
+    useEffect(() => {
+        setSelectedPluginId(initPluginId.current || '')
+    }, [setSelectedPluginId]);
 
     useEffect(() => {
         let pluginService = diContainer.get<PluginService>(TYPES.PluginService);
         pluginService.getOwnPlugins({})
             .then(response => {
-                setPluginInfoDtos(response.plugins)
-                setTaskCardsListProps({
-                    pluginId: pluginId.current || response.plugins[0].id,
-                } as TaskCardsListProps)
+                setPluginsSelectListProps({
+                    plugins: response.plugins,
+                })
+                if (!initPluginId.current) {
+                    setSelectedPluginId(response.plugins[0].id)
+                }
             });
-    }, []);
-    let onSwitchSelectedPlugin: (event: React.MouseEvent<HTMLButtonElement>, id: string) => void = useCallback((event, pluginId) => {
-        let searchParams: URLSearchParams = new URLSearchParams();
-        searchParams.set('selectedPluginId', pluginId);
-        setSearchParams(searchParams)
-        setTaskCardsListProps({
-            pluginId: pluginId,
-        } as TaskCardsListProps)
-    }, [setSearchParams]);
+    }, [setSelectedPluginId]);
     return {
-        plugins: pluginInfoDtos,
-        taskCardListProps: taskCardsListProps,
-        onSwitchSelectedPlugin: onSwitchSelectedPlugin,
+        pluginsSelectListProps: pluginsSelectListProps
     } as OwnPluginsViewController;
 }
 

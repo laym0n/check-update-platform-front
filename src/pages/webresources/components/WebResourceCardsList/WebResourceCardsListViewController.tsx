@@ -3,6 +3,7 @@ import {AddWebResourceForObservingRequestDto} from "src/api/generated";
 import {diContainer, TYPES} from "src/logic/Config";
 import {WebResourceObservingService} from "src/logic/services/WebResourceObserving";
 import {WebResourceCardProps} from "src/pages/webresources/components/WebResourceCard";
+import {usePluginSelectListContext} from "src/shared/components/PluginsSelectList/PluginsSelectListContext";
 
 export type WebResourceCardsListViewController = {
     onNewValueDescriptionChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
@@ -10,20 +11,17 @@ export type WebResourceCardsListViewController = {
     cardProps: WebResourceCardProps[],
 }
 
-export type WebResourceCardsListProps = {
-    pluginId?: string,
-}
-
-const useWebResourceCardsListViewController: (props: WebResourceCardsListProps) => WebResourceCardsListViewController = (props: WebResourceCardsListProps) => {
+const useWebResourceCardsListViewController: () => WebResourceCardsListViewController = () => {
     const [cardProps, setCardProps] = useState([] as WebResourceCardProps[])
     const pluginDescription = useRef<string>('');
+    const {selectedPluginId, setSelectedPluginId} = usePluginSelectListContext();
 
     let loadWebResouceObservings = useCallback(() => {
-        if (props.pluginId === undefined) {
+        if (!selectedPluginId) {
             return
         }
         const webResourceObservingService = diContainer.get<WebResourceObservingService>(TYPES.WebResourceObservingService);
-        webResourceObservingService.getObservings({pluginIds: [props.pluginId]})
+        webResourceObservingService.getObservings({pluginIds: [selectedPluginId]})
             .then((webResourceResponse) => {
                 const webResourceCardProps = webResourceResponse.webResourceObservings.map(observing => {
                     return {
@@ -33,7 +31,7 @@ const useWebResourceCardsListViewController: (props: WebResourceCardsListProps) 
                 });
                 setCardProps(webResourceCardProps)
             })
-    }, [props.pluginId])
+    }, [selectedPluginId])
 
     useEffect(() => {
         loadWebResouceObservings();
@@ -44,7 +42,7 @@ const useWebResourceCardsListViewController: (props: WebResourceCardsListProps) 
             event.preventDefault()
             const webResourceObservingService = diContainer.get<WebResourceObservingService>(TYPES.WebResourceObservingService);
             webResourceObservingService.addObserving({
-                pluginId: props.pluginId,
+                pluginId: selectedPluginId,
                 resourceDescription: pluginDescription.current,
             } as AddWebResourceForObservingRequestDto)
                 .then(observing => {
@@ -60,7 +58,7 @@ const useWebResourceCardsListViewController: (props: WebResourceCardsListProps) 
                     } as WebResourceCardProps];
                     setCardProps(newCardProps)
                 })
-        }, [cardProps, props.pluginId]);
+        }, [cardProps, selectedPluginId]);
 
     let onNewValueDescriptionChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void = useCallback(
         (event) => {

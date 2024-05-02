@@ -1,19 +1,16 @@
-import {useCallback, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {diContainer, TYPES} from "src/logic/Config";
 import {PluginInfoDto} from "src/api/generated";
 import {PluginService} from "src/logic/services/Plugin";
-import {WebResourceCardsListProps} from "src/pages/webresources/components/WebResourceCardsList";
 import useNavigateOnLogOut from "src/shared/hooks/useNavigateOnLogOut";
+import {PluginsSelectListProps} from "src/shared/components/PluginsSelectList";
 
 export type WebResourceViewController = {
-    plugins: PluginInfoDto[],
-    webResourceCardsListProps: WebResourceCardsListProps,
-    onSwitchSelectedPlugin: (event: React.MouseEvent<HTMLButtonElement>, id: string) => void;
+    pluginsSelectListProps: PluginsSelectListProps;
 }
 
 const useWebResourceViewController: () => WebResourceViewController = () => {
     const [pluginInfoDtos, setPluginInfoDtos] = useState([] as PluginInfoDto[])
-    const [webResourceCardsListProps, setWebResourceCardsListProps] = useState({} as WebResourceCardsListProps);
     useNavigateOnLogOut('/');
 
     useEffect(() => {
@@ -21,20 +18,12 @@ const useWebResourceViewController: () => WebResourceViewController = () => {
         pluginService.getCurrentUserPlugins({})
             .then(response => {
                 setPluginInfoDtos(response.plugins)
-                setWebResourceCardsListProps({
-                    pluginId: response.plugins[0].id
-                } as WebResourceCardsListProps)
             });
     }, []);
-    let onSwitchSelectedPlugin: (event: React.MouseEvent<HTMLButtonElement>, id: string) => void = useCallback((event, pluginId) => {
-        setWebResourceCardsListProps({
-            pluginId: pluginId,
-        } as WebResourceCardsListProps)
-    }, []);
     return {
-        plugins: pluginInfoDtos,
-        webResourceCardsListProps: webResourceCardsListProps,
-        onSwitchSelectedPlugin: onSwitchSelectedPlugin,
+        pluginsSelectListProps: {
+            plugins: pluginInfoDtos,
+        }
     } as WebResourceViewController;
 }
 

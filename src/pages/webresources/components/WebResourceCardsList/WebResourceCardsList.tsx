@@ -3,13 +3,12 @@ import {Box, IconButton, Stack} from "@mui/material";
 import {WebResourceCard} from "src/pages/webresources/components/WebResourceCard";
 import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
-import useWebResourceCardsListViewController, {
-    WebResourceCardsListProps
-} from "src/pages/webresources/components/WebResourceCardsList/WebResourceCardsListViewController";
+import useWebResourceCardsListViewController
+    from "src/pages/webresources/components/WebResourceCardsList/WebResourceCardsListViewController";
 
 
-export const WebResourceCardsList = (props: WebResourceCardsListProps) => {
-    let viewController = useWebResourceCardsListViewController(props);
+export const WebResourceCardsList = () => {
+    let viewController = useWebResourceCardsListViewController();
     console.log("WebResourceCardsList render")
     return (
         <Stack sx={{margin: 2, width: 300}}>

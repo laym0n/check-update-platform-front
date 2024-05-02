@@ -2,24 +2,22 @@ import {useCallback, useEffect, useState} from "react";
 import {diContainer, TYPES} from "src/logic/Config";
 import {TaskService} from "src/logic/services/Task";
 import {TaskCardProps} from "src/shared/components/TaskCard";
+import {usePluginSelectListContext} from "src/shared/components/PluginsSelectList/PluginsSelectListContext";
 
 export type TaskCardsListViewController = {
+    pluginId: string;
     cardProps: TaskCardProps[],
 }
 
-export type TaskCardsListProps = {
-    pluginId?: string,
-}
-
-const useTaskCardsListViewController: (props: TaskCardsListProps) => TaskCardsListViewController = (props: TaskCardsListProps) => {
+const useTaskCardsListViewController: () => TaskCardsListViewController = () => {
     const [taskProps, setTaskProps] = useState([] as TaskCardProps[])
-
+    const pluginSelectListContext = usePluginSelectListContext();
     let loadTasks = useCallback(() => {
-        if (props.pluginId === undefined) {
+        if (!pluginSelectListContext.selectedPluginId) {
             return
         }
         const taskService = diContainer.get<TaskService>(TYPES.TaskService);
-        taskService.get({pluginIds: [props.pluginId]})
+        taskService.get({pluginIds: [pluginSelectListContext.selectedPluginId]})
             .then((getTasksResponseDto) => {
                 const taskCardProp = getTasksResponseDto.tasks.map(taskDto => {
                     return {
@@ -29,7 +27,7 @@ const useTaskCardsListViewController: (props: TaskCardsListProps) => TaskCardsLi
                 });
                 setTaskProps(taskCardProp)
             })
-    }, [props.pluginId])
+    }, [pluginSelectListContext.selectedPluginId])
 
     useEffect(() => {
         loadTasks();
@@ -37,6 +35,7 @@ const useTaskCardsListViewController: (props: TaskCardsListProps) => TaskCardsLi
 
     return {
         cardProps: taskProps,
+        pluginId: pluginSelectListContext.selectedPluginId,
     } as TaskCardsListViewController;
 };
 export default useTaskCardsListViewController;
