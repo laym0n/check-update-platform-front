@@ -9,7 +9,7 @@ export const TaskCard = (props: TaskCardProps) => {
     let viewController = useTaskCardViewController(props);
     console.log("TaskCard render")
     return (
-        <Card sx={{margin: 2, width: 300}}>
+        <Card sx={{margin: 2, width: 400}}>
             <CardContent>
                 <Typography margin={1}>{`Type: ${viewController.taskDto.type}`}</Typography>
                 <Typography margin={1}>{`Created: ${viewController.createDate}`}</Typography>

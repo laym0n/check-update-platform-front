@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 import {diContainer, TYPES} from "src/logic/Config";
 import {TaskCardProps} from "src/shared/components/TaskCard";
 import {TaskService} from "src/logic/services/Task";
@@ -7,7 +7,6 @@ import {TaskDto} from "src/api/generated";
 import useNavigateOnLogOut from "src/shared/hooks/useNavigateOnLogOut";
 
 export type TasksViewController = {
-    selectedTaskDto: TaskDto | null;
     makeDecisionDialogProps: MakeDecisionDialogProps;
     taskCardProps: TaskCardProps[],
     onSwitchSelectedTask: (event: React.MouseEvent<HTMLButtonElement>, id: string) => void;
@@ -15,7 +14,7 @@ export type TasksViewController = {
 
 const useTasksViewController: () => TasksViewController = () => {
     const [taskCardProps, setTaskCardProps] = useState([] as TaskCardProps[])
-    const [selectedTaskDto, setSelectedTaskDto] = useState<TaskDto | null>(null);
+    const selectedTaskDto = useRef<TaskDto | null>(null);
     const [isOpenDialog, setIsOpenDialog] = useState(false)
     useNavigateOnLogOut('/');
 
@@ -23,7 +22,7 @@ const useTasksViewController: () => TasksViewController = () => {
         let taskService = diContainer.get<TaskService>(TYPES.TaskService);
         taskService.get({ids: [id]})
             .then(response => {
-                setSelectedTaskDto(response.tasks[0])
+                selectedTaskDto.current = response.tasks[0]
             })
     }, []);
 
@@ -41,10 +40,11 @@ const useTasksViewController: () => TasksViewController = () => {
                         taskDto: task,
                         key: task.id,
                         onMakeDecision: handleOnMakeDecisionClick,
+                        isNeedToShowButtonsForEmployee: true,
                     } as TaskCardProps;
                 });
                 setTaskCardProps(newTaskCardProps)
-                setSelectedTaskDto(response.tasks[0])
+                selectedTaskDto.current = response.tasks[0]
             });
     }, [handleOnMakeDecisionClick]);
     let onSwitchSelectedTask: (event: React.MouseEvent<HTMLButtonElement>, id: string) => void = useCallback((event, value) => {
@@ -54,7 +54,7 @@ const useTasksViewController: () => TasksViewController = () => {
         setIsOpenDialog(false);
     }, []);
     const getTaskId: () => string = useCallback(() => {
-        return selectedTaskDto?.id || ''
+        return selectedTaskDto.current?.id || ''
     }, [selectedTaskDto]);
     const handleMakeDecisionCallback: (value: TaskDto) => (PromiseLike<TaskDto> | TaskDto) = useCallback((taskDto) => {
         let newTaskCardProps = [...taskCardProps];
@@ -74,7 +74,6 @@ const useTasksViewController: () => TasksViewController = () => {
     return {
         taskCardProps: taskCardProps,
         onSwitchSelectedTask: onSwitchSelectedTask,
-        selectedTaskDto: selectedTaskDto,
         makeDecisionDialogProps: {
             isOpenDialog: isOpenDialog,
             getTaskId: getTaskId,
