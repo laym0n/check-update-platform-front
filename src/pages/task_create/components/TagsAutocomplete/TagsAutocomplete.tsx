@@ -25,7 +25,7 @@ export default function TagsAutocomplete(props: TagsAutocompleteProps) {
                 <TextField
                     {...params}
                     variant="outlined"
-                    placeholder="Выберите теги"
+                    placeholder="Select tags"
                 />
             )}
             freeSolo
@@ -36,6 +36,7 @@ export default function TagsAutocomplete(props: TagsAutocompleteProps) {
                 value.map((option, index) => (
                     <Chip
                         label={option.tag}
+                        color={option.isNew ? "error" : "primary"}
                         {...getTagProps({index})}
                     />
                 ))

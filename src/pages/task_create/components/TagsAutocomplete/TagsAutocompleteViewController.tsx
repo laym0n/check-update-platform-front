@@ -32,9 +32,13 @@ const useTagsAutocompleteViewController: (props: TagsAutocompleteProps) => TagsA
 
 
     let onTagAutocompleteChange: (event: React.SyntheticEvent, value: (TagInfoDto | string)[]) => void = useCallback((event, newSelectedTagsOptions) => {
-        newSelectedTagsOptions.forEach(stag => console.log(stag))
+        newSelectedTagsOptions.forEach(val => console.log(val))
         const newTagInfoDtos = newSelectedTagsOptions.map(tag => {
             if (typeof tag === 'string') {
+                const tagInfoDtos = optionTags.filter(optionTag => optionTag.tag === tag);
+                if (tagInfoDtos.length) {
+                    return tagInfoDtos[0];
+                }
                 return {
                     tag: tag,
                     isNew: true,
@@ -46,7 +50,7 @@ const useTagsAutocompleteViewController: (props: TagsAutocompleteProps) => TagsA
         setSelectedTags(newTagInfoDtos)
         const selectedTagsStrings = newTagInfoDtos.map(tagInfoDto => tagInfoDto.tag);
         props.onSelectedTagsChange(selectedTagsStrings)
-    }, [props]);
+    }, [optionTags, props]);
 
     return {
         tags: optionTags,

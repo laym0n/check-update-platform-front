@@ -120,12 +120,12 @@ const useTaskCreateViewController: () => TaskCreateViewController = () => {
         propsForLogoPath: {
             initValue: initLogoPath,
             onValueChange: onChangeLogoPath,
-            placeholder: 'logoPath',
+            placeholder: 'LogoPath',
         },
         propsForDescription: {
             initValue: initDescription,
             onValueChange: onChangeDescription,
-            placeholder: 'description',
+            placeholder: 'Description',
         },
     } as TaskCreateViewController;
 }

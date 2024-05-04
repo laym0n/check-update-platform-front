@@ -10,8 +10,8 @@ export default function TextFieldWithInit(props: TextFieldWithInitProps) {
 
     return (
         <TextField
-            margin="normal"
             required
+            multiline
             fullWidth
             value={viewController.value}
             onChange={viewController.onChange}

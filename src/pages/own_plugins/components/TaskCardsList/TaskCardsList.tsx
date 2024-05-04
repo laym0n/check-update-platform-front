@@ -10,7 +10,7 @@ export const TaskCardsList = () => {
     return (
         <Stack sx={{margin: 2, width: 300}}>
             <Button href={`/plugin/own/${viewController.pluginId}/task`}>
-                Создать задачу
+                Create update task
             </Button>
             <Stack>
                 {viewController.cardProps.map(cardProp => {

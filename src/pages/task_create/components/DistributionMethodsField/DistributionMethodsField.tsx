@@ -21,7 +21,7 @@ export default function DistributionMethodsField(props: DistributionMethodsField
                                               onDeleteClick={viewController.onDeleteMethodClick}/>
                 )
             })}
-            <Button onClick={viewController.onAddClick}>Добавить</Button>
+            <Button onClick={viewController.onAddClick}>ADD DISTRIBUTION</Button>
         </>
     );
 }
