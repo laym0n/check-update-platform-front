@@ -5,6 +5,10 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import useProfileDrawerViewController, {
     ProfileDrawerHooks
 } from "src/pages/layout/components/ProfileDrawer/ProfileDrawerViewController";
+import TaskIcon from '@mui/icons-material/Task';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import LocationSearchingIcon from '@mui/icons-material/LocationSearching';
 
 export const ProfileDrawer = (props: ProfileDrawerHooks) => {
     let viewController = useProfileDrawerViewController(props);
@@ -15,7 +19,7 @@ export const ProfileDrawer = (props: ProfileDrawerHooks) => {
                 <ListItem disablePadding>
                     <ListItemButton href="/webresource">
                         <ListItemIcon>
-                            <LogoutIcon/>
+                            <LocationSearchingIcon color="primary"/>
                         </ListItemIcon>
                         <ListItemText primary="WebResources"/>
                     </ListItemButton>
@@ -23,7 +27,7 @@ export const ProfileDrawer = (props: ProfileDrawerHooks) => {
                 <ListItem disablePadding>
                     <ListItemButton href="/plugin">
                         <ListItemIcon>
-                            <LogoutIcon/>
+                            <AddCircleIcon color="primary"/>
                         </ListItemIcon>
                         <ListItemText primary="Create plugin"/>
                     </ListItemButton>
@@ -31,7 +35,7 @@ export const ProfileDrawer = (props: ProfileDrawerHooks) => {
                 <ListItem disablePadding>
                     <ListItemButton href="/plugin/own">
                         <ListItemIcon>
-                            <LogoutIcon/>
+                            <ManageAccountsIcon color="primary"/>
                         </ListItemIcon>
                         <ListItemText primary="Own plugins"/>
                     </ListItemButton>
@@ -39,7 +43,7 @@ export const ProfileDrawer = (props: ProfileDrawerHooks) => {
                 <ListItem disablePadding>
                     <ListItemButton href="/tasks">
                         <ListItemIcon>
-                            <LogoutIcon/>
+                            <TaskIcon color="primary"/>
                         </ListItemIcon>
                         <ListItemText primary="Tasks"/>
                     </ListItemButton>
@@ -47,7 +51,7 @@ export const ProfileDrawer = (props: ProfileDrawerHooks) => {
                 <ListItem disablePadding>
                     <ListItemButton onClick={viewController.onLogOutClick}>
                         <ListItemIcon>
-                            <LogoutIcon/>
+                            <LogoutIcon color="primary"/>
                         </ListItemIcon>
                         <ListItemText primary="Log Out"/>
                     </ListItemButton>
