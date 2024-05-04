@@ -18,14 +18,16 @@ function TaskOverviewPageContent() {
     const viewController = useTaskOverviewViewController();
     return (
         <>
-            <Button variant="outlined"
+            <span hidden={viewController.isHiddenMakeDecision}>
+                <Button variant="outlined"
                     sx={{
                         position: 'absolute'
                     }}
                     onClick={viewController.handleOpenDialog}>
-                Open alert dialog
-            </Button>
-            <MakeDecisionDialog {...viewController.makeDecisionDialogProps}/>
+                    MAKE DECISION
+                </Button>
+                <MakeDecisionDialog {...viewController.makeDecisionDialogProps}/>
+            </span>
             <PluginDescription {...viewController.pluginDescriptionProps}/>
         </>
     );

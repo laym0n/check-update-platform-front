@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
+import {Button, Dialog, DialogActions, DialogTitle, Stack} from "@mui/material";
 import useMakeDecisionDialogViewController, {
     MakeDecisionDialogProps
 } from "src/shared/components/make_decision_dialog/MakeDecisionDialogViewController";
@@ -15,33 +15,36 @@ export function MakeDecisionDialog(props: MakeDecisionDialogProps) {
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
         >
-            <DialogTitle id="alert-dialog-title">
-                {"Use Google's location service?"}
+            <DialogTitle id="alert-dialog-title" textAlign="center">
+                {"MAKE DECISION"}
             </DialogTitle>
-            <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                    Let Google help apps determine location. This means sending anonymous
-                    location data to Google, even when no apps are running.
-                </DialogContentText>
-            </DialogContent>
             <DialogActions>
-                <TextField
-                    id="outlined-multiline-static"
-                    label="Комментарий"
-                    multiline
-                    rows={4}
-                    placeholder="Введите ваш комментарий здесь..."
-                    onChange={viewController.onCommentChange}
-                />
-                <Button onClick={viewController.onRejectClick}
-                        color="error">
-                    REJECT
-                </Button>
-                <Button onClick={viewController.onApproveClick}
-                        autoFocus
-                        color="success">
-                    APPROVE
-                </Button>
+                <Stack direction="column" spacing={1} width={600}>
+
+                    <TextField
+                        id="outlined-multiline-static"
+                        label="Comment"
+                        multiline
+                        fullWidth
+                        rows={4}
+                        placeholder="Comment"
+                        onChange={viewController.onCommentChange}/>
+                    <Stack direction="row" width='100%' spacing={1}>
+                        <Button onClick={viewController.onRejectClick}
+                                color="error"
+                                fullWidth
+                                variant="contained">
+                            REJECT
+                        </Button>
+                        <Button onClick={viewController.onApproveClick}
+                                autoFocus
+                                fullWidth
+                                variant="contained"
+                                color="success">
+                            APPROVE
+                        </Button>
+                    </Stack>
+                </Stack>
             </DialogActions>
         </Dialog>
     );
