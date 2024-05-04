@@ -7,6 +7,7 @@ import DistributionMethodsField
     from "src/pages/task_create/components/DistributionMethodsField/DistributionMethodsField";
 import TextFieldWithInit from "src/pages/task_create/components/TextFieldWithInit/TextFieldWithInit";
 import {Stack} from "@mui/material";
+import ImagePathsField from "src/pages/task_create/components/ImagePathsField/ImagePathsField";
 
 
 export default function TaskCreatePage() {
@@ -31,12 +32,13 @@ function TaskCreatePageContent() {
                 <TextFieldWithInit {...viewController.propsForLogoPath}/>
                 <TagsAutocomplete {...viewController.tagsAutocompleteProps}/>
                 <DistributionMethodsField {...viewController.distributionMethodsField}/>
+                <ImagePathsField {...viewController.imagePathsFieldProps}/>
                 <Button
                     type="submit"
                     fullWidth
                     variant="contained"
                     sx={{mt: 3, mb: 2}}>
-                    Create
+                    {viewController.buttonLabel}
                 </Button>
             </Stack>
         </>

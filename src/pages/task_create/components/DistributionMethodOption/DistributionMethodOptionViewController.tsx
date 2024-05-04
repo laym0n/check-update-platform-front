@@ -1,5 +1,5 @@
 import {DistributionMethodDto} from "src/api/generated";
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useEffect, useMemo, useState} from "react";
 import moment from "moment/moment";
 import type = DistributionMethodDto.type;
 
@@ -30,10 +30,10 @@ export type DurationOption = {
 
 
 const useDistributionMethodOptionViewController: (props: DistributionMethodOptionProps) => DistributionMethodOptionViewController = (props) => {
-    const durations = [{label: 'DAY', momentString: 'days'} as DurationOption,
+    const durations = useMemo(() => [{label: 'DAY', momentString: 'days'} as DurationOption,
         {label: 'WEEK', momentString: 'weeks'} as DurationOption,
         {label: 'MONTH', momentString: 'months'} as DurationOption,
-        {label: 'YEAR', momentString: 'years'} as DurationOption]
+        {label: 'YEAR', momentString: 'years'} as DurationOption], [])
     const [method, setMethod] = useState(props.distributionMethodDto)
     const [selectedDuration, setSelectedDuration] = useState<DurationOption | null>(null)
     const [durationNumber, setDurationNumber] = useState<number | null>(null)
@@ -43,7 +43,6 @@ const useDistributionMethodOptionViewController: (props: DistributionMethodOptio
             return
         }
         const duration = moment.duration(props.distributionMethodDto.duration);
-        console.log(duration)
         if (duration.years()) {
             setSelectedDuration(durations[3])
             setDurationNumber(duration.years())
@@ -83,7 +82,7 @@ const useDistributionMethodOptionViewController: (props: DistributionMethodOptio
             ...method,
             duration: newDuration,
         } as DistributionMethodDto
-        setMethod(changedMethod)
+        // setMethod(changedMethod)
         props.onDistributionMethodChange(changedMethod, props.index);
     }, [method, props]);
     const onSelectedDuration: (event: React.SyntheticEvent, value: DurationOption | null) => void = useCallback((event, value) => {

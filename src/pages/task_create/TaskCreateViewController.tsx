@@ -12,8 +12,11 @@ import {
     TextFieldWithInitProps
 } from "src/pages/task_create/components/TextFieldWithInit/TextFieldWithInitViewController";
 import useNavigateOnLogOut from "src/shared/hooks/useNavigateOnLogOut";
+import {ImagePathsFieldProps} from "src/pages/task_create/components/ImagePathsField/ImagePathsFieldViewController";
 
 export type TaskCreateViewController = {
+    buttonLabel: string;
+    imagePathsFieldProps: ImagePathsFieldProps;
     propsForDescription: TextFieldWithInitProps;
     propsForLogoPath: TextFieldWithInitProps;
     distributionMethodsField: DistributionMethodsFieldProps;
@@ -35,6 +38,7 @@ const useTaskCreateViewController: () => TaskCreateViewController = () => {
     const description = useRef('');
     const logoPath = useRef('');
     const selectedTags = useRef([] as string[]);
+    const selectedImagePaths = useRef([] as string[]);
     const selectedMethods = useRef([] as DistributionMethodDto[]);
     const [loadedTags, setLoadedTags] = useState([] as string[])
     useNavigateOnLogOut('/');
@@ -57,7 +61,7 @@ const useTaskCreateViewController: () => TaskCreateViewController = () => {
                 specificDescription: {
                     description: description.current,
                     tags: selectedTags.current,
-                    imagePaths: ['https://source.unsplash.com/random?wallpapers', 'https://source.unsplash.com/random?wallpapers']
+                    imagePaths: selectedImagePaths.current
                 },
             }
         } as CreateTaskRequestDto;
@@ -81,10 +85,13 @@ const useTaskCreateViewController: () => TaskCreateViewController = () => {
     }, []);
     const onDistributionMethodsChange: (methods: DistributionMethodDto[]) => void = useCallback((methods) => {
         selectedMethods.current = methods
-        console.log(selectedMethods.current)
+    }, []);
+    const onImagePathsChange: (paths: string[]) => void = useCallback((paths) => {
+        selectedImagePaths.current = paths
     }, []);
 
     const [initSelectedTags, setInitSelectedTags] = useState([] as TagInfoDto[])
+    const [initImagePaths, setInitImagePaths] = useState([] as string[])
 
     const [distributionMethodsField, setDistributionMethodsField] = useState({
         distributionMethods: [],
@@ -106,6 +113,7 @@ const useTaskCreateViewController: () => TaskCreateViewController = () => {
                 setInitSelectedTags(taskDto.description.specificDescription?.tags || [])
                 setInitLogoPath(taskDto.description.logoPath || '')
                 setInitDescription(taskDto.description.specificDescription?.description || '')
+                setInitImagePaths(taskDto.description.specificDescription?.imagePaths || [])
             })
     }, [onDistributionMethodsChange, onSelectedTagsChange, pathVariables.taskId]);
 
@@ -127,6 +135,11 @@ const useTaskCreateViewController: () => TaskCreateViewController = () => {
             onValueChange: onChangeDescription,
             placeholder: 'Description',
         },
+        imagePathsFieldProps: {
+            initImagePaths: initImagePaths,
+            onImagePathsChangeFromProps: onImagePathsChange,
+        },
+        buttonLabel: pathVariables.taskId ? 'UPDATE' : 'CREATE',
     } as TaskCreateViewController;
 }
 
