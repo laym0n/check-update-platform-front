@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, CardActions, CardContent, Stack, Switch, Typography} from "@mui/material";
+import {Card, CardActions, CardContent, CardHeader, Stack, Switch, Typography} from "@mui/material";
 import {WebResourceCardProps} from "src/pages/webresources/components/WebResourceCard";
 import useWebResourceCardController
     from "src/pages/webresources/components/WebResourceCard/WebResourceCardViewController";
@@ -11,9 +11,9 @@ export const WebResourceCard = (props: WebResourceCardProps) => {
     let viewController = useWebResourceCardController(props);
     console.log("WebResourceCard render")
     return (
-        <Card sx={{margin: 2, width: 300}}>
+        <Card sx={{margin: 2, width: 500}}>
+            <CardHeader title={viewController.webResourceObserving.webResourceDto.description}/>
             <CardContent>
-                <Typography>{viewController.webResourceObserving.webResourceDto.name}</Typography>
                 <Typography>{viewController.webResourceObserving.webResourceDto.description}</Typography>
             </CardContent>
             <Stack>

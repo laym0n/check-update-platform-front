@@ -11,11 +11,18 @@ export const WebResourceCardsList = () => {
     let viewController = useWebResourceCardsListViewController();
     console.log("WebResourceCardsList render")
     return (
-        <Stack sx={{margin: 2, width: 300}}>
-            <Box component="form" onSubmit={viewController.onSubmitAddNewResource}>
+        <Stack spacing={1} width='100%' alignItems='center'>
+            <Box component="form"
+                 onSubmit={viewController.onSubmitAddNewResource}
+                 sx={{
+                     display: 'flex',
+                     flexDirection: 'row',
+                     justifyContent: 'center',
+                     alignItems: 'center',
+                 }}>
                 <TextField
-                    placeholder="newResource"
-                    label="bewResource"
+                    placeholder="Link to new resource"
+                    label="Link to new resource"
                     onChange={viewController.onNewValueDescriptionChange}/>
                 <IconButton type="submit" aria-label="search">
                     <SearchIcon color="primary"/>
