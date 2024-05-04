@@ -879,6 +879,7 @@
       },
       "TaskDto": {
         "required": [
+          "createDate",
           "decision",
           "description",
           "id",
@@ -890,6 +891,10 @@
           "id": {
             "type": "string",
             "format": "uuid"
+          },
+          "createDate": {
+            "type": "string",
+            "format": "date-time"
           },
           "description": {
             "$ref": "#/components/schemas/PluginDescriptionTaskDto"

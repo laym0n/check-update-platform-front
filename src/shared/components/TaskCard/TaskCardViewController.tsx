@@ -1,37 +1,43 @@
 import {TaskDto} from "src/api/generated";
-import {diContainer, TYPES} from "src/logic/Config";
-import {AuthenticationService} from "src/logic/services/Authentication";
 import {useCallback} from "react";
 
 export type TaskCardViewController = {
+    isNeedToShowButtonsForResolved: boolean;
+    isNeedToShowButtonsForCreator: boolean;
+    createDate: string;
     onMakeDecisionClick: React.MouseEventHandler<HTMLButtonElement>;
     taskDto: TaskDto,
-    isNeedToShowButtons: boolean,
+    isNeedToShowButtonsForEmployee: boolean,
 }
 
 export type TaskCardProps = {
+    isNeedToShowButtonsForCreator: boolean;
+    isNeedToShowButtonsForEmployee: boolean;
+    pluginId?: string;
     onMakeDecision?: (taskDto: TaskDto) => void;
     key: string,
     taskDto: TaskDto,
 }
 
 const useTaskCardViewController: (props: TaskCardProps) => TaskCardViewController = (props: TaskCardProps) => {
-    const authenticationService = diContainer.get<AuthenticationService>(TYPES.AuthenticationService);
-    const user = authenticationService.getUser();
-    const userIsEmployeeOrAdmin = user.roles
-        .findIndex((role) => {
-            return role === "ADMIN" || role === "EMPLOYEE";
-        }) !== -1;
-    let isNeedToShowButtons = !props.taskDto.decision && userIsEmployeeOrAdmin;
+    let isNeedToShowButtonsForResolved = !!props.taskDto.decision;
+    let isNeedToShowButtonsForEmployee = !isNeedToShowButtonsForResolved && props.isNeedToShowButtonsForEmployee;
+    let isNeedToShowButtonsForCreator = !isNeedToShowButtonsForResolved && props.isNeedToShowButtonsForCreator;
+    console.log(`${isNeedToShowButtonsForResolved} ${isNeedToShowButtonsForEmployee} ${isNeedToShowButtonsForCreator}`)
+
+    let createDate = props.taskDto.createDate
 
     const onMakeDecisionClick = useCallback(() => {
         props.onMakeDecision!(props.taskDto);
     }, [props.onMakeDecision, props.taskDto]);
 
     return {
+        createDate: createDate,
         taskDto: props.taskDto,
         onMakeDecisionClick: onMakeDecisionClick,
-        isNeedToShowButtons: isNeedToShowButtons,
+        isNeedToShowButtonsForEmployee: isNeedToShowButtonsForEmployee,
+        isNeedToShowButtonsForResolved: isNeedToShowButtonsForResolved,
+        isNeedToShowButtonsForCreator: isNeedToShowButtonsForCreator,
     } as TaskCardViewController;
 };
 export default useTaskCardViewController;

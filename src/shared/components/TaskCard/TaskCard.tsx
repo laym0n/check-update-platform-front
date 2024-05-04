@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Card, CardActions, CardContent, Typography} from "@mui/material";
+import {Button, Card, CardActions, CardContent, Stack, Typography} from "@mui/material";
 import useTaskCardViewController, {TaskCardProps} from "src/shared/components/TaskCard/TaskCardViewController";
 import {TaskDto} from "src/api/generated";
 import decision = TaskDto.decision;
@@ -11,22 +11,47 @@ export const TaskCard = (props: TaskCardProps) => {
     return (
         <Card sx={{margin: 2, width: 300}}>
             <CardContent>
-                <Typography>{viewController.taskDto.id}</Typography>
-                <Typography>{viewController.taskDto.type}</Typography>
-                <Typography color={viewController.taskDto.decision ?
+                <Typography margin={1}>{`Type: ${viewController.taskDto.type}`}</Typography>
+                <Typography margin={1}>{`Created: ${viewController.createDate}`}</Typography>
+                <Typography margin={1} color={viewController.taskDto.decision ?
                     viewController.taskDto.decision === decision.APPROVE ? "success.main" : "error" : "yellow"}>
-                    {viewController.taskDto.decision || 'Не решено'}
+                    {viewController.taskDto.decision || 'IN PROCESS'}
                 </Typography>
             </CardContent>
-            <CardActions>
-                <Button variant="contained"
-                        target="_blank"
-                        href={`/task/${props.taskDto.id}/overview`}>Посмотреть</Button>
+            <CardActions sx={{display: viewController.isNeedToShowButtonsForCreator ? "block" : "none"}}>
+                <Stack direction='row' width='100%' spacing={1}>
+                    <Button variant="contained"
+                            fullWidth
+                            target="_blank"
+                            href={`/task/${props.taskDto.id}/overview`}>VIEW</Button>
+                    <Button variant="contained"
+                            fullWidth
+                            href={`/plugin/own/${props.pluginId}/task/${props.taskDto.id}`}>UPDATE</Button>
+                    <Button variant="contained"
+                            fullWidth
+                            color="error"
+                            href={`/plugin/own/${props.pluginId}/task/${props.taskDto.id}`}>REJECT</Button>
+                </Stack>
             </CardActions>
-            <CardActions sx={{display: viewController.isNeedToShowButtons ? "block" : "none"}}>
-                <Button color="success"
-                        variant="contained"
-                        onClick={viewController.onMakeDecisionClick}>Make decision</Button>
+            <CardActions sx={{display: viewController.isNeedToShowButtonsForEmployee ? "block" : "none"}}>
+                <Stack direction='row' width='100%' spacing={1}>
+                    <Button variant="contained"
+                            fullWidth
+                            target="_blank"
+                            href={`/task/${props.taskDto.id}/overview`}>VIEW</Button>
+                    <Button color="success"
+                            fullWidth
+                            variant="contained"
+                            onClick={viewController.onMakeDecisionClick}>MAKE DECISION</Button>
+                </Stack>
+            </CardActions>
+            <CardActions sx={{display: viewController.isNeedToShowButtonsForResolved ? "block" : "none"}}>
+                <Stack direction='row' width='100%' spacing={1}>
+                    <Button variant="contained"
+                            fullWidth
+                            target="_blank"
+                            href={`/task/${props.taskDto.id}/overview`}>VIEW</Button>
+                </Stack>
             </CardActions>
         </Card>
     );

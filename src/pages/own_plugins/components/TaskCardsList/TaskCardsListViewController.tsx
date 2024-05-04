@@ -23,6 +23,9 @@ const useTaskCardsListViewController: () => TaskCardsListViewController = () => 
                     return {
                         taskDto: taskDto,
                         key: taskDto.id,
+                        pluginId: pluginSelectListContext.selectedPluginId,
+                        isNeedToShowButtonsForCreator: true,
+                        isNeedToShowButtonsForEmployee: false,
                     } as TaskCardProps;
                 });
                 setTaskProps(taskCardProp)
