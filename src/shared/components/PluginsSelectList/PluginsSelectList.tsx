@@ -1,16 +1,15 @@
 import {Stack, Typography} from "@mui/material";
 import React from "react";
-import usePluginsSelectListViewController, {
-    PluginsSelectListProps
-} from "src/shared/components/PluginsSelectList/PluginsSelectListViewController";
+import usePluginsSelectListViewController
+    from "src/shared/components/PluginsSelectList/PluginsSelectListViewController";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import usePluginSelectViewController, {
     PluginSelectProps
 } from "src/shared/components/PluginsSelectList/PluginSelectViewController";
 
-export default function PluginsSelectList(props: PluginsSelectListProps) {
-    const viewController = usePluginsSelectListViewController(props);
+export default function PluginsSelectList() {
+    const viewController = usePluginsSelectListViewController();
     return (
         <Stack direction="column" spacing={2}>
             {viewController.pluginProps?.map(propsPlugin => {

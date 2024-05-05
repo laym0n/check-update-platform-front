@@ -23,7 +23,7 @@ function WebResourcePageContent() {
     return (
         <Grid container columns={36}>
             <Grid item md={7}>
-                <PluginsSelectList {...viewController.pluginsSelectListProps}/>
+                <PluginsSelectList/>
             </Grid>
             <Grid item
                   md={22}

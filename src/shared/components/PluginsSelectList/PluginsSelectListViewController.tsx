@@ -1,4 +1,3 @@
-import {PluginInfoDto} from "src/api/generated";
 import {useMemo} from "react";
 import {PluginSelectProps} from "src/shared/components/PluginsSelectList/PluginSelectViewController";
 import {usePluginSelectListContext} from "src/shared/components/PluginsSelectList/PluginsSelectListContext";
@@ -8,26 +7,22 @@ export type PluginsSelectListViewController = {
     selectedPluginId: string,
 }
 
-export type PluginsSelectListProps = {
-    plugins: PluginInfoDto[],
-}
-
-const usePluginsSelectListViewController: (props: PluginsSelectListProps) => PluginsSelectListViewController = (props) => {
+const usePluginsSelectListViewController: () => PluginsSelectListViewController = () => {
     console.log('usePluginsSelectListViewController')
-    const pluginSelectListContext = usePluginSelectListContext();
+    const {selectedPluginId, plugins} = usePluginSelectListContext();
 
     let pluginProps = useMemo(() => {
-        return props.plugins.map(pluginInfo => {
+        return plugins.map(pluginInfo => {
             return {
                 plugin: pluginInfo,
-                isSelect: pluginInfo.id === pluginSelectListContext.selectedPluginId,
+                isSelect: pluginInfo.id === selectedPluginId,
             } as PluginSelectProps
         });
-    }, [pluginSelectListContext.selectedPluginId, props.plugins]);
+    }, [selectedPluginId, plugins]);
 
     return {
         pluginProps: pluginProps,
-        selectedPluginId: pluginSelectListContext.selectedPluginId,
+        selectedPluginId: selectedPluginId,
     } as PluginsSelectListViewController;
 }
 

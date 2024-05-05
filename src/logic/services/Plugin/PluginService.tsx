@@ -1,4 +1,11 @@
-import {AddPluginRequestDto, AddPluginResponseDto, GetPluginsResponseDto} from "src/api/generated";
+import {
+    AddPluginRequestDto,
+    AddPluginResponseDto,
+    GetPluginsResponseDto,
+    PluginInfoDto,
+    RefreshTokenResponseDto,
+    type UpdatePluginRequestDto
+} from "src/api/generated";
 
 export interface PluginService {
     getPlugins(request: GetPluginsRequestDto): Promise<GetPluginsResponseDto>
@@ -8,6 +15,10 @@ export interface PluginService {
     create(request: AddPluginRequestDto): Promise<AddPluginResponseDto>
 
     getOwnPlugins(request: GetPluginsRequestDto): Promise<GetPluginsResponseDto>
+
+    update(requestBody: UpdatePluginRequestDto): Promise<PluginInfoDto>;
+
+    refreshToken(pluginId: string): Promise<RefreshTokenResponseDto>;
 }
 
 export type GetPluginsRequestDto = {

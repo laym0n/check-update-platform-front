@@ -5,6 +5,7 @@ import useOwnPluginsViewController from "src/pages/own_plugins/OwnPluginsViewCon
 import {TaskCardsList} from "src/pages/own_plugins/components";
 import PluginsSelectList from "src/shared/components/PluginsSelectList/PluginsSelectList";
 import {PluginSelectListContextProvider} from "src/shared/components/PluginsSelectList/PluginsSelectListContext";
+import {PluginInfoCard} from "src/pages/own_plugins/components/PluginInfoCard";
 
 
 export default function OwnPluginsPage() {
@@ -23,7 +24,7 @@ function WebResourcePageContent() {
     return (
         <Grid container columns={36}>
             <Grid item md={7}>
-                <PluginsSelectList {...viewController.pluginsSelectListProps}/>
+                <PluginsSelectList/>
             </Grid>
             <Grid item
                   md={22}
@@ -35,7 +36,9 @@ function WebResourcePageContent() {
                   }}>
                 <TaskCardsList/>
             </Grid>
-            <Grid item md={7}/>
+            <Grid item md={7}>
+                <PluginInfoCard/>
+            </Grid>
 
         </Grid>
     );
