@@ -5,6 +5,9 @@ import Grid from "@mui/material/Grid";
 import {WebResourceCardsList} from "src/pages/webresources/components/WebResourceCardsList";
 import PluginsSelectList from "src/shared/components/PluginsSelectList/PluginsSelectList";
 import {PluginSelectListContextProvider} from "src/shared/components/PluginsSelectList/PluginsSelectListContext";
+import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import {PluginUsagesList} from "src/pages/webresources/components/PluginUsagesList";
 
 
 export default function WebResourcePage() {
@@ -32,8 +35,29 @@ function WebResourcePageContent() {
                       flexDirection: "column",
                       justifyContent: "flex-start",
                       alignItems: "center",
-                  }}>
-                <WebResourceCardsList/>
+                  }}
+                  padding={2}
+            >
+                <Accordion sx={{width: '100%', background: "#1e222b"}}>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon/>}
+                    >
+                        WEBRESOURCES
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <WebResourceCardsList/>
+                    </AccordionDetails>
+                </Accordion>
+                <Accordion sx={{width: '100%', background: "#1e222b"}}>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon/>}
+                    >
+                        CHEQUES
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <PluginUsagesList/>
+                    </AccordionDetails>
+                </Accordion>
             </Grid>
             <Grid item md={7}/>
 
