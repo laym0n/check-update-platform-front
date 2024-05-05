@@ -3,7 +3,7 @@ import useTaskOverviewViewController from "src/pages/task_overview/TaskOverviewV
 import {PluginDescription} from "src/shared/components/plugin_description";
 import {Layout} from "src/pages/layout";
 import {Button} from "@mui/material";
-import {MakeDecisionDialog} from "src/shared/components/make_decision_dialog";
+import {AccessTokenDialog} from "src/shared/components/make_decision_dialog";
 
 
 export default function TaskOverviewPage() {
@@ -26,7 +26,7 @@ function TaskOverviewPageContent() {
                     onClick={viewController.handleOpenDialog}>
                     MAKE DECISION
                 </Button>
-                <MakeDecisionDialog {...viewController.makeDecisionDialogProps}/>
+                <AccessTokenDialog {...viewController.makeDecisionDialogProps}/>
             </span>
             <PluginDescription {...viewController.pluginDescriptionProps}/>
         </>

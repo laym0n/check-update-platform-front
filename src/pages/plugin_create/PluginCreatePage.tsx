@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import {AccessTokenDialog} from "src/shared/components/make_decision_dialog";
 
 
 export default function PluginCreatePage() {
@@ -20,7 +21,8 @@ function PluginCreatePageContent() {
 
     return (
         <>
-            <Box component="form" noValidate onSubmit={viewController.onClickCreate} sx={{mt: 3}}>
+            <Box hidden={viewController.isHiddenForm} component="form" noValidate
+                 onSubmit={viewController.onClickCreate} sx={{mt: 3}}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <TextField
@@ -52,6 +54,7 @@ function PluginCreatePageContent() {
                     Create
                 </Button>
             </Box>
+            <AccessTokenDialog {...viewController.accessTokenDialogProps}/>
         </>
     );
 }

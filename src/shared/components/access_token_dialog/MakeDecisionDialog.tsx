@@ -1,12 +1,12 @@
 import React from "react";
 import {Button, Dialog, DialogActions, DialogTitle, Stack} from "@mui/material";
-import useMakeDecisionDialogViewController, {
-    MakeDecisionDialogProps
-} from "src/shared/components/make_decision_dialog/MakeDecisionDialogViewController";
+import useAccessTokenDialogViewController, {
+    AccessTokenDialogProps
+} from "src/shared/components/make_decision_dialog/AccessTokenDialogViewController";
 import TextField from "@mui/material/TextField";
 
-export function MakeDecisionDialog(props: MakeDecisionDialogProps) {
-    let viewController = useMakeDecisionDialogViewController(props)
+export function MakeDecisionDialog(props: AccessTokenDialogProps) {
+    let viewController = useAccessTokenDialogViewController(props)
 
     return (
         <Dialog

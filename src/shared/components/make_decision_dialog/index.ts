@@ -1,1 +1,1 @@
-export * from './MakeDecisionDialog';
+export * from './AccessTokenDialog';

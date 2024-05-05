@@ -3,7 +3,7 @@ import {PluginDescriptionProps} from "src/shared/components/plugin_description/P
 import {useCallback, useEffect, useMemo, useState} from "react";
 import {diContainer, TYPES} from "src/logic/Config";
 import {TaskService} from "src/logic/services/Task";
-import {MakeDecisionDialogProps} from "src/shared/components/make_decision_dialog/MakeDecisionDialogViewController";
+import {AccessTokenDialogProps} from "src/shared/components/make_decision_dialog/AccessTokenDialogViewController";
 import {TaskDto} from "src/api/generated";
 import useNavigateOnLogOut from "src/shared/hooks/useNavigateOnLogOut";
 import {AuthenticationService} from "src/logic/services/Authentication";
@@ -11,7 +11,7 @@ import {PluginService} from "src/logic/services/Plugin";
 
 export type TaskOverviewViewController = {
     isHiddenMakeDecision: boolean;
-    makeDecisionDialogProps: MakeDecisionDialogProps;
+    makeDecisionDialogProps: AccessTokenDialogProps;
     handleOpenDialog: () => void;
     handleCloseDialog: () => void;
     pluginDescriptionProps: PluginDescriptionProps;

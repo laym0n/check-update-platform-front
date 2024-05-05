@@ -3,7 +3,7 @@ import {Layout} from "src/pages/layout";
 import Grid from "@mui/material/Grid";
 import useTasksViewController from "src/pages/tasks/TasksViewController";
 import {TaskCard} from "src/shared/components/TaskCard";
-import {MakeDecisionDialog} from "src/shared/components/make_decision_dialog";
+import {AccessTokenDialog} from "src/shared/components/make_decision_dialog";
 
 
 export default function TasksPage() {
@@ -19,7 +19,7 @@ function TasksPageContent() {
 
     return (
         <>
-            <MakeDecisionDialog {...viewController.makeDecisionDialogProps}/>
+            <AccessTokenDialog {...viewController.makeDecisionDialogProps}/>
             <Grid container columns={36}>
                 <Grid item md={7}/>
                 <Grid item
