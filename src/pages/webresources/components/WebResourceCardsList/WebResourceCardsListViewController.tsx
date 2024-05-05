@@ -46,10 +46,16 @@ const useWebResourceCardsListViewController: () => WebResourceCardsListViewContr
                 resourceDescription: pluginDescription.current,
             } as AddWebResourceForObservingRequestDto)
                 .then(observing => {
-                    const propAlreadyExists = cardProps.filter(prop => {
+                    const index = cardProps.findIndex(prop => {
                         return prop.key === observing.id
-                    }).length !== 0;
-                    if (propAlreadyExists) {
+                    });
+                    if (index !== -1) {
+                        let newCardProps = [...cardProps];
+                        newCardProps[index] = {
+                            ...newCardProps[index],
+                            webResourceObserving: observing,
+                        }
+                        setCardProps(newCardProps)
                         return
                     }
                     let newCardProps = [...cardProps, {

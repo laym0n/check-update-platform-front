@@ -685,7 +685,6 @@
       },
       "WebResourceDto": {
         "required": [
-          "description",
           "id",
           "name"
         ],
@@ -699,6 +698,9 @@
             "type": "string"
           },
           "description": {
+            "type": "string"
+          },
+          "descriptionHeader": {
             "type": "string"
           }
         }
@@ -756,7 +758,8 @@
             "type": "string",
             "enum": [
               "SUBSCRIBE",
-              "PURCHASE"
+              "PURCHASE",
+              "OWNER"
             ]
           },
           "duration": {

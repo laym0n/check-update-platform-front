@@ -12,13 +12,13 @@ export const WebResourceCard = (props: WebResourceCardProps) => {
     console.log("WebResourceCard render")
     return (
         <Card sx={{margin: 2, width: 500}}>
-            <CardHeader title={viewController.webResourceObserving.webResourceDto.description}/>
+            <CardHeader title={viewController.webResourceObserving.webResourceDto.descriptionHeader}/>
             <CardContent>
                 <Typography>{viewController.webResourceObserving.webResourceDto.description}</Typography>
             </CardContent>
             <Stack>
                 <CardActions sx={{display: 'flex', justifyContent: 'space-between'}}>
-                    <Switch defaultChecked={viewController.webResourceObserving.status === status.OBSERVE}
+                    <Switch checked={viewController.webResourceObserving.status === status.OBSERVE}
                             onChange={viewController.onChangeNeedNotify}/>
                 </CardActions>
             </Stack>
