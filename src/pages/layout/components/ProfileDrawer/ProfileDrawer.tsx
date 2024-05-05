@@ -40,7 +40,7 @@ export const ProfileDrawer = (props: ProfileDrawerHooks) => {
                         <ListItemText primary="Own plugins"/>
                     </ListItemButton>
                 </ListItem>
-                <ListItem disablePadding>
+                <ListItem disablePadding sx={{display: viewController.isHiddenTasks ? 'none' : 'block'}}>
                     <ListItemButton href="/tasks">
                         <ListItemIcon>
                             <TaskIcon color="primary"/>
