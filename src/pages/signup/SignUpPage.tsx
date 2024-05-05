@@ -50,6 +50,15 @@ export default function SignUpPage() {
                             <TextField
                                 required
                                 fullWidth
+                                id="login"
+                                label="login"
+                                name="login"
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                required
+                                fullWidth
                                 id="email"
                                 label="Email Address"
                                 name="email"

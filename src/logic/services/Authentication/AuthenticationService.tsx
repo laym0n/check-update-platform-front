@@ -3,9 +3,9 @@ import {AuthenticationRequest, CancelablePromise, UserInfoDto, UserRegistrationR
 export interface AuthenticationService {
     userAuthenticated(): boolean;
 
-    register(request: AuthenticationRequest): CancelablePromise<any>;
+    register(request: UserRegistrationRequestDto): CancelablePromise<any>;
 
-    authenticate(request: UserRegistrationRequestDto): Promise<void>;
+    authenticate(request: AuthenticationRequest): Promise<void>;
 
     refreshAuthorize(): Promise<void>;
 

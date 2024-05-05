@@ -27,6 +27,7 @@ const useSignUpViewController: () => SignUpViewController = () => {
         const data = new FormData(event.currentTarget);
         let request: UserRegistrationRequestDto = {
             email: data.get('email')!!.toString(),
+            login: data.get('login')!!.toString(),
             password: data.get('password')!!.toString()
         };
         authenticationService.register(request)

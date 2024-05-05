@@ -65,10 +65,9 @@ export default function SignInPage() {
                             margin="normal"
                             required
                             fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
+                            id="login"
+                            label="login"
+                            name="login"
                             autoFocus
                         />
                         <TextField

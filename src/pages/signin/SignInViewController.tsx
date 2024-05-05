@@ -15,7 +15,7 @@ const useSignInViewController: () => SignInViewController = () => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         let request: AuthenticationRequest = {
-            email: data.get('email')!!.toString(),
+            login: data.get('login')!!.toString(),
             password: data.get('password')!!.toString(),
             rememberMe: data.get('rememberMe') === 'on',
         }

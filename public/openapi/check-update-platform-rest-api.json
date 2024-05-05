@@ -538,6 +538,114 @@
         ]
       }
     },
+    "/feedback": {
+      "get": {
+        "tags": [
+          "Feedback"
+        ],
+        "operationId": "getFeedbacks",
+        "parameters": [
+          {
+            "name": "filters.ids",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "filters.pluginIds",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "filters.userIds",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "filters.excludedUserIds",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "request",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/GetFeedbacksRequestDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetFeedbacksResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Feedback"
+        ],
+        "operationId": "createOrUpdateFeedback",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrUpdateFeedbackRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeedbackDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/authentication": {
       "post": {
         "tags": [
@@ -1094,10 +1202,14 @@
       "UserRegistrationRequestDto": {
         "required": [
           "email",
+          "login",
           "password"
         ],
         "type": "object",
         "properties": {
+          "login": {
+            "type": "string"
+          },
           "email": {
             "type": "string"
           },
@@ -1263,14 +1375,97 @@
           }
         }
       },
-      "AuthenticationRequest": {
+      "CreateOrUpdateFeedbackRequestDto": {
+        "required": [
+          "pluginId",
+          "rating"
+        ],
+        "type": "object",
+        "properties": {
+          "pluginId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "rating": {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "comment": {
+            "type": "string"
+          }
+        }
+      },
+      "FeedbackDto": {
+        "required": [
+          "createDate",
+          "id",
+          "rating",
+          "user"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "comment": {
+            "type": "string"
+          },
+          "rating": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "user": {
+            "$ref": "#/components/schemas/UserInfoDto"
+          }
+        }
+      },
+      "UserInfoDto": {
         "required": [
           "email",
+          "id",
+          "login",
+          "roles"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "email": {
+            "type": "string"
+          },
+          "login": {
+            "type": "string"
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "SIMPLE_USER",
+                "EMPLOYEE",
+                "ADMIN"
+              ]
+            }
+          }
+        }
+      },
+      "AuthenticationRequest": {
+        "required": [
+          "login",
           "password"
         ],
         "type": "object",
         "properties": {
-          "email": {
+          "login": {
             "type": "string"
           },
           "password": {
@@ -1320,34 +1515,6 @@
             "type": "string",
             "description": "Refresh token live duration",
             "example": "PT1H"
-          }
-        }
-      },
-      "UserInfoDto": {
-        "required": [
-          "email",
-          "id",
-          "roles"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "email": {
-            "type": "string"
-          },
-          "roles": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "SIMPLE_USER",
-                "EMPLOYEE",
-                "ADMIN"
-              ]
-            }
           }
         }
       },
@@ -1417,6 +1584,61 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/PluginUsageDto"
+            }
+          }
+        }
+      },
+      "FeedbacksFilterDto": {
+        "type": "object",
+        "properties": {
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "pluginIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "userIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "excludedUserIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        }
+      },
+      "GetFeedbacksRequestDto": {
+        "type": "object",
+        "properties": {
+          "filters": {
+            "$ref": "#/components/schemas/FeedbacksFilterDto"
+          }
+        }
+      },
+      "GetFeedbacksResponseDto": {
+        "required": [
+          "feedbacks"
+        ],
+        "type": "object",
+        "properties": {
+          "feedbacks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FeedbackDto"
             }
           }
         }
