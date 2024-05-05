@@ -109,6 +109,52 @@
         ]
       }
     },
+    "/task/{id}/creator/decision": {
+      "put": {
+        "tags": [
+          "Task"
+        ],
+        "operationId": "makeDecisionByCreator",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MakeDecisionRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/webresource/observing": {
       "get": {
         "tags": [
@@ -743,7 +789,8 @@
             "type": "string",
             "enum": [
               "APPROVE",
-              "REJECT"
+              "REJECT",
+              "REJECT_BY_CREATOR"
             ]
           },
           "comment": {
@@ -906,7 +953,8 @@
             "type": "string",
             "enum": [
               "APPROVE",
-              "REJECT"
+              "REJECT",
+              "REJECT_BY_CREATOR"
             ]
           },
           "type": {

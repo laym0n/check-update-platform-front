@@ -31,7 +31,7 @@ export const WebResourceCardsList = () => {
             <Stack>
                 {viewController.cardProps.map(cardProp => {
                     return (
-                        <WebResourceCard {...cardProp}/>
+                        <WebResourceCard {...cardProp} onObservingChange={viewController.onObservingChange}/>
                     );
                 })}
             </Stack>

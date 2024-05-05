@@ -6,6 +6,8 @@ export interface TaskService {
     get(dto: GetTasksDto): Promise<GetTasksResponseDto>;
 
     makeDecision(dto: MakeDecisionDto): Promise<TaskDto>;
+
+    makeDecisionByCreator(dto: MakeDecisionDto): Promise<TaskDto>;
 }
 
 export type GetTasksDto = {

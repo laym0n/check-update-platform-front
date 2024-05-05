@@ -24,4 +24,10 @@ export class TaskServiceImpl implements TaskService {
         return authenticationService.refreshAuthorize()
             .then(() => TaskClient.makeDecision(dto.taskId, dto.request));
     }
+
+    makeDecisionByCreator(dto: MakeDecisionDto): Promise<TaskDto> {
+        const authenticationService = diContainer.get<AuthenticationService>(TYPES.AuthenticationService);
+        return authenticationService.refreshAuthorize()
+            .then(() => TaskClient.makeDecisionByCreator(dto.taskId, dto.request));
+    }
 }

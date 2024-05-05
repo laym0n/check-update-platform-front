@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useRef, useState} from "react";
-import {AddWebResourceForObservingRequestDto} from "src/api/generated";
+import {AddWebResourceForObservingRequestDto, WebResourceObservingDto} from "src/api/generated";
 import {diContainer, TYPES} from "src/logic/Config";
 import {WebResourceObservingService} from "src/logic/services/WebResourceObserving";
 import {WebResourceCardProps} from "src/pages/webresources/components/WebResourceCard";
@@ -9,13 +9,14 @@ export type WebResourceCardsListViewController = {
     onNewValueDescriptionChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
     onSubmitAddNewResource: React.FormEventHandler<HTMLDivElement>;
     cardProps: WebResourceCardProps[],
+    onObservingChange: (observing: WebResourceObservingDto) => void;
 }
 
 const useWebResourceCardsListViewController: () => WebResourceCardsListViewController = () => {
     const [cardProps, setCardProps] = useState([] as WebResourceCardProps[])
     const pluginDescription = useRef<string>('');
     const {selectedPluginId, setSelectedPluginId} = usePluginSelectListContext();
-
+    console.log('useWebResourceCardsListViewController')
     let loadWebResouceObservings = useCallback(() => {
         if (!selectedPluginId) {
             return
@@ -66,6 +67,19 @@ const useWebResourceCardsListViewController: () => WebResourceCardsListViewContr
                 })
         }, [cardProps, selectedPluginId]);
 
+    const onObservingChange = useCallback((observing: WebResourceObservingDto) => {
+        const index = cardProps.findIndex(cardProp => cardProp.webResourceObserving.id === observing.id);
+        if (index === -1) {
+            return
+        }
+        let newCardProps = [...cardProps]
+        newCardProps[index] = {
+            ...newCardProps[index],
+            webResourceObserving: observing,
+        }
+        setCardProps(newCardProps)
+    }, [cardProps]);
+
     let onNewValueDescriptionChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void = useCallback(
         (event) => {
             pluginDescription.current = event.target.value
@@ -74,6 +88,7 @@ const useWebResourceCardsListViewController: () => WebResourceCardsListViewContr
         onSubmitAddNewResource: onSubmitAddNewResource,
         onNewValueDescriptionChange: onNewValueDescriptionChange,
         cardProps: cardProps,
+        onObservingChange: onObservingChange,
     } as WebResourceCardsListViewController;
 };
 export default useWebResourceCardsListViewController;

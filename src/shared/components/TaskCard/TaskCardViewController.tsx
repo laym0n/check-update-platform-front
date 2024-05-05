@@ -2,6 +2,7 @@ import {TaskDto} from "src/api/generated";
 import {useCallback} from "react";
 
 export type TaskCardViewController = {
+    onClickRejectByCreator: React.MouseEventHandler<HTMLButtonElement>;
     isNeedToShowButtonsForResolved: boolean;
     isNeedToShowButtonsForCreator: boolean;
     createDate: string;
@@ -15,6 +16,7 @@ export type TaskCardProps = {
     isNeedToShowButtonsForEmployee: boolean;
     pluginId?: string;
     onMakeDecision?: (taskDto: TaskDto) => void;
+    onMakeDecisionByCreator?: (taskDto: TaskDto) => void;
     key: string,
     taskDto: TaskDto,
 }
@@ -31,6 +33,10 @@ const useTaskCardViewController: (props: TaskCardProps) => TaskCardViewControlle
         props.onMakeDecision!(props.taskDto);
     }, [props.onMakeDecision, props.taskDto]);
 
+    const onClickRejectByCreator: React.MouseEventHandler<HTMLButtonElement> = useCallback((event) => {
+        props.onMakeDecisionByCreator!(props.taskDto);
+    }, [props.onMakeDecisionByCreator, props.taskDto]);
+
     return {
         createDate: createDate,
         taskDto: props.taskDto,
@@ -38,6 +44,7 @@ const useTaskCardViewController: (props: TaskCardProps) => TaskCardViewControlle
         isNeedToShowButtonsForEmployee: isNeedToShowButtonsForEmployee,
         isNeedToShowButtonsForResolved: isNeedToShowButtonsForResolved,
         isNeedToShowButtonsForCreator: isNeedToShowButtonsForCreator,
+        onClickRejectByCreator: onClickRejectByCreator,
     } as TaskCardViewController;
 };
 export default useTaskCardViewController;

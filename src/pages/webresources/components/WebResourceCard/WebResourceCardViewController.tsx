@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback} from "react";
 import {UpdateWebResourceObservingRequestDto, WebResourceObservingDto} from "src/api/generated";
 import {diContainer, TYPES} from "src/logic/Config";
 import {WebResourceObservingService} from "src/logic/services/WebResourceObserving";
@@ -12,26 +12,23 @@ export type WebResourceCardViewController = {
 export type WebResourceCardProps = {
     key: string,
     webResourceObserving: WebResourceObservingDto,
+    onObservingChange: (observing: WebResourceObservingDto) => void;
 }
 
 const useWebResourceCardController: (props: WebResourceCardProps) => WebResourceCardViewController = (props: WebResourceCardProps) => {
-    const [webResourceObserving, setWebResourceObserving] = useState(props.webResourceObserving)
-
-    useEffect(() => {
-        setWebResourceObserving(props.webResourceObserving)
-        console.log(1)
-    }, [props.webResourceObserving]);
+    console.log('useWebResourceCardController')
+    let {webResourceObserving, key, onObservingChange} = {...props};
 
     let onChangeNeedNotify: (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void = useCallback((event, checked) => {
         const webResourceObservingService = diContainer.get<WebResourceObservingService>(TYPES.WebResourceObservingService);
         webResourceObservingService.stopObservings({
-            webResourceId: props.webResourceObserving.id,
+            webResourceId: webResourceObserving.id,
             status: checked ? status.OBSERVE : status.NOT_OBSERVE,
-        }).then(observing => setWebResourceObserving(observing))
-    }, [props.webResourceObserving.id])
+        }).then(observing => onObservingChange(observing))
+    }, [onObservingChange, webResourceObserving.id])
 
     return {
-        webResourceObserving: webResourceObserving,
+        webResourceObserving: props.webResourceObserving,
         onChangeNeedNotify: onChangeNeedNotify,
     } as WebResourceCardViewController;
 };

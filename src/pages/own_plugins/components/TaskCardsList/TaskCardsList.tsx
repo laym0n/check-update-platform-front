@@ -15,7 +15,7 @@ export const TaskCardsList = () => {
             <Stack>
                 {viewController.cardProps.map(cardProp => {
                     return (
-                        <TaskCard {...cardProp}/>
+                        <TaskCard {...cardProp} onMakeDecisionByCreator={viewController.onMakeDecisionByCreator}/>
                     );
                 })}
             </Stack>

@@ -30,7 +30,7 @@ export const TaskCard = (props: TaskCardProps) => {
                     <Button variant="contained"
                             fullWidth
                             color="error"
-                            href={`/plugin/own/${props.pluginId}/task/${props.taskDto.id}`}>REJECT</Button>
+                            onClick={viewController.onClickRejectByCreator}>REJECT</Button>
                 </Stack>
             </CardActions>
             <CardActions sx={{display: viewController.isNeedToShowButtonsForEmployee ? "block" : "none"}}>
