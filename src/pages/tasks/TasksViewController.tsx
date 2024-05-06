@@ -2,12 +2,12 @@ import {useCallback, useEffect, useRef, useState} from 'react';
 import {diContainer, TYPES} from "src/logic/Config";
 import {TaskCardProps} from "src/shared/components/TaskCard";
 import {TaskService} from "src/logic/services/Task";
-import {AccessTokenDialogProps} from "src/shared/components/make_decision_dialog/AccessTokenDialogViewController";
 import {TaskDto} from "src/api/generated";
 import useNavigateOnLogOut from "src/shared/hooks/useNavigateOnLogOut";
+import {MakeDecisionDialogProps} from "src/shared/components/make_decision_dialog/MakeDecisionDialogViewController";
 
 export type TasksViewController = {
-    makeDecisionDialogProps: AccessTokenDialogProps;
+    makeDecisionDialogProps: MakeDecisionDialogProps;
     taskCardProps: TaskCardProps[],
     onSwitchSelectedTask: (event: React.MouseEvent<HTMLButtonElement>, id: string) => void;
 }

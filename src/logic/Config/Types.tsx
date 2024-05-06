@@ -5,6 +5,7 @@ const TYPES = {
     PluginUsageService: Symbol.for("PluginUsageService"),
     WebResourceObservingService: Symbol.for("WebResourceObservingService"),
     TaskService: Symbol.for("TaskService"),
+    FeedbackService: Symbol.for("FeedbackService"),
 };
 
 export {TYPES};

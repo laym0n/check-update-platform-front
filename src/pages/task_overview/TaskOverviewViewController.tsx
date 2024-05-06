@@ -3,15 +3,16 @@ import {PluginDescriptionProps} from "src/shared/components/plugin_description/P
 import {useCallback, useEffect, useMemo, useState} from "react";
 import {diContainer, TYPES} from "src/logic/Config";
 import {TaskService} from "src/logic/services/Task";
-import {AccessTokenDialogProps} from "src/shared/components/make_decision_dialog/AccessTokenDialogViewController";
-import {TaskDto} from "src/api/generated";
+import {FeedbackDto, TaskDto} from "src/api/generated";
 import useNavigateOnLogOut from "src/shared/hooks/useNavigateOnLogOut";
 import {AuthenticationService} from "src/logic/services/Authentication";
 import {PluginService} from "src/logic/services/Plugin";
+import {MakeDecisionDialogProps} from "src/shared/components/make_decision_dialog/MakeDecisionDialogViewController";
+import {CommentsBoxProps} from "src/shared/components/plugin_description/components/CommentsBox";
 
 export type TaskOverviewViewController = {
     isHiddenMakeDecision: boolean;
-    makeDecisionDialogProps: AccessTokenDialogProps;
+    makeDecisionDialogProps: MakeDecisionDialogProps;
     handleOpenDialog: () => void;
     handleCloseDialog: () => void;
     pluginDescriptionProps: PluginDescriptionProps;
@@ -56,7 +57,13 @@ const useTaskOverviewViewController: () => TaskOverviewViewController = () => {
                     distributionMethods: taskDto.description.distributionMethods,
                     buyButtonProps: {
                         isDisabled: true,
-                    }
+                    },
+                    commentsBoxProps: {
+                        initFeedback: {} as FeedbackDto,
+                        feedbacks: [] as FeedbackDto[],
+                        onSubmitComment: () => {
+                        }
+                    } as CommentsBoxProps,
                 } as PluginDescriptionProps)
                 if (taskDto.decision) {
                     setIsHiddenMakeDecision(true);

@@ -3,7 +3,7 @@ import {usePluginSelectListContext} from "src/shared/components/PluginsSelectLis
 import {useCallback, useEffect, useState} from "react";
 import {diContainer, TYPES} from "src/logic/Config";
 import {PluginService} from "src/logic/services/Plugin";
-import {AccessTokenDialogProps} from "src/shared/components/make_decision_dialog/AccessTokenDialogViewController";
+import {AccessTokenDialogProps} from "src/shared/components/access_token_dialog/AccessTokenDialogViewController";
 
 export type PluginInfoCardViewController = {
     accessTokenDialogProps: AccessTokenDialogProps;

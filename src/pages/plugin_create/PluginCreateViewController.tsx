@@ -3,8 +3,8 @@ import {diContainer, TYPES} from "src/logic/Config";
 import {PluginService} from "src/logic/services/Plugin";
 import {AddPluginRequestDto} from "src/api/generated";
 import useNavigateOnLogOut from "src/shared/hooks/useNavigateOnLogOut";
-import {AccessTokenDialogProps} from "src/shared/components/make_decision_dialog/AccessTokenDialogViewController";
 import {useNavigate} from "react-router-dom";
+import {AccessTokenDialogProps} from "src/shared/components/access_token_dialog/AccessTokenDialogViewController";
 
 export type PluginCreateViewController = {
     accessTokenDialogProps: AccessTokenDialogProps;

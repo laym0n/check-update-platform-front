@@ -12,7 +12,7 @@ export type AccessTokenDialogProps = {
 }
 
 const useAccessTokenDialogViewController: (props: AccessTokenDialogProps) => AccessTokenDialogViewController = (props) => {
-    let {accessToken, isOpenDialog, onCloseClick} = {...props};
+    let {isOpenDialog, onCloseClick} = {...props};
     const handleCloseDialog = useCallback(() => {
         onCloseClick();
     }, [onCloseClick]);

@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import {AccessTokenDialog} from "src/shared/components/make_decision_dialog";
+import {AccessTokenDialog} from "src/shared/components/access_token_dialog";
 
 
 export default function PluginCreatePage() {

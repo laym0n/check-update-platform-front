@@ -584,14 +584,6 @@
                 "type": "string"
               }
             }
-          },
-          {
-            "name": "request",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/GetFeedbacksRequestDto"
-            }
           }
         ],
         "responses": {
@@ -1585,47 +1577,6 @@
             "items": {
               "$ref": "#/components/schemas/PluginUsageDto"
             }
-          }
-        }
-      },
-      "FeedbacksFilterDto": {
-        "type": "object",
-        "properties": {
-          "ids": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          "pluginIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          "userIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          "excludedUserIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        }
-      },
-      "GetFeedbacksRequestDto": {
-        "type": "object",
-        "properties": {
-          "filters": {
-            "$ref": "#/components/schemas/FeedbacksFilterDto"
           }
         }
       },

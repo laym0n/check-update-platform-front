@@ -2,7 +2,7 @@ import React from "react";
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography} from "@mui/material";
 import useAccessTokenDialogViewController, {
     AccessTokenDialogProps
-} from "src/shared/components/make_decision_dialog/AccessTokenDialogViewController";
+} from "src/shared/components/access_token_dialog/AccessTokenDialogViewController";
 
 export function AccessTokenDialog(props: AccessTokenDialogProps) {
     let viewController = useAccessTokenDialogViewController(props)

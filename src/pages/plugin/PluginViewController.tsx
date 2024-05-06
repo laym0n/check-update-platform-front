@@ -6,7 +6,10 @@ import {PluginUsageService} from "src/logic/services/PluginUsage";
 import {useLayoutContext} from "src/pages/layout/LayoutContext";
 import NotAuthorizedError from "src/logic/errors/NotAuthorizedError";
 import {PluginDescriptionProps} from "src/shared/components/plugin_description/PluginDescriptionViewController";
-import {DistributionMethodDto, TagInfoDto} from "src/api/generated";
+import {CreateOrUpdateFeedbackRequestDto, DistributionMethodDto, FeedbackDto, TagInfoDto} from "src/api/generated";
+import {FeedbackService} from "src/logic/services/Feedback";
+import {AuthenticationService} from "src/logic/services/Authentication";
+import {CommentsBoxProps} from "src/shared/components/plugin_description/components/CommentsBox";
 
 export type PluginViewController = {
     pluginDescriptionProps: PluginDescriptionProps;
@@ -18,8 +21,34 @@ type PluginPagePathVariables = {
 
 const usePluginViewController: () => PluginViewController = () => {
     const layoutContext = useLayoutContext();
-    const [pluginDescriptionProps, setPluginDescriptionProps] = useState<PluginDescriptionProps>({} as PluginDescriptionProps)
     const pluginPagePathVariables = useParams<PluginPagePathVariables>();
+
+    const onSubmitComment: (request: CreateOrUpdateFeedbackRequestDto) => void = useCallback((request) => {
+        request = {
+            ...request,
+            pluginId: pluginPagePathVariables.id!,
+        }
+        const feedbackService = diContainer.get<FeedbackService>(TYPES.FeedbackService);
+        feedbackService.giveFeedBack(request)
+            .then(feedback => {
+                setPluginDescriptionProps(prevState => {
+                    return {
+                        ...prevState,
+                        commentsBoxProps: {
+                            ...prevState.commentsBoxProps,
+                            initFeedback: feedback,
+                        }
+                    }
+                })
+            })
+    }, [pluginPagePathVariables.id]);
+    const [pluginDescriptionProps, setPluginDescriptionProps] = useState<PluginDescriptionProps>({
+        commentsBoxProps: {
+            initFeedback: {} as FeedbackDto,
+            feedbacks: [] as FeedbackDto[],
+            onSubmitComment: onSubmitComment,
+        } as CommentsBoxProps
+    } as unknown as PluginDescriptionProps)
     const selectedMethod = useRef<DistributionMethodDto>();
 
     const onBuyButtonClick: React.MouseEventHandler<HTMLButtonElement> = useCallback(() => {
@@ -63,22 +92,73 @@ const usePluginViewController: () => PluginViewController = () => {
                         isNew: false,
                     } as TagInfoDto
                 });
-                setPluginDescriptionProps({
-                    name: pluginInfoDto.name,
-                    tags: tags,
-                    logoPath: pluginInfoDto.description.logoPath,
-                    imagePaths: pluginInfoDto.description.specificDescription?.imagePaths,
-                    description: pluginInfoDto.description.specificDescription?.description,
-                    distributionMethods: pluginInfoDto.description.distributionMethods,
-                    onSelectedMethodChanged: onSelectedMethodChanged,
-                    buyButtonProps: {
-                        getPluginId: getPluginId,
-                        isDisabled: false,
-                        getDistributionMethod: getDistributionMethod,
-                    },
-                } as PluginDescriptionProps)
+                setPluginDescriptionProps((prevState) => {
+                    return {
+                        ...prevState,
+                        name: pluginInfoDto.name,
+                        tags: tags,
+                        logoPath: pluginInfoDto.description.logoPath,
+                        imagePaths: pluginInfoDto.description.specificDescription?.imagePaths,
+                        description: pluginInfoDto.description.specificDescription?.description,
+                        distributionMethods: pluginInfoDto.description.distributionMethods,
+                        onSelectedMethodChanged: onSelectedMethodChanged,
+                        buyButtonProps:
+                            {
+                                getPluginId: getPluginId,
+                                isDisabled: false,
+                                getDistributionMethod: getDistributionMethod,
+                            },
+                    } as PluginDescriptionProps
+                })
             });
-    }, [onBuyButtonClick, onSelectedMethodChanged, pluginPagePathVariables.id]);
+    }, [getDistributionMethod, getPluginId, onBuyButtonClick, onSelectedMethodChanged, pluginPagePathVariables.id]);
+
+    useEffect(() => {
+        let userIdsArray: string[] = [];
+        if (layoutContext.isAuthenticated) {
+            const authenticationService = diContainer.get<AuthenticationService>(TYPES.AuthenticationService);
+            const user = authenticationService.getUser();
+            userIdsArray = [user.id];
+        }
+
+        const feedbackService = diContainer.get<FeedbackService>(TYPES.FeedbackService);
+        feedbackService.get({excludedUserIds: userIdsArray})
+            .then(response => {
+                setPluginDescriptionProps((prevState) => {
+                    return {
+                        ...prevState,
+                        commentsBoxProps: {
+                            ...prevState.commentsBoxProps,
+                            feedbacks: response.feedbacks,
+                        }
+                    } as PluginDescriptionProps
+                })
+            })
+        setPluginDescriptionProps((prevState) => {
+            return {
+                ...prevState,
+                commentsBoxProps: {
+                    ...prevState.commentsBoxProps,
+                    isHiddenForm: !layoutContext.isAuthenticated,
+                }
+            } as PluginDescriptionProps
+        })
+        if (!layoutContext.isAuthenticated) {
+            return
+        }
+        feedbackService.get({userIds: userIdsArray})
+            .then(response => {
+                setPluginDescriptionProps((prevState) => {
+                    return {
+                        ...prevState,
+                        commentsBoxProps: {
+                            ...prevState.commentsBoxProps,
+                            initFeedback: response.feedbacks[0],
+                        }
+                    } as PluginDescriptionProps
+                })
+            });
+    }, [layoutContext.isAuthenticated]);
 
     return {
         pluginDescriptionProps: pluginDescriptionProps,

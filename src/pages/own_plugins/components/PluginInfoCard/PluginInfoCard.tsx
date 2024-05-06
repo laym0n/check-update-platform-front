@@ -3,7 +3,7 @@ import {Box, Button, Card, Stack, Typography} from "@mui/material";
 import usePluginInfoCardViewController
     from "src/pages/own_plugins/components/PluginInfoCard/PluginInfoCardViewController";
 import TextField from "@mui/material/TextField";
-import {AccessTokenDialog} from "src/shared/components/make_decision_dialog";
+import {AccessTokenDialog} from "src/shared/components/access_token_dialog";
 
 
 export const PluginInfoCard = () => {

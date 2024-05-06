@@ -2,8 +2,10 @@ import React, {useCallback, useState} from 'react';
 import {DistributionMethodDto, TagInfoDto} from "src/api/generated";
 import {DistributionMethodAutocompleteProps} from "src/shared/components/DistributionMethodAutocomplete";
 import {BuyButtonProps} from "src/shared/components/BuyButton";
+import {CommentsBoxProps} from "src/shared/components/plugin_description/components/CommentsBox";
 
 export type PluginDescriptionViewController = {
+    commentsBoxProps: CommentsBoxProps;
     buyButtonProps: BuyButtonProps;
     distributionMethodAutocompleteProps: DistributionMethodAutocompleteProps;
     name: string,
@@ -16,6 +18,7 @@ export type PluginDescriptionViewController = {
 }
 
 export type PluginDescriptionProps = {
+    commentsBoxProps: CommentsBoxProps;
     buyButtonProps: BuyButtonProps,
     onSelectedMethodChanged?: (newMethod: DistributionMethodDto) => void;
     name: string,
@@ -46,7 +49,8 @@ const usePluginDescriptionViewController: (props: PluginDescriptionProps) => Plu
             distributionMethods: props.distributionMethods,
             onChangeDistributionMethod: props.onSelectedMethodChanged || (() => {
             }),
-        }
+        },
+        commentsBoxProps: props.commentsBoxProps,
     } as PluginDescriptionViewController;
 }
 

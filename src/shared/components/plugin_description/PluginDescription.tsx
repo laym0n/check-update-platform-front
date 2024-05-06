@@ -9,6 +9,7 @@ import {
     DistributionMethodAutocomplete
 } from "src/shared/components/DistributionMethodAutocomplete/DistributionMethodAutocomplete";
 import {BuyButton} from "src/shared/components/BuyButton/BuyButton";
+import {CommentsBox} from "src/shared/components/plugin_description/components/CommentsBox/CommentsBox";
 
 export function PluginDescription(props: PluginDescriptionProps) {
     let viewController = usePluginDescriptionViewController(props)
@@ -94,6 +95,7 @@ export function PluginDescription(props: PluginDescriptionProps) {
                         variant="body1">
                 {viewController.description}
             </Typography>
+            <CommentsBox {...viewController.commentsBoxProps}/>
         </Stack>
     );
 }

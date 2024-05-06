@@ -13,6 +13,8 @@ import {WebResourceObservingService} from "src/logic/services/WebResourceObservi
 import {WebResourceObservingServiceImpl} from "src/logic/services/WebResourceObserving/WebResourceObservingServiceImpl";
 import {TaskService} from "src/logic/services/Task";
 import {TaskServiceImpl} from "src/logic/services/Task/TaskServiceImpl";
+import {FeedbackService} from "src/logic/services/Feedback";
+import {FeedbackServiceImpl} from "src/logic/services/Feedback/FeedbackServiceImpl";
 
 const diContainer = new Container();
 diContainer.bind<AuthenticationService>(TYPES.AuthenticationService).to(AuthenticationServiceImpl);
@@ -21,5 +23,6 @@ diContainer.bind<TagService>(TYPES.TagService).to(TagServiceStubImpl);
 diContainer.bind<PluginUsageService>(TYPES.PluginUsageService).to(PluginUsageServiceImpl);
 diContainer.bind<WebResourceObservingService>(TYPES.WebResourceObservingService).to(WebResourceObservingServiceImpl);
 diContainer.bind<TaskService>(TYPES.TaskService).to(TaskServiceImpl);
+diContainer.bind<FeedbackService>(TYPES.FeedbackService).to(FeedbackServiceImpl);
 
 export {diContainer};
