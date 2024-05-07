@@ -10,10 +10,11 @@ export const PluginUsageCard = (props: PluginUsageCardProps) => {
     console.log("PluginUsageCard render")
     return (
         <Card sx={{margin: 2, width: 500}}>
-            <CardHeader title={viewController.pluginUsageDto.distributionMethod.type}/>
+            <CardHeader sx={{textAlign: 'center'}} title={viewController.pluginUsageDto.distributionMethod.type}/>
             <CardContent>
                 <Stack spacing={1} direction="column">
-                    <Typography>{`Cost ${viewController.pluginUsageDto.distributionMethod.cost}`}</Typography>
+                    {viewController.pluginUsageDto.distributionMethod.cost &&
+                        <Typography>{`Cost ${viewController.pluginUsageDto.distributionMethod.cost}`}</Typography>}
                     {viewController.duration &&
                         <Typography>{`Duration ${viewController.duration}`}</Typography>}
                     {viewController.pluginUsageDto.expiredDate &&

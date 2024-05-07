@@ -7,6 +7,7 @@ import status = UpdateWebResourceObservingRequestDto.status;
 export type WebResourceCardViewController = {
     onChangeNeedNotify: (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void;
     webResourceObserving: WebResourceObservingDto,
+    descriptionsRows: string[],
 }
 
 export type WebResourceCardProps = {
@@ -17,7 +18,7 @@ export type WebResourceCardProps = {
 
 const useWebResourceCardController: (props: WebResourceCardProps) => WebResourceCardViewController = (props: WebResourceCardProps) => {
     console.log('useWebResourceCardController')
-    let {webResourceObserving, key, onObservingChange} = {...props};
+    let {webResourceObserving, onObservingChange} = {...props};
 
     let onChangeNeedNotify: (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void = useCallback((event, checked) => {
         const webResourceObservingService = diContainer.get<WebResourceObservingService>(TYPES.WebResourceObservingService);
@@ -27,9 +28,11 @@ const useWebResourceCardController: (props: WebResourceCardProps) => WebResource
         }).then(observing => onObservingChange(observing))
     }, [onObservingChange, webResourceObserving.id])
 
+    let descriptionsRows = (props.webResourceObserving.webResourceDto.description || '').split('\n')
     return {
         webResourceObserving: props.webResourceObserving,
         onChangeNeedNotify: onChangeNeedNotify,
+        descriptionsRows: descriptionsRows,
     } as WebResourceCardViewController;
 };
 export default useWebResourceCardController;

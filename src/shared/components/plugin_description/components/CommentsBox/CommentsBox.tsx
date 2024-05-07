@@ -12,21 +12,32 @@ export function CommentsBox(props: CommentsBoxProps) {
         <Stack direction="column"
                spacing={1}
         >
-            <Typography>FEEDBACKS</Typography>
+            <Typography sx={{textAlign: 'center'}}>FEEDBACKS</Typography>
             <Box component="form"
                  onSubmit={viewController.onSubmitFeedback}
                  hidden={viewController.isHiddenForm}
             >
-                <Rating
-                    name="simple-controlled"
-                    value={viewController.ratingValue}
-                    onChange={viewController.onRatingChange}
-                />
-                <TextField multiline
-                           value={viewController.commentValue}
-                           onChange={viewController.onCommentChange}
-                />
-                <Button type='submit' variant='contained'>SUBMIT</Button>
+                <Stack direction="column"
+                       spacing={2}
+                >
+                    <Rating
+                        name="simple-controlled"
+                        value={viewController.ratingValue}
+                        onChange={viewController.onRatingChange}
+                    />
+                    <TextField multiline
+                               value={viewController.commentValue}
+                               onChange={viewController.onCommentChange}
+                    />
+                    <Button type='submit'
+                            variant='contained'
+                            sx={{
+                                width: 'auto'
+                            }}
+                    >
+                        SUBMIT
+                    </Button>
+                </Stack>
             </Box>
             <Stack spacing={1} direction="column">
                 {viewController.commentsProps.map(prop => {

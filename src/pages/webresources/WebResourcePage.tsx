@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import {WebResourceCardsList} from "src/pages/webresources/components/WebResourceCardsList";
 import PluginsSelectList from "src/shared/components/PluginsSelectList/PluginsSelectList";
 import {PluginSelectListContextProvider} from "src/shared/components/PluginsSelectList/PluginsSelectListContext";
-import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
+import {Accordion, AccordionDetails, AccordionSummary, SxProps, Theme} from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {PluginUsagesList} from "src/pages/webresources/components/PluginUsagesList";
 
@@ -22,7 +22,16 @@ export default function WebResourcePage() {
 
 function WebResourcePageContent() {
     let viewController = useWebResourceViewController();
-
+    let accordionProps: SxProps<Theme> = {
+        width: '100%',
+        background: "#1e222b",
+    };
+    if (viewController.isHidenInfos) {
+        accordionProps = {
+            ...accordionProps,
+            display: 'none',
+        }
+    }
     return (
         <Grid container columns={36}>
             <Grid item md={7}>
@@ -38,7 +47,7 @@ function WebResourcePageContent() {
                   }}
                   padding={2}
             >
-                <Accordion sx={{width: '100%', background: "#1e222b"}}>
+                <Accordion sx={accordionProps}>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon/>}
                     >
@@ -48,7 +57,7 @@ function WebResourcePageContent() {
                         <WebResourceCardsList/>
                     </AccordionDetails>
                 </Accordion>
-                <Accordion sx={{width: '100%', background: "#1e222b"}}>
+                <Accordion sx={accordionProps}>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon/>}
                     >

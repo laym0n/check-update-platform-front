@@ -19,7 +19,7 @@ export default function OwnPluginsPage() {
 }
 
 function WebResourcePageContent() {
-    let viewController = useOwnPluginsViewController();
+    useOwnPluginsViewController();
 
     return (
         <Grid container columns={36}>

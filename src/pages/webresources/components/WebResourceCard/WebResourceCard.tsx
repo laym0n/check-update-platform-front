@@ -14,7 +14,9 @@ export const WebResourceCard = (props: WebResourceCardProps) => {
         <Card sx={{margin: 2, width: 500}}>
             <CardHeader title={viewController.webResourceObserving.webResourceDto.descriptionHeader}/>
             <CardContent>
-                <Typography>{viewController.webResourceObserving.webResourceDto.description}</Typography>
+                {viewController.descriptionsRows.map((row, index) => {
+                    return <Typography key={index}>{row}</Typography>
+                })}
             </CardContent>
             <Stack>
                 <CardActions sx={{display: 'flex', justifyContent: 'space-between'}}>

@@ -33,7 +33,7 @@ const useOwnPluginsViewController: () => OwnPluginsViewController = () => {
         pluginService.getOwnPlugins({})
             .then(response => {
                 setPlugins(response.plugins)
-                if (!initPluginId.current) {
+                if (!initPluginId.current && response.plugins.length) {
                     setSelectedPluginId(response.plugins[0].id)
                 }
             });

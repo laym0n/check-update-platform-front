@@ -30,10 +30,10 @@ const useDistributionMethodAutocompleteViewController: (props: DistributionMetho
             .map(method => {
                 let label: string;
                 if (method.type === DistributionMethodDto.type.PURCHASE) {
-                    label = `${method.cost} РУБ`
+                    label = `${method.cost} RUB`
                 } else {
                     let duration = moment.duration(method.duration!).humanize()
-                    label = `${method.cost} РУБ/${duration}`
+                    label = `${method.cost} RUB/${duration}`
                 }
                 return {
                     label: label,

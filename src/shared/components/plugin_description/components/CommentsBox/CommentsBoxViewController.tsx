@@ -32,7 +32,7 @@ const useCommentsBoxViewController: (props: CommentsBoxProps) => CommentsBoxView
     }, [initFeedback?.comment, initFeedback?.rating]);
 
     const commentProps: CommentCardProps[] = useMemo(() => {
-        return feedbacks
+        return (feedbacks || [])
             .map(feedback => {
                 return {
                     feedback: feedback,
@@ -60,6 +60,7 @@ const useCommentsBoxViewController: (props: CommentsBoxProps) => CommentsBoxView
     return {
         ratingValue: ratingValue,
         commentsProps: commentProps,
+        commentValue: commentValue,
         onRatingChange: onRatingChange,
         onCommentChange: onCommentChange,
         onSubmitFeedback: onSubmitFeedback,

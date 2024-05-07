@@ -15,7 +15,7 @@ export type WebResourceCardsListViewController = {
 const useWebResourceCardsListViewController: () => WebResourceCardsListViewController = () => {
     const [cardProps, setCardProps] = useState([] as WebResourceCardProps[])
     const pluginDescription = useRef<string>('');
-    const {selectedPluginId, setSelectedPluginId} = usePluginSelectListContext();
+    const {selectedPluginId} = usePluginSelectListContext();
     console.log('useWebResourceCardsListViewController')
     let loadWebResouceObservings = useCallback(() => {
         if (!selectedPluginId) {
