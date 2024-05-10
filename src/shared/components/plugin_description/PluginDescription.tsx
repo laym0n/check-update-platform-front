@@ -1,5 +1,5 @@
 import React from "react";
-import {Chip, ImageList, ImageListItem, Stack, Typography} from "@mui/material";
+import {Box, Chip, ImageList, ImageListItem, Stack, Typography} from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
 import usePluginDescriptionViewController, {
@@ -18,8 +18,6 @@ export function PluginDescription(props: PluginDescriptionProps) {
         width: `${100 / (viewController.imagePaths?.length || 1)}%`,
         maxWidth: 100,
         height: 'auto',
-        aspectRatio: '1 / 1',
-        objectFit: 'cover'
     };
     const selectedImageStyle: React.CSSProperties = {
         ...simpleImageStyle,
@@ -28,7 +26,7 @@ export function PluginDescription(props: PluginDescriptionProps) {
         borderColor: 'primary'
     };
     return (
-        <Stack width='100%'>
+        <Stack width='100%' spacing={1}>
             <Grid container>
                 <Grid item
                       xs={6}
@@ -37,25 +35,40 @@ export function PluginDescription(props: PluginDescriptionProps) {
                           alignItems: 'center',
                           flexDirection: 'column'
                       }}>
-                    <Stack alignItems="center"
+                    <Box alignItems="center"
                            sx={{
-                               width: '65%',
+                               display: 'flex',
+                               flexDirection: 'column',
+                               width: 600,
+                               height: 700
                            }}>
-                        <img
+                        <div style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignContent: 'center',
+                            alignItems: 'center',
+                            height: 500,
+                            width: 500,
+                            maxHeight: 500,
+                        }}>
+                            <img
                             src={viewController.imagePaths?.[viewController.selectedIndexImage]}
                             alt={viewController.imagePaths?.[viewController.selectedIndexImage]}
                             style={{
-                                ...simpleImageStyle,
                                 width: '100%',
-                                maxWidth: "max-content",
                             }}
-                        />
+                            />
+                        </div>
                         <ImageList variant="quilted"
                                    cols={viewController.imagePaths?.length}
                                    sx={{width: "auto", display: "flex"}}>
                             {(viewController.imagePaths || []).map((imageUrl, index) => (
                                 <ImageListItem key={index}
-                                               sx={index === viewController.selectedIndexImage ? selectedImageStyle : simpleImageStyle}
+                                               sx={{
+                                                   ...(index === viewController.selectedIndexImage ? selectedImageStyle : simpleImageStyle),
+                                                   objectFit: 'cover'
+                                               }}
                                                onClick={(event) => viewController.onImageClick(event, index)}>
                                     <img
                                         src={imageUrl}
@@ -64,7 +77,7 @@ export function PluginDescription(props: PluginDescriptionProps) {
                                 </ImageListItem>
                             ))}
                         </ImageList>
-                    </Stack>
+                    </Box>
                 </Grid>
                 <Grid item xs={6}>
                     <Stack alignItems="center" justifyContent="center" height="100%">
@@ -74,6 +87,7 @@ export function PluginDescription(props: PluginDescriptionProps) {
                                     sx={{
                                         ...simpleImageStyle,
                                         width: 300,
+                                        aspectRatio: '1 / 1'
                                     }}/>
                             <Typography variant="h5" gutterBottom>
                                 {viewController.name}
@@ -91,10 +105,13 @@ export function PluginDescription(props: PluginDescriptionProps) {
                     <Chip key={tag.tag} label={tag.tag} variant="outlined"/>
                 ))}
             </Stack>
-            <Typography margin={2}
-                        variant="body1">
-                {viewController.description}
-            </Typography>
+
+            {(viewController.description || '').split('\\n').map((desc, index) => {
+                return (<Typography key={index}
+                                    variant="body1">
+                    {desc}
+                </Typography>)
+            })}
             <CommentsBox {...viewController.commentsBoxProps}/>
         </Stack>
     );
