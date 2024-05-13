@@ -122,7 +122,7 @@ const usePluginViewController: () => PluginViewController = () => {
         }
 
         const feedbackService = diContainer.get<FeedbackService>(TYPES.FeedbackService);
-        feedbackService.get({excludedUserIds: userIdsArray})
+        feedbackService.get({excludedUserIds: userIdsArray, pluginIds: [pluginPagePathVariables.id!]})
             .then(response => {
                 setPluginDescriptionProps((prevState) => {
                     return {
@@ -146,7 +146,7 @@ const usePluginViewController: () => PluginViewController = () => {
         if (!layoutContext.isAuthenticated) {
             return
         }
-        feedbackService.get({userIds: userIdsArray})
+        feedbackService.get({userIds: userIdsArray, pluginIds: [pluginPagePathVariables.id!]})
             .then(response => {
                 setPluginDescriptionProps((prevState) => {
                     return {
@@ -158,7 +158,7 @@ const usePluginViewController: () => PluginViewController = () => {
                     } as PluginDescriptionProps
                 })
             });
-    }, [layoutContext.isAuthenticated]);
+    }, [layoutContext.isAuthenticated, pluginPagePathVariables.id]);
 
     return {
         pluginDescriptionProps: pluginDescriptionProps,
