@@ -6,6 +6,8 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import {AccessTokenDialog} from "src/shared/components/access_token_dialog";
+import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
+import {CreateStepper} from "src/pages/plugin_create/components/CreateStepper/CreateStepper";
 
 
 export default function PluginCreatePage() {
@@ -54,6 +56,12 @@ function PluginCreatePageContent() {
                     Create
                 </Button>
             </Box>
+            <Accordion>
+                <AccordionSummary>How to create plugin</AccordionSummary>
+                <AccordionDetails>
+                    <CreateStepper/>
+                </AccordionDetails>
+            </Accordion>
             <AccessTokenDialog {...viewController.accessTokenDialogProps}/>
         </>
     );
